@@ -54,10 +54,10 @@ stages:
               steps:
                 - task: AzureWebAppContainer@1
                   inputs:
-                    azureSubscription: '$(AZURE_SUBSCRIPTION)'
-                    appName: '$(WEBAPP_NAME)'
+                    azureSubscription: 'AzureConnection'
+                    appName: 'forecast-app-dev-bjhxh3fjceeud7cv'
                     containers: |
-                      $(DOCKER_REPO):latest
+                      SEUUSUARIO/forecast-application:latest
                   displayName: "Deploy no Azure App Service"
 
 
