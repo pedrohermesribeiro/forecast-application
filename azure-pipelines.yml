@@ -10,7 +10,7 @@ variables:
   IMAGE_NAME: 'forecast-application'
   DOCKER_REPO: 'SEUUSUARIO/forecast-application'  # <-- ajuste com seu DockerHub
   WEBAPP_NAME: 'forecast-app-dev-bjhxh3fjceeud7cv'
-  AZURE_SUBSCRIPTION: 'AzureConnection'
+  AZURE_SUBSCRIPTION: 'DockerHubConnection'
 
 stages:
   - stage: Build
