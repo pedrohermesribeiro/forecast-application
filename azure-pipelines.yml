@@ -1,19 +1,63 @@
 trigger:
-  - main
+  branches:
+    include:
+      - main
 
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-  - task: JavaToolInstaller@0
-    inputs:
-      versionSpec: '21'
-      jdkArchitectureOption: 'x64'
-      jdkSourceOption: 'PreInstalled'
-    displayName: "Configurar JDK 21"
+variables:
+  IMAGE_NAME: 'forecast-application'
+  DOCKER_REPO: 'SEUUSUARIO/forecast-application'  # <-- ajuste com seu DockerHub
+  WEBAPP_NAME: 'forecast-app-dev-bjhxh3fjceeud7cv'
+  AZURE_SUBSCRIPTION: 'AzureConnection'
 
-  - task: Maven@4
-    inputs:
-      mavenPomFile: 'pom.xml'
-      goals: 'clean package -DskipTests'
-    displayName: "Build do projeto com Maven"
+stages:
+  - stage: Build
+    displayName: "Build e Push Docker"
+    jobs:
+      - job: BuildJob
+        steps:
+          - task: JavaToolInstaller@0
+            inputs:
+              versionSpec: '21'
+              jdkArchitectureOption: 'x64'
+              jdkSourceOption: 'PreInstalled'
+            displayName: "Configurar JDK 21"
+
+          - task: Maven@4
+            inputs:
+              mavenPomFile: 'pom.xml'
+              goals: 'clean package -DskipTests'
+            displayName: "Build com Maven"
+
+          - task: Docker@2
+            inputs:
+              containerRegistry: 'DockerHubConnection'
+              repository: '$(DOCKER_REPO)'
+              command: 'buildAndPush'
+              Dockerfile: '**/Dockerfile'
+              tags: |
+                $(Build.BuildId)
+                latest
+            displayName: "Build & Push imagem Docker"
+
+  - stage: Deploy
+    displayName: "Deploy no Azure Web App (Free)"
+    dependsOn: Build
+    jobs:
+      - deployment: DeployJob
+        environment: 'development'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: AzureWebAppContainer@1
+                  inputs:
+                    azureSubscription: '$(AZURE_SUBSCRIPTION)'
+                    appName: '$(WEBAPP_NAME)'
+                    containers: |
+                      $(DOCKER_REPO):latest
+                  displayName: "Deploy no Azure App Service"
+
+
