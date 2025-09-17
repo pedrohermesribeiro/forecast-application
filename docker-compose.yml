@@ -1,0 +1,38 @@
+version: '3.9'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-forecast
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: forecastdb
+      MYSQL_USER: forecast
+      MYSQL_PASSWORD: forecast
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - forecast-network
+
+  app:
+    build: .
+    container_name: forecast-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/forecastdb?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: forecast
+      SPRING_DATASOURCE_PASSWORD: forecast
+    networks:
+      - forecast-network
+
+networks:
+  forecast-network:
+
+volumes:
+  mysql_data:
+
