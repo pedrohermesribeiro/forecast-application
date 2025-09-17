@@ -46,18 +46,14 @@ stages:
     displayName: "Deploy no Azure Web App (Free)"
     dependsOn: Build
     jobs:
-      - deployment: DeployJob
-        environment: 'development'
-        strategy:
-          runOnce:
-            deploy:
-              steps:
-                - task: AzureWebAppContainer@1
-                  inputs:
-                    azureSubscription: 'AzureConnection'
-                    appName: 'forecast-app-dev-bjhxh3fjceeud7cv'
-                    containers: |
-                      SEUUSUARIO/forecast-application:latest
-                  displayName: "Deploy no Azure App Service"
+      - job: DeployJob
+        steps:
+          - task: AzureWebAppContainer@1
+            inputs:
+              azureSubscription: 'AzureConnection'
+              appName: 'forecast-app-dev-bjhxh3fjceeud7cv'
+              containers: |
+                pedrohermes/forecast-application:latest
+            displayName: "Deploy no Azure App Service"
 
 
