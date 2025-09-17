@@ -33,7 +33,7 @@ stages:
 
           - task: Docker@2
             inputs:
-              containerRegistry: 'DockerHubConnection'
+              containerRegistry: 'DockerHubConnection1'
               repository: '$(DOCKER_REPO)'
               command: 'buildAndPush'
               Dockerfile: '**/Dockerfile'
