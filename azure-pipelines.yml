@@ -34,7 +34,7 @@ stages:
           - task: Docker@2
             inputs:
               containerRegistry: 'DockerHubConnection1'
-              repository: '$(DOCKER_REPO)'
+              repository: 'pedrohermes/forecast-application'
               command: 'buildAndPush'
               Dockerfile: '**/Dockerfile'
               tags: |
