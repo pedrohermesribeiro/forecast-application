@@ -8,7 +8,7 @@ steps:
   - task: JavaToolInstaller@0
     inputs:
       versionSpec: '21'
-      jdkArchitecture: 'x64'
+      jdkArchitectureOption: 'x64'
       jdkSourceOption: 'PreInstalled'
     displayName: "Configurar JDK 21"
 
