@@ -1,0 +1,19 @@
+trigger:
+  - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: JavaToolInstaller@0
+    inputs:
+      versionSpec: '21'
+      jdkArchitecture: 'x64'
+      jdkSourceOption: 'PreInstalled'
+    displayName: "Configurar JDK 21"
+
+  - task: Maven@4
+    inputs:
+      mavenPomFile: 'pom.xml'
+      goals: 'clean package -DskipTests'
+    displayName: "Build do projeto com Maven"
