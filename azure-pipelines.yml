@@ -51,7 +51,7 @@ stages:
           - task: AzureWebAppContainer@1
             inputs:
               azureSubscription: 'AzureConnection'
-              appName: 'forecast-app-dev-bjhxh3fjceeud7cv.brazilsouth-01.azurewebsites.net'
+              appName: 'forecast-app-dev-bjhxh3fjceeud7cv'
               containers: |
                 pedrohermes/forecast-application:latest
             displayName: "Deploy no Azure App Service"
