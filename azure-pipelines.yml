@@ -9,7 +9,7 @@ pool:
 variables:
   IMAGE_NAME: 'forecast-application'
   DOCKER_REPO: 'pedrohermes/forecast-application'  # <-- ajuste com seu DockerHub
-  WEBAPP_NAME: 'forecast-app-dev-bjhxh3fjceeud7cv.brazilsouth-01.azurewebsites.net'
+  WEBAPP_NAME: 'forecast-app-dev-bjhxh3fjceeud7cv'
   AZURE_SUBSCRIPTION: 'AzureConnection'
 
 stages:
