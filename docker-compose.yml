@@ -5,13 +5,14 @@ services:
     build: .
     container_name: forecast-app
     ports:
-      - "8080:80"   # host:container → acessa localhost:8080, app roda na porta 80 interna
+      - "8080:80"   # host:container → acessa localhost:8080, app roda na 80 interna
     environment:
-      SPRING_PROFILES_ACTIVE: default   # garante que use o application.yml padrão (H2)
+      SPRING_PROFILES_ACTIVE: default
     networks:
       - forecast-network
 
 networks:
   forecast-network:
+
 
 
