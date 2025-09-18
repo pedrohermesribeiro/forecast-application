@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: jdbc:mysql://192.168.65.2:3306/forecastdb?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-    username: forecast
-    password: forecast
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:h2:mem:forecastdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
 
   jpa:
     hibernate:
@@ -17,5 +17,5 @@ spring:
     name: forecast-application
 
 server:
-  port: 8080
+  port: 80
   
