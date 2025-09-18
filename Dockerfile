@@ -1,15 +1,17 @@
-# Etapa 1: Build da aplicação
-FROM maven:3.9.9-eclipse-temurin-21 AS builder
+# Etapa 1: build com Maven Wrapper
+FROM eclipse-temurin:21-jdk AS build
 WORKDIR /app
-COPY pom.xml .
-RUN mvn dependency:go-offline -B
-COPY src ./src
-RUN mvn clean package -DskipTests
+COPY . .
+RUN ./mvnw clean package -DskipTests
 
-# Etapa 2: Runtime da aplicação
-FROM eclipse-temurin:21-jdk
+# Etapa 2: imagem final
+FROM eclipse-temurin:21-jre
 WORKDIR /app
-COPY --from=builder /app/target/forecast-application-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=build /app/target/forecast-application-0.0.1-SNAPSHOT.jar app.jar
 
-EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar","--server.port=80"]
+# Expõe a porta 80 (requisito do Azure App Service)
+EXPOSE 80
+
+# Força o Spring Boot a rodar na porta 80
+ENTRYPOINT ["java", "-jar", "/app.jar", "--server.port=80"]
+
