@@ -1,7 +1,13 @@
-# Etapa 1: build com Maven Wrapper
 FROM eclipse-temurin:21-jdk AS build
 WORKDIR /app
+
+# Copia os arquivos do projeto
 COPY . .
+
+# Dá permissão de execução ao mvnw
+RUN chmod +x mvnw
+
+# Executa o build da aplicação
 RUN ./mvnw clean package -DskipTests
 
 # Etapa 2: imagem final
