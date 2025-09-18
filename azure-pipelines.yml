@@ -51,7 +51,7 @@ stages:
           - task: AzureWebAppContainer@1
             inputs:
               azureSubscription: 'AzureConnection'
-              appName: 'forecast-app-dev-bjhxh3fjceeud7cv'
+              appName: 'forecast-app-dev'
               resourceGroupName: 'forecast-rg'
               containers: |
                 pedrohermes/forecast-application:latest
