@@ -4,6 +4,9 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+# Arquivo de variáveis de ambiente (não versionar nunca)
+.env
+
 ### STS ###
 .apt_generated
 .classpath
