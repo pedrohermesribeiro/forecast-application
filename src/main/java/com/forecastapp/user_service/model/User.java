@@ -1,4 +1,4 @@
-package com.forecastapp.forecast_application.entity;
+package com.forecastapp.user_service.model;
 
 import java.util.HashSet;
 import java.util.Set;

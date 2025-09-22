@@ -1,7 +1,9 @@
-package com.forecastapp.forecast_application.repository;
+package com.forecastapp.user_service.repository;
 
-import com.forecastapp.forecast_application.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.forecastapp.user_service.model.Role;
+
 import java.util.Optional;
 
 public interface RoleRepository extends JpaRepository<Role, Long> {

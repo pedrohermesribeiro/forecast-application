@@ -1,7 +1,9 @@
-package com.forecastapp.forecast_application.repository;
+package com.forecastapp.user_service.repository;
 
-import com.forecastapp.forecast_application.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.forecastapp.user_service.model.User;
+
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {

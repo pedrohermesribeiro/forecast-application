@@ -1,7 +1,8 @@
-package com.forecastapp.forecast_application.controller;
+package com.forecastapp.user_service.controller;
 
-import com.forecastapp.forecast_application.entity.User;
-import com.forecastapp.forecast_application.service.UserService;
+import com.forecastapp.user_service.model.User;
+import com.forecastapp.user_service.service.UserService;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api")
 public class UserController {
 
     private final UserService userService;

@@ -1,4 +1,4 @@
-package com.forecastapp.forecast_application;
+package com.forecastapp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

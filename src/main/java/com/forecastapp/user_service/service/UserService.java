@@ -1,7 +1,8 @@
-package com.forecastapp.forecast_application.service;
+package com.forecastapp.user_service.service;
 
-import com.forecastapp.forecast_application.entity.User;
-import com.forecastapp.forecast_application.repository.UserRepository;
+import com.forecastapp.user_service.model.User;
+import com.forecastapp.user_service.repository.UserRepository;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
