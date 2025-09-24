@@ -1,18 +1,38 @@
-version: '3.9'
+version: "3.9"
 
 services:
-  app:
-    build: .
-    container_name: forecast-app
+  api_gateway:
+    build:
+      context: ./api_gateway
+      dockerfile: Dockerfile
+    container_name: api_gateway
     ports:
-      - "8080:80"   # host:container → acessa localhost:8080, app roda na 80 interna
-    environment:
-      SPRING_PROFILES_ACTIVE: default
-    networks:
-      - forecast-network
+      - "8080:8080"   # host:container
+    depends_on:
+      - auth_service
+      - ai_service
+      - user_service
 
-networks:
-  forecast-network:
+  auth_service:
+    build:
+      context: ./auth_service
+      dockerfile: Dockerfile
+    container_name: auth_service
+    ports:
+      - "8082:8080"
 
+  ai_service:
+    build:
+      context: ./ai_service
+      dockerfile: Dockerfile
+    container_name: ai_service
+    ports:
+      - "8081:8080"
 
-
+  user_service:
+    build:
+      context: ./user_service
+      dockerfile: Dockerfile
+    container_name: user_service
+    ports:
+      - "8083:8080"

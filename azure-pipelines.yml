@@ -7,14 +7,14 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  IMAGE_NAME: 'forecast-application'
-  DOCKER_REPO: 'pedrohermes/forecast-application'  # <-- ajuste com seu DockerHub
-  WEBAPP_NAME: 'forecast-app-dev-bjhxh3fjceeud7cv'
-  AZURE_SUBSCRIPTION: 'AzureConnection'
+  DOCKER_REPO: 'pedrohermes'            # seu DockerHub user/org
+  WEBAPP_NAME: 'forecast-app-dev'       # nome do App Service
+  RESOURCE_GROUP: 'forecast-rg'         # resource group do Azure
+  AZURE_SUBSCRIPTION: 'AzureConnection' # service connection configurada no DevOps
 
 stages:
   - stage: Build
-    displayName: "Build e Push Docker"
+    displayName: "Build e Push Docker Images"
     jobs:
       - job: BuildJob
         steps:
@@ -31,30 +31,61 @@ stages:
               goals: 'clean package -DskipTests'
             displayName: "Build com Maven"
 
+          # Build e push das 4 imagens
           - task: Docker@2
+            displayName: "Build & Push api_gateway"
             inputs:
               containerRegistry: 'DockerHubConnection'
-              repository: 'pedrohermes/forecast-application'
+              repository: '$(DOCKER_REPO)/forecast-application-api_gateway'
               command: 'buildAndPush'
-              Dockerfile: '**/Dockerfile'
+              Dockerfile: 'api_gateway/Dockerfile'
               tags: |
                 $(Build.BuildId)
                 latest
-            displayName: "Build & Push imagem Docker"
+
+          - task: Docker@2
+            displayName: "Build & Push auth_service"
+            inputs:
+              containerRegistry: 'DockerHubConnection'
+              repository: '$(DOCKER_REPO)/forecast-application-auth_service'
+              command: 'buildAndPush'
+              Dockerfile: 'auth_service/Dockerfile'
+              tags: |
+                $(Build.BuildId)
+                latest
+
+          - task: Docker@2
+            displayName: "Build & Push user_service"
+            inputs:
+              containerRegistry: 'DockerHubConnection'
+              repository: '$(DOCKER_REPO)/forecast-application-user_service'
+              command: 'buildAndPush'
+              Dockerfile: 'user_service/Dockerfile'
+              tags: |
+                $(Build.BuildId)
+                latest
+
+          - task: Docker@2
+            displayName: "Build & Push ai_service"
+            inputs:
+              containerRegistry: 'DockerHubConnection'
+              repository: '$(DOCKER_REPO)/forecast-application-ai_service'
+              command: 'buildAndPush'
+              Dockerfile: 'ai_service/Dockerfile'
+              tags: |
+                $(Build.BuildId)
+                latest
 
   - stage: Deploy
-    displayName: "Deploy no Azure Web App (Free)"
+    displayName: "Deploy no Azure Web App (multi-container)"
     dependsOn: Build
     jobs:
       - job: DeployJob
         steps:
           - task: AzureWebAppContainer@1
+            displayName: "Deploy docker-compose-prod.yml"
             inputs:
-              azureSubscription: 'AzureConnection'
-              appName: 'forecast-app-dev'
-              resourceGroupName: 'forecast-rg'
-              containers: |
-                pedrohermes/forecast-application:latest
-            displayName: "Deploy no Azure App Service"
-
-
+              azureSubscription: '$(AZURE_SUBSCRIPTION)'
+              appName: '$(WEBAPP_NAME)'
+              resourceGroupName: '$(RESOURCE_GROUP)'
+              multicontainerConfigFile: 'docker-compose.yml'
