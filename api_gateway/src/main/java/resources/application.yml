@@ -2,6 +2,8 @@ server:
   port: 8080  # O Gateway central ficará nessa porta
 
 spring:
+  application:
+    name: api-gateway
   cloud:
     gateway:
       routes:
@@ -18,8 +20,17 @@ spring:
           predicates:
             - Path=/ai/**
       globalcors:
+        add-to-simple-url-handler-mapping: true
         corsConfigurations:
           '[/**]':
-            allowedOrigins: "http://localhost:4200"
-            allowedMethods: "*"
+            allowedOrigins:
+              - "http://localhost:4200"
+              - "https://forecast-frontend.azurewebsites.net"  # já deixa pronto p/ produção
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
             allowedHeaders: "*"
+            allowCredentials: true
