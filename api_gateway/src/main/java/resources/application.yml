@@ -22,7 +22,7 @@ spring:
         corsConfigurations:
           '[/**]':
             allowedOrigins:
-              - "http://localhost:4200"
+              - "http://localhost:4200/chat"
               - "https://forecast-app-dev-bjhxh3fjceeud7cv.brazilsouth-01.azurewebsites.net"
             allowedMethods:
               - GET
