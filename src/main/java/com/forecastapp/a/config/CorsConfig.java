@@ -21,4 +21,19 @@ public class CorsConfig {
             }
         };
     }
+
+    @Bean
+    public CorsWebFilter corsWebFilter() {
+        CorsConfiguration corsConfig = new CorsConfiguration();
+        corsConfig.addAllowedOrigin("http://localhost:4200"); // libera o Angular local
+        corsConfig.addAllowedOriginPattern("*"); // opcional: libera tudo
+        corsConfig.addAllowedMethod("*"); // GET, POST, PUT, DELETE etc.
+        corsConfig.addAllowedHeader("*"); // headers customizados
+        corsConfig.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfig);
+
+        return new CorsWebFilter(source);
+    }
 }
