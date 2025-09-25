@@ -1,4 +1,4 @@
-FROM eclipse-temurin:21-jre
+FROM eclipse-temurin:21-jdk-jammy AS build
 WORKDIR /app
 COPY target/api_gateway-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
