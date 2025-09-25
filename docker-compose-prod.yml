@@ -6,10 +6,6 @@ services:
     restart: always
     ports:
       - "8080:8080"
-    depends_on:
-      - auth_service
-      - user_service
-      - ai_service
 
   auth_service:
     image: pedrohermes/forecast-application-auth_service:latest
