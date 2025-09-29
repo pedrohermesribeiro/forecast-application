@@ -1,0 +1,47 @@
+<div class="login-container">
+  <div class="login-box">
+    <h2>🔐 Acesso ao Sistema</h2>
+    <p class="subtitle">Entre com suas credenciais para acessar o agente de investimentos</p>
+
+    <form (ngSubmit)="onLogin()">
+        <!-- Usuário -->
+        <div class="form-group">
+            <label for="username">Usuário ou Email</label>
+            <input
+            type="text"
+            id="username"
+            name="username"
+
+            required
+            />
+        </div>
+
+        <!-- Senha -->
+        <div class="form-group">
+            <label for="password">Senha</label>
+            <input
+            type="password"
+            id="password"
+            name="password"
+
+            required
+            />
+        </div>
+
+        <!-- Erro -->
+        <p  class="error">{{ errorMessage }}</p>
+
+        <!-- Botão -->
+        <button type="submit" [disabled]="">
+            {{ loading ? 'Entrando...' : 'Entrar' }}
+        </button>
+    </form>
+
+
+    <!-- Link de registro futuro -->
+    <p class="register-link">
+      Não tem conta? <a routerLink="/register">Cadastre-se</a>
+    </p>
+  </div>
+</div>
+

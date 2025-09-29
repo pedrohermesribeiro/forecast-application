@@ -8,10 +8,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.http.ResponseEntity;
 
 import com.forecastapp.ai_service.dto.ChatbotResponseDTO;
 import com.forecastapp.ai_service.service.ChatbotService;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/ai")
 public class ChatbotController {
@@ -23,10 +26,10 @@ public class ChatbotController {
     }
 
     @PostMapping("/chat")
-    public String chat(@RequestBody Map<String, String> request) {
+    public ResponseEntity<ChatbotResponseDTO> chat(@RequestBody Map<String, String> request) {
         String pergunta = request.get("pergunta");
         ChatbotResponseDTO respDTO = new ChatbotResponseDTO();
         respDTO = chatbotService.processarPergunta(pergunta);
-        return respDTO.getExplicacao();
+        return ResponseEntity.ok(respDTO);
     }
 }
