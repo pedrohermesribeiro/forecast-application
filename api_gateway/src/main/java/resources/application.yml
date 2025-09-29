@@ -6,16 +6,30 @@ spring:
     gateway:
       routes:
         - id: auth
-          uri: http://localhost:8082
+          uri: http://auth_service:8082
           predicates:
             - Path=/auth/**
         - id: users
-          uri: http://localhost:8083
+          uri: http://user_service:8083
           predicates:
             - Path=/users/**
         - id: ai
-          uri: http://localhost:8081
+          uri: http://ai_service:8081
           predicates:
             - Path=/ai/**
-
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:4200/chat"
+              - "https://forecast-app-dev-bjhxh3fjceeud7cv.brazilsouth-01.azurewebsites.net"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: true
 

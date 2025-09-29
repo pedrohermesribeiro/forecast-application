@@ -1,11 +1,11 @@
 # Etapa 1: build
-FROM eclipse-temurin:21-jdk AS build
+FROM mcr.microsoft.com/openjdk/jdk:21-ubuntu AS build
 WORKDIR /app
 COPY . .
 RUN mvn clean package -DskipTests
 
 # Etapa 2: runtime
-FROM eclipse-temurin:21-jre
+FROM mcr.microsoft.com/openjdk/jdk:21-ubuntu
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 
