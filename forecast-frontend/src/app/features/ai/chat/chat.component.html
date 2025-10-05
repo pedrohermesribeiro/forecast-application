@@ -3,6 +3,8 @@
 
   <!-- Removi o <form> para evitar GET automático -->
   <div class="chat-input">
+
+  <form (submit)="sendMessage()" class="chat-input">
     <input
       type="text"
       [(ngModel)]="newMessage"
@@ -19,4 +21,27 @@
       <b>{{ msg.sender }}:</b> {{ msg.text }}
     </div>
   </div>
+</div>
+    <br>
+
+    <button type="submit">Enviar</button>
+  </form>
+
+
+
+
+
+  <!-- Área para exibir as mensagens -->
+  <div class="messages" *ngIf="message.length > 0">
+    <div *ngFor="let msg of message">
+      <strong style="margin-left: 10px; margin-top: 10px;">Você:</strong>
+      <strong style="margin-left: 10px; margin-top: 10px;">Bot:</strong>
+      <span style="text-align: justify; margin-left: 10px; margin-top: 10px;">{{ msg.text }}</span>
+    </div>
+  </div>
+
+  <div style="margin-left: 15px; margin-top: 10px;" *ngIf="message.length > 1">
+    <button type="submit" (click)="novaPergunta()">Nova pergunta</button>
+  </div>
+
 </div>

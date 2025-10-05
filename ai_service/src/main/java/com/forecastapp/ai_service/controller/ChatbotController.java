@@ -27,7 +27,7 @@ public class ChatbotController {
     public ResponseEntity<ChatbotResponseDTO> chat(@RequestBody Map<String, String> request) {
         String pergunta = request.get("message");
         System.err.println("Pergunta: " + pergunta);
-        ChatbotResponseDTO respDTO = new ChatbotResponseDTO();
+         ChatbotResponseDTO respDTO = new ChatbotResponseDTO();
         respDTO = chatbotService.processarPergunta(pergunta);
         return ResponseEntity.ok(respDTO);
     }
