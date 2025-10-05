@@ -18,7 +18,7 @@ FROM nginx:alpine
 RUN rm /etc/nginx/conf.d/default.conf
 
 # Copia build do Angular
-COPY dist/forecast-frontend /usr/share/nginx/html
+COPY --from=build /app/dist/forecast-frontend /usr/share/nginx/html
 
 # Copia configuração customizada
 COPY nginx.conf /etc/nginx/conf.d/default.conf
