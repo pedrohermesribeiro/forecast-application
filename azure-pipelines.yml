@@ -31,7 +31,7 @@ stages:
               goals: 'clean package -DskipTests'
             displayName: "Build com Maven"
 
-          # Build e push das 4 imagens
+          # Build e push api_gateway
           - task: Docker@2
             displayName: "Build & Push api_gateway"
             inputs:
@@ -43,6 +43,7 @@ stages:
                 $(Build.BuildId)
                 latest
 
+          # Build e push auth_service
           - task: Docker@2
             displayName: "Build & Push auth_service"
             inputs:
@@ -54,6 +55,7 @@ stages:
                 $(Build.BuildId)
                 latest
 
+          # Build e push user_service
           - task: Docker@2
             displayName: "Build & Push user_service"
             inputs:
@@ -65,6 +67,7 @@ stages:
                 $(Build.BuildId)
                 latest
 
+          # Build e push ai_service
           - task: Docker@2
             displayName: "Build & Push ai_service"
             inputs:
@@ -72,6 +75,18 @@ stages:
               repository: '$(DOCKER_REPO)/forecast-application-ai_service'
               command: 'buildAndPush'
               Dockerfile: 'ai_service/Dockerfile'
+              tags: |
+                $(Build.BuildId)
+                latest
+
+          # Build e push frontend
+          - task: Docker@2
+            displayName: "Build & Push frontend"
+            inputs:
+              containerRegistry: 'DockerHubConnection'
+              repository: '$(DOCKER_REPO)/forecast-application-frontend'
+              command: 'buildAndPush'
+              Dockerfile: 'frontend/Dockerfile'
               tags: |
                 $(Build.BuildId)
                 latest
@@ -88,4 +103,4 @@ stages:
               azureSubscription: '$(AZURE_SUBSCRIPTION)'
               appName: '$(WEBAPP_NAME)'
               resourceGroupName: '$(RESOURCE_GROUP)'
-              multicontainerConfigFile: 'docker-compose.yml'
+              multicontainerConfigFile: 'docker-compose-prod.yml'

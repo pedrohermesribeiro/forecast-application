@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,9 +16,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.forecastapp.ai_service.dto.ChatbotResponseDTO;
-import com.forecastapp.ai_service.dto.ChatbotResponseDTO.PrevisaoDTO;
 import com.forecastapp.ai_service.model.AiLog;
 import com.forecastapp.ai_service.repository.AiLogRepository;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class ChatbotService {
@@ -75,10 +77,25 @@ public class ChatbotService {
                         Map<String, Object> contentData = (Map<String, Object>) candidate.get("content");
                         if (contentData.containsKey("parts")) {
                             List<Map<String, Object>> parts = (List<Map<String, Object>>) contentData.get("parts");
+
+
+
                             if (!parts.isEmpty()) {
                             	System.err.println("parts da explicação: " + (String) parts.get(0).get("text"));
-                            	responseDTO = (ChatbotResponseDTO) new ChatbotResponseDTO((String) parts.get(0).get("text"),parts.getLast());
-                                respostaDaIA = (String) parts.get(0).get("text");
+                                String limpo = (String) parts.get(0).get("text");
+                                limpo = limpo.replace("```json", "").replace("```", "").trim();
+                                try {
+                                    ObjectMapper mapper = new ObjectMapper();
+                                    JsonNode root = mapper.readTree(limpo);
+
+                                    String explicacao = root.get("explicacao").asText();
+                                    System.err.println("explicação " + explicacao);
+                            	    responseDTO = (ChatbotResponseDTO) new ChatbotResponseDTO(explicacao,parts.getLast());
+                                    respostaDaIA = (String) parts.get(0).get("text");
+                                } catch (Exception e) {
+                                    // fallback: se não conseguir parsear, devolve só o texto limpo
+                                     responseDTO.setExplicacao(limpo);
+                                }
                             }
                         }
                     }
@@ -97,7 +114,7 @@ public class ChatbotService {
 
         log.info("💾 Interação salva em tb_ai_logs (id: {})", logEntry.getId());
         log.info("✅ Resposta da IA: {}", respostaDaIA);
-
+        System.err.println("ResponseDTO: " + responseDTO.getExplicacao());
         return responseDTO;
     }
 }
