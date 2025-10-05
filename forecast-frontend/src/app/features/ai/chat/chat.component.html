@@ -1,6 +1,8 @@
 <div class="chat-container">
   <h2>Chatbot de Previsão</h2>
 
+  <!-- Removi o <form> para evitar GET automático -->
+  <div class="chat-input">
 
   <form (submit)="sendMessage()" class="chat-input">
     <input
@@ -10,6 +12,16 @@
       placeholder="Digite sua pergunta..."
       required
     />
+    <button (click)="sendMessage()">Enviar</button>
+  </div>
+
+  <!-- Renderiza mensagens do chat -->
+  <div class="chat-messages">
+    <div *ngFor="let msg of message" [ngClass]="msg.sender">
+      <b>{{ msg.sender }}:</b> {{ msg.text }}
+    </div>
+  </div>
+</div>
     <br>
 
     <button type="submit">Enviar</button>

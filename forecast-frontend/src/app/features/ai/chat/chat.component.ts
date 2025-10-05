@@ -4,6 +4,14 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpHeaders } from '@angular/common/http';
 import { catchError, map } from 'rxjs';
+//import { environment } from '../environments/environment';
+import { environment } from '../../../../environments/environment';
+
+
+
+
+
+
 interface ChatMessage {
   sender: 'user' | 'bot';
   text: string;
@@ -23,12 +31,24 @@ export class ChatComponent {
   newMessage: string = '';
   newResp: any = '';
   // ✅ URL do API Gateway no Azure
+  //private apiUrl = `${environment.apiUrl}/chat`;
+
+  
+ //private apiUrl = environment.apiUrl;
+
+  //private apiUrl = `/ai/chat`;
+
+private apiUrl = 'https://localhost:8081/ai/chat';
   private apiUrl = 'http://localhost:8081/ai/chat';
 
   message: { sender: string, text: string }[] = [];
   messag: { sender: string, text: string }[] = [];
   explicacao: string = '';
   constructor(private http: HttpClient) {}
+
+
+ /* this.http.post(`${environment.apiUrl}/ai/chat`, body)
+  .subscribe(...);*/
 
   /*sendMessage(event: Event) {
     event.preventDefault();
@@ -86,6 +106,15 @@ export class ChatComponent {
     }
  parsed: string = '';
 
+  sendMessage(): void {
+
+      console.log("environment: ", this.apiUrl)
+      try {
+        this.message.push({ sender: 'user', text: this.newMessage });
+        const respo = fetch(this.apiUrl,{
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ "message": this.newMessage})
   async sendMessage() {
 
       try {
@@ -107,6 +136,83 @@ export class ChatComponent {
         console.error('Erro ao cadastrar:', error);
         alert('Falha ao cadastrar. Tente novamente.');
     }
+  }  
+
+
+/*async sendMessage() {
+ console.log("environment: ", this.apiUrl);
+  try {
+    // Adiciona mensagem do usuário
+    this.message.push({ sender: 'user', text: this.newMessage });
+
+    // Faz POST para o backend
+    const response = await fetch(this.apiUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ pergunta: this.newMessage })
+    });
+
+    if (!response.ok) {
+      throw new Error("Erro ao chamar API");
+    }
+
+    // Lê o JSON de resposta
+    const data = await response.json();
+    console.log("Data recebida:", data);
+
+    // Adiciona resposta do bot
+    this.message.push({ sender: 'bot', text: data.explicacao || 'Sem resposta' });
+
+  } catch (error) {
+    console.error('Erro ao cadastrar:', error);
+    this.message.push({ sender: 'bot', text: "Erro na comunicação com o servidor" });
+  }*/
+
+  // Limpa input
+  //this.newMessage = '';
+
+  /*
+const headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
+//return this.httpClient.post<T>(this.httpUtilService.prepareUrlForRequest(url), body, {headers: headers})
+
+this.http.post<any>(this.apiUrl, { pergunta: this.newMessage }, {headers: headers})
+  .subscribe({
+    next: (resp) => {
+      this.message.push({ sender: 'bot', text: resp.explicacao || 'Sem resposta' });
+    },
+    error: (err) => {
+      this.message.push({ sender: 'bot', text: err.error.errorMessage });
+    }
+  });*/
+
+
+ /* if (!this.newMessage.trim()) return;
+
+  this.http.post<any>(this.apiUrl, { pergunta: this.newMessage }, { headers })
+    .subscribe({
+      next: (resp) => {
+        this.message.push({ sender: 'bot', text: resp.explicacao || 'Sem resposta' });
+      },
+      error: (err) => {
+        this.message.push({ sender: 'bot', text: err.error?.errorMessage || 'Erro no servidor' });
+      }
+    });*/
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
   }   
 
 
@@ -213,6 +319,7 @@ export class ChatComponent {
       }
     });*/
     
+   /* async chat(){
     async chat(){
     if (!this.newMessage.trim()) return;
 
@@ -255,6 +362,7 @@ export class ChatComponent {
     // Limpa o input
     this.newMessage = '';
   }
+  }*/
   }
 
 
