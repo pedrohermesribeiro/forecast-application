@@ -38,7 +38,7 @@ export class ChatComponent {
 
   //private apiUrl = `/ai/chat`;
 
-private apiUrl = 'http://localhost:8081/ai/chat';
+private apiUrl = 'https://localhost:8081/ai/chat';
 
   message: { sender: string, text: string }[] = [];
   messag: { sender: string, text: string }[] = [];
