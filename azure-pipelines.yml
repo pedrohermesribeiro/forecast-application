@@ -86,7 +86,8 @@ stages:
               containerRegistry: 'DockerHubConnection'
               repository: '$(DOCKER_REPO)/forecast-application-frontend'
               command: 'buildAndPush'
-              Dockerfile: 'frontend/Dockerfile'
+              dockerfile: 'frontend/Dockerfile'
+              buildContext: 'forecast-frontend'
               tags: |
                 $(Build.BuildId)
                 latest
