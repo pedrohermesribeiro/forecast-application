@@ -13,6 +13,7 @@ import com.forecastapp.ai_service.dto.ChatbotResponseDTO;
 import com.forecastapp.ai_service.service.ChatbotService;
 
 @CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8085"})
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("ai")
 public class ChatbotController {
@@ -27,6 +28,7 @@ public class ChatbotController {
     public ResponseEntity<ChatbotResponseDTO> chat(@RequestBody Map<String, String> request) {
         String pergunta = request.get("message");
         System.err.println("Pergunta: " + pergunta);
+        String pergunta = request.get("pergunta");
         ChatbotResponseDTO respDTO = new ChatbotResponseDTO();
         respDTO = chatbotService.processarPergunta(pergunta);
         return ResponseEntity.ok(respDTO);
