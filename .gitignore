@@ -34,3 +34,10 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Angular build
+forecast-frontend/dist/
+forecast-frontend/.angular/
+
+# Node modules
+forecast-frontend/node_modules/
