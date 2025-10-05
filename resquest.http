@@ -1,6 +1,5 @@
 ### Login Request
-POST http://localhost:8081/chat
-POST http://localhost:4200/ai/chat
+POST https://forecast-app-dev-bjhxh3fjceeud7cv.brazilsouth-01.azurewebsites.net/ai/chat
 Content-Type: application/json
 
 { "pergunta": "Qual a previsão de vendas o mercado de cerveja para o próximo mês?" }

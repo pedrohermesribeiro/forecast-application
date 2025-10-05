@@ -39,7 +39,7 @@ export class ChatComponent {
   //private apiUrl = `/ai/chat`;
 
 private apiUrl = 'https://localhost:8081/ai/chat';
-  private apiUrl = 'http://localhost:8081/ai/chat';
+  //private apiUrl = 'http://localhost:8081/ai/chat';
 
   message: { sender: string, text: string }[] = [];
   messag: { sender: string, text: string }[] = [];
@@ -106,15 +106,7 @@ private apiUrl = 'https://localhost:8081/ai/chat';
     }
  parsed: string = '';
 
-  sendMessage(): void {
 
-      console.log("environment: ", this.apiUrl)
-      try {
-        this.message.push({ sender: 'user', text: this.newMessage });
-        const respo = fetch(this.apiUrl,{
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ "message": this.newMessage})
   async sendMessage() {
 
       try {
@@ -213,7 +205,7 @@ this.http.post<any>(this.apiUrl, { pergunta: this.newMessage }, {headers: header
 
 
 
-  }   
+  
 
 
 
@@ -363,7 +355,7 @@ this.http.post<any>(this.apiUrl, { pergunta: this.newMessage }, {headers: header
     this.newMessage = '';
   }
   }*/
-  }
+  
 
 
 
