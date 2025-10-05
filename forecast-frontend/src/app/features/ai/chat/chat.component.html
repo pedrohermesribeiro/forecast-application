@@ -13,19 +13,9 @@
       required
     />
     <button (click)="sendMessage()">Enviar</button>
+    </form>
   </div>
 
-  <!-- Renderiza mensagens do chat -->
-  <div class="chat-messages">
-    <div *ngFor="let msg of message" [ngClass]="msg.sender">
-      <b>{{ msg.sender }}:</b> {{ msg.text }}
-    </div>
-  </div>
-</div>
-    <br>
-
-    <button type="submit">Enviar</button>
-  </form>
 
 
 
@@ -44,4 +34,4 @@
     <button type="submit" (click)="novaPergunta()">Nova pergunta</button>
   </div>
 
-</div>
+
