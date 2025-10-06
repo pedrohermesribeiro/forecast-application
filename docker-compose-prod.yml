@@ -32,11 +32,10 @@ services:
       - GEMINI_API_KEY=${GEMINI_API_KEY}
       - GEMINI_API_URL=${URL}
 
-  services:
-    frontend:
-      image: pedrohermes/forecast-application-frontend:latest
-      restart: always
-      ports:
-        - "80:80"   # 👈 frontend é a porta pública
-      depends_on:
-        - api_gateway
+  frontend:
+    image: pedrohermes/forecast-application-frontend:latest
+    restart: always
+    ports:
+      - "80:80"   # 👈 frontend é a porta pública
+    depends_on:
+      - api_gateway
