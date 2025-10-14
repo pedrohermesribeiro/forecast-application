@@ -1,45 +1,43 @@
-version: "3.8"
-
+version: '3.8'
 services:
+  frontend:
+    build: ./forecast-frontend
+    ports:
+      - "8085:80"
+    depends_on:
+      - api_gateway
+      - ai_service
+    networks:
+      - app-network
   api_gateway:
-    build:
-      context: ./api_gateway
-      dockerfile: Dockerfile
-    container_name: api_gateway
+    build: ./api_gateway
     ports:
       - "8080:8080"
-
+    networks:
+      - app-network
   auth_service:
-    build:
-      context: ./auth_service
-      dockerfile: Dockerfile
-    container_name: auth_service
+    build: ./auth_service
     ports:
       - "8082:8080"
-
+    networks:
+      - app-network
+  user_service:
+    build: ./user_service
+    ports:
+      - "8083:8080"
+    networks:
+      - app-network
   ai_service:
-    build:
-      context: ./ai_service
-      dockerfile: Dockerfile
-    container_name: ai_service
+    build: ./ai_service
     ports:
       - "8081:8080"
     env_file:
       - .env
-
-  user_service:
-    build:
-      context: ./user_service
-      dockerfile: Dockerfile
-    container_name: user_service
-    ports:
-      - "8083:8080"
-
-  frontend:
-    build:
-      context: ./forecast-frontend   # pasta onde está o Angular
-      dockerfile: Dockerfile
-    container_name: forecast-application-frontend-1
-    ports:
-      - "8085:80"   # expõe o Nginx na porta 8085
-
+    networks:
+      - app-network
+    environment:
+      GEMINI_KEY: ${GEMINI_API_KEY}
+      GEMINI_API_URL: ${GEMINI_API_URL}
+networks:
+  app-network:
+    driver: bridge

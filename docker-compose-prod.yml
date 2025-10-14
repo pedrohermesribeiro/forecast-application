@@ -1,6 +1,12 @@
 version: "3.9"
 
 services:
+  frontend:
+      image: pedrohermes/forecast-application-frontend:latest
+      restart: always
+      ports:
+        - "8085:80"
+
   api_gateway:
     image: pedrohermes/forecast-application-api_gateway:latest
     restart: always
@@ -32,10 +38,3 @@ services:
       - GEMINI_API_KEY=${GEMINI_API_KEY}
       - GEMINI_API_URL=${URL}
 
-  frontend:
-    image: pedrohermes/forecast-application-frontend:latest
-    restart: always
-    ports:
-      - "80:80"   # 👈 frontend é a porta pública
-    depends_on:
-      - api_gateway

@@ -3,3 +3,35 @@ POST https://forecast-app-dev-bjhxh3fjceeud7cv.brazilsouth-01.azurewebsites.net/
 Content-Type: application/json
 
 { "pergunta": "Qual a previsão de vendas o mercado de cerveja para o próximo mês?" }
+
+
+### Login Request
+POST http://localhost:8080/chat
+Content-Type: application/json
+
+{ "pergunta": "Qual a previsão de vendas o mercado de cerveja para o próximo mês?" }
+
+### Login
+POST http://localhost:8080/localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "1234"
+}
+
+### Login
+POST http://localhost:8085/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "1234"
+}
+
+
+### Login Request
+POST http://localhost:8085/chat
+Content-Type: application/json
+
+{ "pergunta": "Qual a previsão de vendas o mercado de cerveja para o próximo mês?" }
