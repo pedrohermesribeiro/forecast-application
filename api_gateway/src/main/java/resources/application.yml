@@ -14,7 +14,7 @@ spring:
           predicates:
             - Path=/users/**
         - id: ai
-          uri: http://ai_service:8080
+          uri: http://ai_service:8081
           predicates:
             - Path=/ai/**
       globalcors:

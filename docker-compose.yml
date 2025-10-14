@@ -6,7 +6,6 @@ services:
       - "8085:80"
     depends_on:
       - api_gateway
-      - ai_service
     networks:
       - app-network
   api_gateway:

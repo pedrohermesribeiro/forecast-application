@@ -6,13 +6,13 @@ Content-Type: application/json
 
 
 ### Login Request
-POST http://localhost:8080/chat
+POST http://localhost:8081/ai/chat
 Content-Type: application/json
 
 { "pergunta": "Qual a previsão de vendas o mercado de cerveja para o próximo mês?" }
 
 ### Login
-POST http://localhost:8080/localhost:8080/auth/login
+POST http://localhost:8080/auth/login
 Content-Type: application/json
 
 {
@@ -21,7 +21,7 @@ Content-Type: application/json
 }
 
 ### Login
-POST http://localhost:8085/auth/login
+POST http://localhost:8080/auth/login
 Content-Type: application/json
 
 {
@@ -31,7 +31,7 @@ Content-Type: application/json
 
 
 ### Login Request
-POST http://localhost:8085/chat
+POST http://localhost:8085/ai/chat
 Content-Type: application/json
 
 { "pergunta": "Qual a previsão de vendas o mercado de cerveja para o próximo mês?" }

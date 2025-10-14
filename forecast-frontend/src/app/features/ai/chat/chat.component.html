@@ -4,7 +4,7 @@
   <!-- Removi o <form> para evitar GET automático -->
   <div class="chat-input">
 
-  <form (submit)="sendMessage()" class="chat-input">
+ 
     <input
       type="text"
       [(ngModel)]="newMessage"
@@ -13,7 +13,7 @@
       required
     />
     <button (click)="sendMessage()">Enviar</button>
-    </form>
+
   </div>
 
 
