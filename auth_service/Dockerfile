@@ -1,11 +1,11 @@
 FROM maven:3.9.6-eclipse-temurin-21 AS build
-WORKDIR /app/auth_service
+WORKDIR /app
 COPY auth_service/pom.xml .
 COPY auth_service/src ./src
 RUN mvn clean package -DskipTests -f pom.xml
 
 FROM eclipse-temurin:21-jdk
-WORKDIR /app/auth_service
+WORKDIR /app
 COPY --from=build /app/auth_service/target/auth_service-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8082
 ENTRYPOINT ["java", "-jar", "app.jar"]
