@@ -1,6 +1,6 @@
 FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /app
-COPY auth_service/pom.xml .
+COPY api_gateway/pom.xml .
 COPY api_gateway/src ./src
 RUN mvn clean package -DskipTests -f pom.xml
 
