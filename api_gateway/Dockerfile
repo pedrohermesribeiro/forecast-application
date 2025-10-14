@@ -1,5 +1,5 @@
 FROM maven:3.9.6-eclipse-temurin-21 AS build
-WORKDIR /app
+WORKDIR /app/api_gateway
 COPY api_gateway/pom.xml .
 COPY api_gateway/src ./src
 RUN mvn clean package -DskipTests -f pom.xml

@@ -1,5 +1,5 @@
 FROM maven:3.9.6-eclipse-temurin-21 AS build
-WORKDIR /app
+WORKDIR /app/user_service
 COPY user_service/pom.xml .
 COPY user_service/src ./src
 RUN mvn clean package -DskipTests -f pom.xml

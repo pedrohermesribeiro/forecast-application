@@ -1,5 +1,5 @@
 FROM maven:3.9.6-eclipse-temurin-21 AS build
-WORKDIR /app
+WORKDIR /app/ai_service
 COPY ai_service/pom.xml .
 COPY ai_service/src ./src
 RUN mvn clean package -DskipTests -f pom.xml
