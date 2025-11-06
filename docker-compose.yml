@@ -1,17 +1,14 @@
-version: '3.8'
 services:
-  frontend:
-    build: ./forecast-frontend
-    ports:
-      - "8085:80"
-    depends_on:
-      - api_gateway
-    networks:
-      - app-network
   api_gateway:
     build: ./api_gateway
     ports:
       - "8080:8080"
+    networks:
+      - app-network
+  frontend:
+    build: ./forecast-frontend
+    ports:
+      - "8085:80"
     networks:
       - app-network
   auth_service:
