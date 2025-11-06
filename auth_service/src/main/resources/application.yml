@@ -1,5 +1,5 @@
 server:
-  port: 8082
+  port: 8080
 
 spring:
   application:
@@ -27,6 +27,10 @@ management:
       exposure:
         include: health,info
 
+jwt:
+  secret: 12345678901234567890123456789012
+  expiration: 86400000
+
 ---
 spring:
   config:
@@ -35,3 +39,5 @@ spring:
   h2:
     console:
       enabled: false
+
+
