@@ -2,6 +2,8 @@ server:
   port: 8080
 
 spring:
+  security:
+    enabled: false
   cloud:
     gateway:
       routes:
@@ -14,9 +16,10 @@ spring:
           predicates:
             - Path=/users/**
         - id: ai
-          uri: http://ai_service:8081
+          uri: http://ai_service:8080
           predicates:
-            - Path=/ai/**
+            - Path=/chat/**
+
       globalcors:
         add-to-simple-url-handler-mapping: true
         corsConfigurations:
@@ -24,7 +27,6 @@ spring:
             allowedOrigins:
               - "http://localhost:4200"
               - "http://localhost:8085"
-              - "https://forecast-app-dev-bjhxh3fjceeud7cv.brazilsouth-01.azurewebsites.net"
             allowedMethods:
               - GET
               - POST
@@ -38,3 +40,12 @@ logging:
   level:
     org.springframework.cloud.gateway: DEBUG
     reactor.netty: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway
+  endpoint:
+    gateway:
+      enabled: true
