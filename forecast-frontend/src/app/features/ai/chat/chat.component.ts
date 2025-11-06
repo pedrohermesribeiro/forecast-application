@@ -115,15 +115,18 @@ private apiUrl = 'http://localhost:8081/ai/chat';
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ "pergunta": this.newMessage})
-        }).then(respo => {
-          console.log("Parsed:", respo);
-          //const explicacao = respo.json();
-          if (!respo.ok) throw new Error("Erro ao criar jogo");
-          return respo.json();
-        }).then(data =>{
-          this.message.push({ sender: 'bot', text: data.explicacao });
-          console.log("Data: ", data.explicacao)
+        }).then(async respo => {
+          //console.log("Parsed:", await respo.json());
+          if (respo === null) throw new Error("Erro ao criar jogo");
+          const explicacao = await respo.json();
+          this.message.push({ sender: 'bot', text: explicacao.explicacao });
+          
+          //return respo.json();
         })
+        /*.then(data =>{
+          //this.message.push({ sender: 'bot', text: data.explicacao });
+          console.log("Data: ", data.explicacao)
+        })*/
       } catch (error) {
         console.error('Erro ao cadastrar:', error);
         alert('Falha ao cadastrar. Tente novamente.');
