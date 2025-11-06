@@ -1,11 +1,5 @@
-FROM maven:3.9.6-eclipse-temurin-21 AS build
+FROM mcr.microsoft.com/openjdk/jdk:21-ubuntu AS build
 WORKDIR /app
-COPY user_service/pom.xml .
-COPY user_service/src ./src
-RUN mvn clean package -DskipTests -f pom.xml
-
-FROM eclipse-temurin:21-jdk
-WORKDIR /app
-COPY --from=build /app/user_service/target/user_service-0.0.1-SNAPSHOT.jar app.jar
-EXPOSE 8083
-ENTRYPOINT ["java", "-jar", "app.jar"]
+COPY target/user_service-0.0.1-SNAPSHOT.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar", "--server.port=8080"]
