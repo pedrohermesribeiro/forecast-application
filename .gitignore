@@ -41,3 +41,10 @@ forecast-frontend/.angular/
 
 # Node modules
 forecast-frontend/node_modules/
+
+# JVM crash logs
+hs_err_pid*.log
+replay_pid*.log
+
+# Caso tenha sobrado
+curl.exe
