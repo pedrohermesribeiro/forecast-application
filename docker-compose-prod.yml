@@ -5,23 +5,18 @@ services:
     image: pedrohermes/forecast-application-frontend:latest
     ports:
       - "8085:80"
-    restart: always
 
   api_gateway:
     image: pedrohermes/forecast-application-api_gateway:latest
     ports:
       - "8080:8080"
-    restart: always
 
   auth_service:
     image: pedrohermes/forecast-application-auth_service:latest
     environment:
       SPRING_PROFILES_ACTIVE: prod
-      JWT_SECRET: ${JWT_SECRET}
-      JWT_EXPIRATION: ${JWT_EXPIRATION}
     ports:
       - "8082:8080"
-    restart: always
 
   user_service:
     image: pedrohermes/forecast-application-user_service:latest
@@ -29,11 +24,16 @@ services:
       SPRING_PROFILES_ACTIVE: prod
     ports:
       - "8083:8080"
-    restart: always
 
   ai_service:
     image: pedrohermes/forecast-application-ai_service:latest
     ports:
+      - "8081:8080"
+    environment:
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      GEMINI_API_URL: ${GEMINI_API_URL}
+
+
       - "8081:8080"
     environment:
       GEMINI_API_KEY: ${GEMINI_API_KEY}
