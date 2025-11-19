@@ -24,13 +24,12 @@ jobs:
       - name: Test Railway Auth
         run: railway whoami || echo "Autenticando via token..."
 
-      # MULTI-CONTAINER DOCKER-COMPOSE DEPLOY
       - name: Deploy via docker-compose
         run: |
           railway up \
-            --project ${{ secrets.RAILWAY_PROJECT_ID }} \
-            --service ${{ secrets.RAILWAY_SERVICE_ID }} \
-            -c docker-compose-prod.yml
+            -c docker-compose-prod.yml \
+            --service ${{ secrets.RAILWAY_SERVICE_ID }}
+
 
 
 
