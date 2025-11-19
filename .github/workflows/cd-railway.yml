@@ -27,9 +27,10 @@ jobs:
       # MULTI-CONTAINER DOCKER-COMPOSE DEPLOY
       - name: Deploy via docker-compose
         run: railway up \
-  --project 20afa6ef-bd8e-4060-a7a8-3e0d5188078b \
+  --project ${{ secrets.RAILWAY_PROJECT_ID }} \
   --service ${{ secrets.RAILWAY_SERVICE_ID }} \
   -c docker-compose-prod.yml
+
 
 
 
