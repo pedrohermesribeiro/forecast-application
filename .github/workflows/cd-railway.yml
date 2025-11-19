@@ -1,0 +1,25 @@
+name: CD - Deploy Railway
+
+on:
+  workflow_run:
+    workflows: ["CI - Build & Push Docker Images"]
+    types: [completed]
+
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Instalar Railway CLI
+        run: npm i -g @railway/cli
+
+      - name: Login Railway
+        run: railway login --token ${{ secrets.RAILWAY_TOKEN }}
+
+      - name: Deploy docker-compose
+        run: railway up --service ${{ secrets.RAILWAY_SERVICE_ID }} -c docker-compose-prod.yml
