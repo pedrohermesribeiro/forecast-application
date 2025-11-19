@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
 @Configuration
 public class SecurityConfig {
@@ -34,5 +35,30 @@ public class SecurityConfig {
             .roles("USER")
             .build();
         return new InMemoryUserDetailsManager(user);
+    }
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(csrf -> csrf.disable()) // desabilita CSRF (necessário para chamadas Angular sem sessão)
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/ai/**").permitAll() // libera seus endpoints
+                .anyRequest().permitAll()              // libera todo o resto também
+            );
+        return http.build();
+    }
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(csrf -> csrf.disable()) // desabilita CSRF para permitir chamadas do Angular
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/ai/**").permitAll() // libera seu endpoint de chat
+                .anyRequest().permitAll()              // libera todo o resto também (pode ajustar depois)
+            )
+            .formLogin(form -> form.disable())         // desliga o /login HTML
+            .httpBasic(basic -> basic.disable());      // desliga autenticação básica
+
+        return http.build();
     }
 }

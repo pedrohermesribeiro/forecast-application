@@ -1,28 +1,35 @@
 server:
-  port: 8080  # O Gateway central ficará nessa porta
+  port: 8080
 
 spring:
   cloud:
     gateway:
       routes:
         - id: auth
-          uri: http://auth_service:8082
+          uri: http://auth_service:8080
           predicates:
             - Path=/auth/**
+          filters:
+            - StripPrefix=1
+
         - id: users
           uri: http://user_service:8083
           predicates:
             - Path=/users/**
+          filters:
+            - StripPrefix=1
+
         - id: ai
-          uri: http://ai_service:8081
+          uri: http://ai_service:8080
           predicates:
             - Path=/ai/**
+       
       globalcors:
         add-to-simple-url-handler-mapping: true
         corsConfigurations:
           '[/**]':
             allowedOrigins:
-              - "http://localhost:4200/chat"
+              - "http://localhost:4200"
               - "https://forecast-app-dev-bjhxh3fjceeud7cv.brazilsouth-01.azurewebsites.net"
             allowedMethods:
               - GET
@@ -32,4 +39,7 @@ spring:
               - OPTIONS
             allowedHeaders: "*"
             allowCredentials: true
-
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty: DEBUG
