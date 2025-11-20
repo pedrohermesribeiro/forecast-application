@@ -7,14 +7,11 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    container: ghcr.io/railwayapp/cli:latest  # CLI já instalado
     env:
-      RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}  # Use o novo token de API aqui
+      RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Instalar Railway CLI
-        run: npm i -g @railway/cli
-      - name: Linkar o Projeto
-        run: railway link --project 20afa6ef-bd8e-4060-a7a8-3e0d5188078b
       - name: Deploy to Railway
         run: railway up --service 89a19eee-d2f8-4a5e-a0f1-d7244d08b57b --environment production --ci --verbose
