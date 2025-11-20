@@ -27,7 +27,7 @@ jobs:
       - name: Deploy to Railway
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        run: railway up --environment production --detach --verbose
+        run: railway up --service accomplished-expression --detach --verbose
 
 
 
