@@ -7,11 +7,14 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    container: ghcr.io/railwayapp/cli:latest  # CLI já instalado
     env:
-      RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+      RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}  # Project Token
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Deploy to Railway
-        run: railway up --service 89a19eee-d2f8-4a5e-a0f1-d7244d08b57b --environment production --ci --verbose
+      - name: Trigger Deploy via API
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.RAILWAY_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            https://backboard.railway.app/project/20afa6ef-bd8e-4060-a7a8-3e0d5188078b/environment/8b6c01b2-e8bc-41d2-8279-24519d075390/service/89a19eee-d2f8-4a5e-a0f1-d7244d08b57b/deploys
