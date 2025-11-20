@@ -1,33 +1,25 @@
 name: CD - Deploy Railway
-
 on:
   workflow_run:
     workflows: ["CI - Build & Push Docker Images"]
     types: [completed]
-
   workflow_dispatch:
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     env:
       RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
       - name: Instalar Railway CLI
         run: npm i -g @railway/cli
-
-      - name: Test Railway Auth
-        run: railway whoami || echo "Autenticando via token..."
-
+      - name: Autenticar no Railway
+        run: railway login --browserless
+      - name: Linkar o Projeto
+        run: railway link --project 20afa6ef-bd8e-4060-a7a8-3e0d5188078b
       - name: Deploy to Railway
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        run: railway up --service accomplished-expression --detach --verbose
+        run: railway up --service 20afa6ef-bd8e-4060-a7a8-3e0d5188078b --environment production --ci --verbose
 
 
 
