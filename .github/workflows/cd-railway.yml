@@ -19,7 +19,7 @@ jobs:
       - name: Linkar o Projeto
         run: railway link --project 20afa6ef-bd8e-4060-a7a8-3e0d5188078b
       - name: Deploy to Railway
-        run: railway up --service 20afa6ef-bd8e-4060-a7a8-3e0d5188078b --environment production --ci --verbose
+        run: railway up --service 89a19eee-d2f8-4a5e-a0f1-d7244d08b57b --environment production --ci --verbose
 
 
 
