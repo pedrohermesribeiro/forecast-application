@@ -24,11 +24,10 @@ jobs:
       - name: Test Railway Auth
         run: railway whoami || echo "Autenticando via token..."
 
-      - name: Deploy via docker-compose
-        run: |
-          railway up \
-            -c docker-compose-prod.yml \
-            --service ${{ secrets.RAILWAY_SERVICE_ID }}
+      - name: Deploy to Railway
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: railway up --service <nome-do-seu-servico> --environment production --detach --verbose
 
 
 
