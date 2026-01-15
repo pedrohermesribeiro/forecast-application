@@ -1,1 +1,37 @@
-<p>user-form works!</p>
+<div class="container">
+
+  <h2>{{ editing ? 'Editar Usuário' : 'Novo Usuário' }}</h2>
+
+  <form (ngSubmit)="salvar()">
+
+    <label>Username</label>
+    <input type="text" [(ngModel)]="user.username" name="username" required>
+
+    <label>Email</label>
+    <input type="email" [(ngModel)]="user.email" name="email" required>
+
+    <label>Role</label>
+<select 
+      [(ngModel)]="selectedRoleId" 
+      name="selectedRole" 
+      required>
+      <option [value]="null">Selecione uma role</option>
+      <option *ngFor="let role of availableRoles" [value]="role.id">
+        {{ role.name }}
+      </option>
+    </select>
+
+    <label *ngIf="!editing">Senha</label>
+    <input
+      *ngIf="!editing"
+      type="password"
+      [(ngModel)]="user.password"
+      name="password"
+      required
+    >
+    <button type="submit" class="btn-save">Salvar</button>
+    <button type="button" class="btn-cancel" (click)="voltar()">Cancelar</button>
+
+  </form>
+</div>
+

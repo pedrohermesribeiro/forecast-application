@@ -1,0 +1,17 @@
+<div class="container">
+  <h2>{{ editing ? 'Editar Role' : 'Nova Role' }}</h2>
+  <form (ngSubmit)="salvar()">
+    <label>Nome da Role</label>
+    <input
+      type="text"
+      [(ngModel)]="role.name"
+      name="name"
+      placeholder="Ex: ADMIN ou ROLE_ADMIN"
+      required
+    >
+    <small>Será salvo como ROLE_XXX automaticamente</small>
+
+    <button type="submit" class="btn-save">Salvar</button>
+    <button type="button" class="btn-cancel" (click)="voltar()">Cancelar</button>
+  </form>
+</div>

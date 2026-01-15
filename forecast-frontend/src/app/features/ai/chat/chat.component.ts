@@ -38,7 +38,7 @@ export class ChatComponent {
 
   //private apiUrl = `/ai/chat`;
 
-private apiUrl = 'http://localhost:8081/ai/chat';
+private apiUrl = 'http://localhost:8080/ai/chat';
   //private apiUrl = 'http://localhost:8081/ai/chat';
 
   message: { sender: string, text: string }[] = [];
@@ -50,7 +50,7 @@ private apiUrl = 'http://localhost:8081/ai/chat';
  /* this.http.post(`${environment.apiUrl}/ai/chat`, body)
   .subscribe(...);*/
 
-  /*sendMessage(event: Event) {
+  /*oldendMessage(event: Event) {
     event.preventDefault();
 
     if (!this.newMessage.trim()) return;
@@ -107,7 +107,7 @@ private apiUrl = 'http://localhost:8081/ai/chat';
  parsed: string = '';
 
 
-  async sendMessage() {
+  async sendMessage(event?: Event) {
 
       try {
         this.message.push({ sender: 'user', text: this.newMessage });

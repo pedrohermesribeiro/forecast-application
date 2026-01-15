@@ -1,1 +1,43 @@
-<p>user-list works!</p>
+<div class="container">
+  <h2>Usuários</h2>
+
+  <button class="btn btn-primary" (click)="novoUsuario()">➕ Novo Usuário</button>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.id }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.email }}</td>
+        <td>
+          <ng-container>
+            <span class="role-tag" *ngFor="let role of user.roles; let i = index">
+              {{ user.roles[i].name }}
+              <!-- Opcional: separador entre tags -->
+              <!-- <ng-container *ngIf="i < user.role.length">, </ng-container> -->
+            </span>
+          </ng-container>
+
+          <!-- <ng-template #semRoles>
+            <span class="no-role">Nenhuma</span>
+          </ng-template> -->
+        </td>
+        <td>
+          <button class="btn-edit" (click)="editarUsuario(user.id)">Editar</button>
+          <button class="btn-delete" (click)="deletarUsuario(user.id)">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
