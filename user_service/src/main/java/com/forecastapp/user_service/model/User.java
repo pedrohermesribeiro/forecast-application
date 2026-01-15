@@ -40,8 +40,14 @@ public class User {
     // Construtores
     public User() {}
 
-    public User(String username, String email, String password) {
+    public User(String username, String email, String password, Role role ) {
         this.username = username;
+        this.email = email;
+        this.password = password;
+        this.roles.add(role);
+    }
+
+        public User(String email, String password) {
         this.email = email;
         this.password = password;
     }

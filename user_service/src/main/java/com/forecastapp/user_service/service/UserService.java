@@ -19,6 +19,7 @@ public class UserService {
 
     // Criar usuário
     public User createUser(User user) {
+        System.out.println("📩 PARÂMETRO RECEBIDO PELO USER_SERVICE-1 - 5: " + user.getRoles());
         return userRepository.save(user);
     }
 
@@ -47,5 +48,14 @@ public class UserService {
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
+
+    public Optional<User> getByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    public Optional<User> getByEmail(String email) {
+    return userRepository.findByEmail(email);
+}
+
 }
 
