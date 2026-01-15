@@ -25,6 +25,7 @@ public class ChatbotController {
 
     @PostMapping("/chat")
     public ChatbotResponseDTO chat(@RequestBody Map<String, String> request) {
+        System.out.println("🔥 RECEBIDO NO AI_SERVICE: " + request.get("pergunta"));
         String pergunta = request.get("pergunta");
         System.err.println("Pergunta: " + pergunta);
          ChatbotResponseDTO respDTO = new ChatbotResponseDTO();

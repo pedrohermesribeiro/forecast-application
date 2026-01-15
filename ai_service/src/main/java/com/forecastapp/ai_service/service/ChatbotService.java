@@ -31,8 +31,8 @@ public class ChatbotService {
     @Value("${GEMINI_API_KEY}")
     private String geminiApiKey;
 
-    @Value("${GEMINI_API_URL}")
-    private String geminiApiUrl;
+   // @Value("${GEMINI_API_URL}")
+    private String geminiApiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent";
 
     public ChatbotService(AiLogRepository aiLogRepository, RestTemplate restTemplate) {
         this.aiLogRepository = aiLogRepository;

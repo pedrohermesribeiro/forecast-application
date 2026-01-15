@@ -20,17 +20,17 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- WebFlux (se precisar de chamadas reativas entre serviços) -->
+        <!-- WebFlux (se precisar de chamadas reativas entre serviços)
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
 
-        <!-- Segurança -->
+        Segurança
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
+        </dependency> -->
 
         <!-- JWT para autenticação com Auth Service -->
         <dependency>
