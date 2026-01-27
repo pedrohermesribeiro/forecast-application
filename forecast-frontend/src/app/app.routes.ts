@@ -14,6 +14,7 @@ export const routes: Routes = [
   { path: 'users/new', component: UserForm },
   { path: 'users/edit/:id', component: UserForm },
   { path: 'users/:id', component: UserForm },
+  { path: 'users/register', component: UserForm },
   { path: 'roles', component: RoleList},
   { path: 'roles/new', component: RoleForm},
   { path: 'roles/:id', component: RoleForm},

@@ -1,8 +1,9 @@
-import { UserService, User, Role } from './../../../service/user.service';
+import { UserService, User, Role } from '../../../service/user.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+//import { filter } from 'rxjs';
 
 
 @Component({
@@ -18,10 +19,9 @@ export class UserForm implements OnInit {
     username: '', email: '', roles: [],
   };
 
-  roleAux: String = '';
-
-  roleAu: Role[] = []
-
+  roleUser = history.state?.role;
+  availableRolesUser: Role[] = [];
+  roleFromState: any;
   selectedRoleId: number | null = null; // para o select
 
   editing = false;
@@ -32,14 +32,18 @@ export class UserForm implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private userService: UserService
-  ) {}
+  ) {
+
+  }
 
   ngOnInit(): void {
   this.userService.getAllRoles().subscribe(roles => {
       this.availableRoles = roles;
-      console.log("Relação de roles: ", roles);
+          this.roleFromState = this.availableRoles.find(function(role) {
+          return role?.name === 'USER';
     });
-
+      this.roleUser.id = this.roleFromState.id;
+    });
     this.userId = Number(this.route.snapshot.paramMap.get('id'));
     if (this.userId) {
       this.editing = true;
@@ -49,6 +53,7 @@ export class UserForm implements OnInit {
     }
   }
 
+  
   // isRoleSelected(role: Role): boolean {
   //   return this.user.roles.some(r => r.id === role.id || r.name === role.name);
   // }
@@ -64,10 +69,7 @@ export class UserForm implements OnInit {
   // }
   // Quando o usuário seleciona uma role no <select>
   addRole() {
-    // if (!this.selectedRoleId) return;
-    console.log("Objeto role selecionado id: ", this.selectedRoleId);
     const role = this.availableRoles.find(r => Number(r.id) === Number(this.selectedRoleId));
-    console.log("Objeto role selecionado: ", role);
     if (!role) {
     console.error("Role não encontrada no array availableRoles");
     return;
@@ -76,26 +78,35 @@ export class UserForm implements OnInit {
   const alreadyExists = this.user.roles.some(existing => Number(existing.id) === Number(role.id));
 
   if (!alreadyExists) {
-    this.user.roles.push(role);  // ← aqui também .roles
+    console.log("Role adicionada com sucesso. Roles atuais:", this.roleUser);
+
+    if(this.roleUser.name === 'USER'){
+      this.user.roles.push(this.roleUser);  // ← aqui também .roles
+    }else{
+      this.user.roles.push(role);  // ← aqui também .roles
+    }
+    
     console.log("Role adicionada com sucesso. Roles atuais:", this.user.roles);
   } else {
     console.log("Role já existe no usuário");
   }
-    console.log("Objeto role selecionado: ", this.user.roles);
-    // Limpa a seleção após adicionar (opcional)
+
     this.selectedRoleId = null;
   }
 
 salvar(): void {
-    // const role = this.availableRoles.find(r => r.name === this.roleAux);
-    // this.user.role.push(role)
     this.addRole();
     const request = this.editing && this.userId
       ? this.userService.update(this.userId, this.user)
       : this.userService.create(this.user);
 
     request.subscribe(() => {
-      this.router.navigate(['/users']);
+      if(this.roleUser?.name === 'USER'){
+        this.router.navigate(['/login']);
+      }else{
+        this.router.navigate(['/users']);
+      }
+      
     });
   }
 

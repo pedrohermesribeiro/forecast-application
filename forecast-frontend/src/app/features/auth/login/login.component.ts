@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
+import { Role, User } from '../../../service/auth-service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { catchError, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { RoleData } from '../model/roleData';
+//import { RoleData } from '../model/roleData';
 
 interface LoginRequest {
   email: string;
@@ -13,6 +16,10 @@ interface LoginRequest {
 interface LoginResponse {
   token: string;
 }
+
+role: RoleData;
+const roleUser = {id: null, name: 'USER'}
+
 
 @Component({
   selector: 'app-login',
@@ -34,6 +41,13 @@ export class LoginComponent {
     private http: HttpClient,
     private router: Router
   ) {}
+
+  cadastrar(){
+    this.router.navigate(['/users/new'], {
+    state: {role: roleUser},  // ← passa como query param (ex.: /users/new?role=admin)
+  });
+
+  }
 
   onLogin() {
     this.loading = true;
@@ -59,4 +73,9 @@ export class LoginComponent {
       })
     ).subscribe(() => this.loading = false);
   }
+
+
+
+
+
 }

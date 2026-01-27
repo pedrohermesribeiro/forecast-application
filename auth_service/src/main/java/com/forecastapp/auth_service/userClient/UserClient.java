@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 //import org.springframework.web.util.UriComponentsBuilder;
 //import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.forecastapp.auth_service.model.UserDTO;
 //import com.forecastapp.auth_service.security.JwtTokenUtil;
@@ -85,7 +86,7 @@ public class UserClient {
 
         //private Object baseUrl;
 
-        public ResponseEntity<UserDTO> findByEmail(String email) {
+        public ResponseEntity<UserDTO> findByEmail01(String email) {
         Long id = 1L;
         
             // try (Socket socket = new Socket("localhost", 8080)) {
@@ -106,6 +107,21 @@ public class UserClient {
         System.out.println("➡️ Chamando URL: " + baseUrl + " " + entity);
         return entity;
     }
+
+
+
+
+    public ResponseEntity<UserDTO> findByEmail(String email) {
+        String baseUrl = "http://user-service:8083/users/search";  // Use service name and internal port
+
+        String url = UriComponentsBuilder.fromHttpUrl(baseUrl)
+                .queryParam("email", email)  // Automatically encodes '@' to '%40'
+                .toUriString();
+        System.out.println("➡️ Chamando URL: " + url);
+        ResponseEntity<UserDTO> entity = new RestTemplate().getForEntity(url, UserDTO.class);
+    return ResponseEntity.ok(entity.getBody());
+}
+
 
 
 

@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User, UserService } from '../../../service/user.service';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+
+const roleUser = {id: null, name: 'ADMIN'}
 
 @Component({
   selector: 'app-user-list',
@@ -16,6 +19,7 @@ export class UserList implements OnInit {
 
   constructor(
     private userService: UserService,
+    private http: HttpClient,
     private router: Router
   ) {}
 
@@ -29,20 +33,13 @@ export class UserList implements OnInit {
     });
   }
 
-  // Novo método para formatar as roles
-  // getRoleNames(user: User): string {
-  //   if (!user.role || user.role.length === 0) {
-  //     return 'Nenhuma';
-  //   }
-    
-  //   return user.role
-      // .map(rol => rol.name.replace(/^/, ''))  // remove o prefixo ROLE_ se quiser
-      // .join(', ');
- // }
-
   novoUsuario(): void {
-    this.router.navigate(['/users/new']);
-  }
+    this.router.navigate(['/users/new'], {
+    state: {role: roleUser},  // ← passa como query param (ex.: /users/new?role=admin)
+
+  });
+
+}
 
   editarUsuario(id: number | undefined): void {
     if (id) this.router.navigate([`/users/edit/${id}`]);
