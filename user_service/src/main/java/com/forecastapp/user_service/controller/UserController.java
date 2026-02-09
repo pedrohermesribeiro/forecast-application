@@ -4,6 +4,7 @@ import com.forecastapp.user_service.model.User;
 import com.forecastapp.user_service.model.UserDTO;
 //import com.forecastapp.user_service.model.UserDTO;
 import com.forecastapp.user_service.service.UserService;
+import com.forecastapp.user_service.util.HashUtil;
 
 //import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin(origins = "http://localhost:8085")
 public class UserController {
 
     private final UserService userService;
@@ -26,6 +28,8 @@ public class UserController {
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user) {
         System.out.println("📩 PARÂMETRO CRIAÇÃO DE USUÁRIO: " + user.getRoles());
+        String plainPassword = user.getPassword();
+        user.setPassword(HashUtil.sha256(plainPassword));
         User createdUser = userService.createUser(user);
         return ResponseEntity.ok(createdUser);
     }
