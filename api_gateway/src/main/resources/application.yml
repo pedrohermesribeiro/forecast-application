@@ -61,3 +61,6 @@ management:
           - health
           - info
           - gateway
+
+jwt:
+  secret: MeuSegredoSuperSecreto123
