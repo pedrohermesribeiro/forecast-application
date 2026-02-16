@@ -1,9 +1,9 @@
 .chat-container {
   display: flex;
   flex-direction: column;
-  height: 90vh;
+  height: 97vh;
   width: 100%;
-  max-width: 800px;
+  max-width: 1300px;
   margin: auto;
   border: 1px solid #ddd;
   border-radius: 12px;
@@ -80,6 +80,7 @@
   padding: 0.8rem;
   border-top: 1px solid #ddd;
   background: #f1f1f1;
+
 }
 
 .chat-input input {
@@ -89,6 +90,7 @@
   border-radius: 8px;
   outline: none;
   font-size: 1rem;
+
 }
 
 .chat-input button {
@@ -105,4 +107,32 @@
 
 .chat-input button:hover {
   background: #0066cc;
+}
+
+.message-item {
+  margin: 12px 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  max-width: 93%;
+}
+
+.user-message {
+  background: #e3f2fd;
+  align-self: flex-start;
+  margin-right: auto;
+}
+
+.bot-message {
+  background: #f1f8e9;
+  align-self: flex-start;
+  margin-left: auto;
+  margin-right: 20px; /* ou ajuste para ficar mais à esquerda */
+}
+
+.message-text {
+  white-space: pre-wrap;          /* Preserva quebras de linha do texto */
+  word-wrap: break-word;          /* Quebra palavras longas */
+  text-align: justify;            /* Justificado */
+  line-height: 1.5;               /* Mais espaçamento entre linhas */
+  margin-top: 6px;
 }

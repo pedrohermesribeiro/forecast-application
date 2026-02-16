@@ -1,5 +1,6 @@
 package com.forecastapp.ai_service.service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -42,13 +43,40 @@ public class ChatbotService {
     public ChatbotResponseDTO processarPergunta(String pergunta) {
         log.info("📩 Pergunta recebida para processamento: {}", pergunta);
 
-        String promptCompleto = "Análise e previsão de vendas. Responda com texto e dados para um gráfico.\n" +
-                                "Instruções:\n" +
-                                "1. A resposta deve ser um JSON válido.\n" +
-                                "2. Inclua o campo 'explicacao' com a análise em texto.\n" +
-                                "3. Inclua o campo 'previsao' com um array de 3 objetos, cada um com 'mes' e 'vendas' para uma previsão de 3 meses. Assegure-se que o nome da chave dos meses esteja em português, como 'Out', 'Nov', 'Dez', etc. e as vendas sejam valores numéricos.\n" +
-                                "4. Use a pergunta do usuário como base: \"" + pergunta + "\".\n" +
-                                "5. Não inclua nenhum outro texto ou formatação fora do JSON.";
+String hoje = java.time.LocalDate.now()
+    .plusMonths(1)
+    .format(java.time.format.DateTimeFormatter.ofPattern("MMM/yyyy", java.util.Locale.forLanguageTag("pt-BR")))
+    .replace(".", ""); // → "Mar/2026" ou "Abr/2026"
+
+        String promptCompleto = """
+            Você é um analista de vendas. Responda APENAS com JSON válido, sem texto fora do JSON, sem ```json
+
+            Regras obrigatórias:
+            - Campo "explicacao": string com análise clara em português (mínimo 80 palavras e no máximo 100 palavras)
+            - Campo "previsao": array EXATAMENTE com 6 itens (nunca 3, 4, 5 ou 7)
+            - Cada item deve ter:
+            - "mes": string com abreviação de 3 letras em português (Jan, Fev, Mar, Abr, Mai, Jun, Jul, Ago, Set, Out, Nov, Dez)
+            - "vendas": número inteiro positivo (sem aspas)
+            - A previsão começa no mês seguinte ao atual e vai exatamente 6 meses à frente.
+            - Hoje é %s. Comece a previsão em %s.
+            - Valores de vendas devem ser plausíveis e variar de forma realista.
+            - No final da explicação colocar as referências da explicação e da previsão.
+
+            Pergunta do usuário: %s
+
+            Resposta esperada (exemplo de formato, não copie os valores):
+            {
+            "explicacao": "Texto da análise aqui...",
+            "previsao": [
+                {"mes": "Mar", "vendas": 52000},
+                {"mes": "Abr", "vendas": 55000},
+                {"mes": "Mai", "vendas": 48000},
+                {"mes": "Jun", "vendas": 61000},
+                {"mes": "Jul", "vendas": 59000},
+                {"mes": "Ago", "vendas": 64000}
+            ]
+            }
+            """.formatted(hoje.replaceFirst("(?<=/)[0-9]{4}$", ""), hoje, pergunta);
 
         Map<String, Object> requestBody = new HashMap<>();
         Map<String, Object> content = new HashMap<>();
@@ -85,16 +113,35 @@ public class ChatbotService {
                                 String limpo = (String) parts.get(0).get("text");
                                 limpo = limpo.replace("```json", "").replace("```", "").trim();
                                 try {
+                                    limpo = (String) parts.get(0).get("text");
+                                    limpo = limpo.replace("```json", "").replace("```", "").trim();
+                                    
                                     ObjectMapper mapper = new ObjectMapper();
                                     JsonNode root = mapper.readTree(limpo);
 
-                                    String explicacao = root.get("explicacao").asText();
-                                    System.err.println("explicação " + explicacao);
-                            	    responseDTO = (ChatbotResponseDTO) new ChatbotResponseDTO(explicacao,parts.getLast());
-                                    respostaDaIA = (String) parts.get(0).get("text");
+                                    String explicacao = root.path("explicacao").asText(null); // mais seguro que .asText()
+
+                                    // Parse do array "previsao" corretamente
+                                    JsonNode previsaoNode = root.path("previsao");
+                                    List<ChatbotResponseDTO.PrevisaoDTO> previsaoList = new ArrayList<>();
+
+                                    if (previsaoNode.isArray()) {
+                                        for (JsonNode node : previsaoNode) {
+                                            ChatbotResponseDTO.PrevisaoDTO dto = new ChatbotResponseDTO.PrevisaoDTO();
+                                            dto.setMes(node.path("mes").asText(null));
+                                            dto.setVendas(node.path("vendas").asInt(0)); // default 0 se falhar
+                                            previsaoList.add(dto);
+                                        }
+                                    }
+
+                                    responseDTO = new ChatbotResponseDTO(explicacao, previsaoList);
+
+                                    System.err.println("Previsão parseada: " + previsaoList.size() + " itens");
+
                                 } catch (Exception e) {
-                                    // fallback: se não conseguir parsear, devolve só o texto limpo
-                                     responseDTO.setExplicacao(limpo);
+                                    log.error("Erro ao parsear JSON da Gemini: {}", e.getMessage(), e);
+                                    responseDTO = new ChatbotResponseDTO();
+                                    responseDTO.setExplicacao(limpo != null ? limpo : "Erro ao processar resposta da IA.");
                                 }
                             }
                         }
