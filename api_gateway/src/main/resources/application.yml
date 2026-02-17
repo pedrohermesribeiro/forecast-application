@@ -1,9 +1,16 @@
 server:
   port: 8080
 
+
 spring:
-  application:
-    name: api-gateway
+  config:
+    activate:
+      on-profile: prod
+
+
+# spring:
+#   application:
+#     name: api-gateway
 
   cloud:
     gateway:

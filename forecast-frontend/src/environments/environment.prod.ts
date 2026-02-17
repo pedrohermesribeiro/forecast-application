@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost:8080'
+  apiUrl: 'https://forecast-api-gateway.onrender.com'  // ← URL do gateway (atualize após deploy)
 };
 

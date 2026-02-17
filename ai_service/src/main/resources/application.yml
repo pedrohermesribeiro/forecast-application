@@ -2,30 +2,39 @@ server:
   port: 8081
 
 spring:
-  application:
-    name: ai-service
-  datasource:
-    url: jdbc:h2:mem:forecast_ai_db;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
+  config:
+    activate:
+      on-profile: prod
+
+# spring:
+#   application:
+#     name: ai-service
+#   datasource:
+#     url: jdbc:h2:mem:forecast_ai_db;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+#     driver-class-name: org.h2.Driver
+#     username: sa
+#     password:
+#   jpa:
+#     hibernate:
+#       ddl-auto: update
+#     show-sql: true
+#     properties:
+#       hibernate:
+#         format_sql: true
   h2:
     console:
       enabled: true
       path: /h2-console
 
 # usa variáveis de ambiente com valor padrão para não quebrar em dev/teste
-gemini:
+openai:
   api:
-    key: ${GEMINI_API_KEY:dummy-key-for-dev}
-    url: ${GEMINI_API_URL:https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent}
+    key: ${OPENAI_API_KEY:default-dummy-key-for-local}
+
+# gemini:
+#   api:
+#     key: ${GEMINI_API_KEY:dummy-key-for-dev}
+#     url: ${GEMINI_API_URL:https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent}
 
 management:
   endpoints:

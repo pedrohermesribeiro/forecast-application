@@ -35,7 +35,8 @@ export class ChatComponent {
   previsao: { mes: string; vendas: number }[] = [];
   showPrediction: boolean = false;
 
-private apiUrl = 'http://localhost:8080/ai/chat';
+//private apiUrl = 'http://localhost:8080/ai/chat';
+private apiUrl = `${environment.apiUrl}/ai/chat`;  // ou /auth/login
 
   message: { sender: string, text: string }[] = [];
   messag: { sender: string, text: string }[] = [];

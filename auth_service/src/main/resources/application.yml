@@ -1,21 +1,26 @@
 server:
   port: 8082
 
+
 spring:
-  application:
-    name: auth-service
-  datasource:
-    url: jdbc:h2:mem:forecast_auth_db;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
+  config:
+    activate:
+      on-profile: prod
+# spring:
+#   application:
+#     name: auth-service
+#   datasource:
+#     url: jdbc:h2:mem:forecast_auth_db;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+#     driver-class-name: org.h2.Driver
+#     username: sa
+#     password:
+#   jpa:
+#     hibernate:
+#       ddl-auto: update
+#     show-sql: true
+#     properties:
+#       hibernate:
+#         format_sql: true
   h2:
     console:
       enabled: true

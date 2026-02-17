@@ -90,6 +90,12 @@
             <version>1.16.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.openai</groupId>
+            <artifactId>openai-java</artifactId>
+            <version>2.12.1</version>   <!-- ou a versão mais atual -->
+        </dependency>
+
 
     </dependencies>
 

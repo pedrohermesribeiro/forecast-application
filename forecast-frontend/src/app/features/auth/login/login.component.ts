@@ -8,6 +8,7 @@ import { of } from 'rxjs';
 import { RoleData } from '../model/roleData';
 import * as CryptoJS from 'crypto-js';
 import { jwtDecode } from 'jwt-decode';
+import { environment } from '../../../../environments/environment';
 //import { RoleData } from '../model/roleData';
 
 interface LoginRequest {
@@ -41,7 +42,8 @@ export class LoginComponent {
   errorMessage = '';
   respLogin: any = '';
 
-  private apiUrl = 'http://localhost:8080/auth/login';  // ajuste se gateway ou proxy
+  //private apiUrl = 'http://localhost:8080/auth/login';  // ajuste se gateway ou proxy
+  private apiUrl = `${environment.apiUrl}/auth/login`;  // ou /auth/login
 
   constructor(
     private http: HttpClient,

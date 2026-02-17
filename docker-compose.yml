@@ -32,10 +32,19 @@ services:
       - .env
     networks:
       - app-network
-    environment:
-      GEMINI_KEY: ${GEMINI_API_KEY}
-      GEMINI_API_URL: ${GEMINI_API_URL}
+    environment:                  # ← aqui sim, environment é válido
+          - OPENAI_API_KEY=${OPENAI_API_KEY}
+          - OPENAI_MODEL=gpt-4o-mini
+          - JAVA_OPTS=-Xmx512m
+    restart: unless-stopped
+    # environment:
+    #   GEMINI_KEY: ${GEMINI_API_KEY}
+    #   GEMINI_API_URL: ${GEMINI_API_URL}
 networks:
   app-network:
     driver: bridge
+# openai:
+#   api:
+#     key: ${OPENAI_API_KEY}
+
 
