@@ -1,57 +1,37 @@
 version: "3.9"
 
 services:
+  frontend:
+    image: pedrohermes/forecast-application-frontend:latest
+    ports:
+      - "8085:80"
 
   api-gateway:
     image: pedrohermes/forecast-application-api_gateway:latest
-    container_name: api-gateway
-    environment:
-      SPRING_PROFILES_ACTIVE: prod
     ports:
       - "8080:8080"
-    depends_on:
-      - auth-service
-      - user-service
-      - ai-service
-    networks:
-      - app-network
 
   auth-service:
     image: pedrohermes/forecast-application-auth_service:latest
-    container_name: auth-service
     environment:
       SPRING_PROFILES_ACTIVE: prod
-    networks:
-      - app-network
+    ports:
+      - "8082:8080"
 
   user-service:
     image: pedrohermes/forecast-application-user_service:latest
-    container_name: user-service
     environment:
       SPRING_PROFILES_ACTIVE: prod
-    networks:
-      - app-network
+    ports:
+      - "8083:8080"
 
   ai-service:
     image: pedrohermes/forecast-application-ai_service:latest
-    container_name: ai-service
-    environment:
-      SPRING_PROFILES_ACTIVE: prod
-      OPENAI_API_KEY: ${OPENAI_API_KEY}
-      OPENAI_MODEL: gpt-4o-mini
-    networks:
-      - app-network
-
-  frontend:
-    image: pedrohermes/forecast-application-frontend:latest
-    container_name: forecast-frontend
     ports:
-      - "8085:80"
-    depends_on:
-      - api-gateway
-    networks:
-      - app-network
+      - "8081:8080"
+    environment:                  # ← aqui sim, environment é válido
+          - OPENAI_API_KEY=${OPENAI_API_KEY}
+          - OPENAI_MODEL=gpt-4o-mini
+          - JAVA_OPTS=-Xmx512m
+    restart: unless-stopped
 
-networks:
-  app-network:
-    driver: bridge
