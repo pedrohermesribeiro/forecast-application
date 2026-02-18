@@ -5,13 +5,34 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.forecastapp</groupId>
-        <artifactId>forecast-application</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.4.2</version>
+        <relativePath/>
     </parent>
 
+    <groupId>com.forecastapp</groupId>
     <artifactId>ai_service</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
     <name>AI Service</name>
+
+
+    <!-- <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.4.2</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>com.forecastapp</groupId>
+    <artifactId>user_service</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>user_service</name> -->
+
+
+
+
+
 
     <dependencies>
         <!-- Web básico -->
