@@ -1,44 +1,33 @@
 server:
   port: ${PORT:8080}
 
-
 spring:
   config:
     activate:
       on-profile: prod
 
-
-# spring:
-#   application:
-#     name: api-gateway
-
   cloud:
     gateway:
       routes:
         - id: user-service
-          # uri: http://user-service:8083
-          uri: https://forecast-user-service.onrender.com
+          uri: ${USER_SERVICE_URL}
           predicates:
             - Path=/users/**
 
-        # Nova rota para roles (pode usar o mesmo serviço)
         - id: role-service
-          uri: https://forecast-user-service.onrender.com
-          # uri: http://user-service:8083   # mesmo container/porta
+          uri: ${USER_SERVICE_URL}
           predicates:
-            - Path=/roles/**              # ou /roles, /roles/{id}, etc.
+            - Path=/roles/**
           filters:
             - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
 
         - id: auth-service
-          uri: https://forecast-auth-service.onrender.com
-          # uri: http://auth-service:8082
+          uri: ${AUTH_SERVICE_URL}
           predicates:
             - Path=/auth/login
 
         - id: ai-service
-          uri: https://forecast-ai-service.onrender.com
-          # uri: http://ai-service:8081
+          uri: ${AI_SERVICE_URL}
           predicates:
             - Path=/ai/chat
 
@@ -47,8 +36,7 @@ spring:
         cors-configurations:
           '[/**]':
             allowed-origins:
-              - "http://localhost:4200"
-              - "http://localhost:8085"
+              - ${FRONTEND_URL}
             allowed-methods: [GET, POST, PUT, DELETE, OPTIONS]
             allowed-headers: ["*"]
             allow-credentials: true
@@ -58,20 +46,97 @@ spring:
 
 logging:
   level:
-    org.springframework.cloud.gateway: DEBUG
-    reactor.netty.http.client: DEBUG
+    org.springframework.cloud.gateway: INFO
+    reactor.netty.http.client: INFO
 
 management:
-  endpoint:
-    gateway:
-      enabled: true
   endpoints:
     web:
       exposure:
-        include:
-          - health
-          - info
-          - gateway
+        include: health,info,gateway
 
 jwt:
-  secret: MeuSegredoSuperSecreto123
+  secret: ${JWT_SECRET}
+
+
+
+
+
+
+# server:
+#   port: ${PORT:8080}
+
+
+# spring:
+#   config:
+#     activate:
+#       on-profile: prod
+
+
+# # spring:
+# #   application:
+# #     name: api-gateway
+
+#   cloud:
+#     gateway:
+#       routes:
+#         - id: user-service
+#           # uri: http://user-service:8083
+#           uri: https://forecast-user-service.onrender.com
+#           predicates:
+#             - Path=/users/**
+
+#         # Nova rota para roles (pode usar o mesmo serviço)
+#         - id: role-service
+#           uri: https://forecast-user-service.onrender.com
+#           # uri: http://user-service:8083   # mesmo container/porta
+#           predicates:
+#             - Path=/roles/**              # ou /roles, /roles/{id}, etc.
+#           filters:
+#             - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
+
+#         - id: auth-service
+#           uri: https://forecast-auth-service.onrender.com
+#           # uri: http://auth-service:8082
+#           predicates:
+#             - Path=/auth/login
+
+#         - id: ai-service
+#           uri: https://forecast-ai-service.onrender.com
+#           # uri: http://ai-service:8081
+#           predicates:
+#             - Path=/ai/chat
+
+#       globalcors:
+#         add-to-simple-url-handler-mapping: true
+#         cors-configurations:
+#           '[/**]':
+#             allowed-origins:
+#               - "http://localhost:4200"
+#               - "http://localhost:8085"
+#             allowed-methods: [GET, POST, PUT, DELETE, OPTIONS]
+#             allowed-headers: ["*"]
+#             allow-credentials: true
+
+#       default-filters:
+#         - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
+
+# logging:
+#   level:
+#     org.springframework.cloud.gateway: DEBUG
+#     reactor.netty.http.client: DEBUG
+
+# management:
+#   endpoint:
+#     gateway:
+#       enabled: true
+#   endpoints:
+#     web:
+#       exposure:
+#         include:
+#           - health
+#           - info
+#           - gateway
+
+# jwt:
+#   secret: MeuSegredoSuperSecreto123
