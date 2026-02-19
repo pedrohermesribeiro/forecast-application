@@ -23,7 +23,13 @@ FROM eclipse-temurin:21-jdk-alpine
 WORKDIR /app
 
 # Copia SOMENTE o JAR do ai_service (ajuste o artifactId/versão se mudar)
-COPY --from=build /app/ai_service/target/ai_service-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=build /app/ai_service/target/user_service-0.0.1-SNAPSHOT.jar app.jar
 
-EXPOSE 8081
-ENTRYPOINT ["java", "-jar", "app.jar", "--server.port=8081"]
+EXPOSE 8083
+ENTRYPOINT ["java", "-jar", "app.jar", "--server.port=8083"]
+
+# Copia SOMENTE o JAR do ai_service (ajuste o artifactId/versão se mudar)
+# COPY --from=build /app/ai_service/target/user_service-0.0.1-SNAPSHOT.jar app.jar
+
+# EXPOSE 8083
+# ENTRYPOINT ["java", "-jar", "app.jar", "--server.port=8083"]
