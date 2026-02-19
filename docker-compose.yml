@@ -17,6 +17,8 @@ services:
       - "8082:8080"
     networks:
       - app-network
+    environment:
+      JWT_SECRET: ${JWT_SECRET}
   user-service:
     build: ./user_service
     ports:

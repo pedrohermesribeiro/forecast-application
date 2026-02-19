@@ -1,4 +1,4 @@
-package com.forecastapp.auth_service.security;
+package com.forecastapp.api_gateway.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;

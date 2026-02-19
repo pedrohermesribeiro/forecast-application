@@ -5,6 +5,10 @@ spring:
   config:
     activate:
       on-profile: prod
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
 
 # spring:
 #   application:
@@ -21,10 +25,7 @@ spring:
 #     properties:
 #       hibernate:
 #         format_sql: true
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+
 
 # usa variáveis de ambiente com valor padrão para não quebrar em dev/teste
 openai:
@@ -47,15 +48,15 @@ management:
 
 # em produção (opcional), desabilite o console H2
 ---
-spring:
-  config:
-    activate:
-      on-profile: prod
-  h2:
-    console:
-      enabled: false
-  security:
-    enabled: false
+# spring:
+#   config:
+#     activate:
+#       on-profile: prod
+#   h2:
+#     console:
+#       enabled: false
+#   security:
+#     enabled: false
 
 jwt:
   secret: ${JWT_SECRET}
