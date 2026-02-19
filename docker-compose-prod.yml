@@ -3,6 +3,8 @@ version: "3.9"
 services:
   frontend:
     image: pedrohermes/forecast-application-frontend:latest
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
     ports:
       - "8085:80"
 
