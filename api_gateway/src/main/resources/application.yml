@@ -12,12 +12,12 @@ spring:
         - id: user-service
           uri: ${USER_SERVICE_URL}
           predicates:
-            - Path=/users/**
+            - Path=/users
 
         - id: role-service
           uri: ${USER_SERVICE_URL}
           predicates:
-            - Path=/roles/**
+            - Path=/roles
           filters:
             - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
 
