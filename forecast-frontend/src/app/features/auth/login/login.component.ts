@@ -43,7 +43,11 @@ export class LoginComponent {
   respLogin: any = '';
 
   //private apiUrl = 'http://localhost:8080/auth/login';  // ajuste se gateway ou proxy
-  private apiUrl = `${environment.apiUrl}/auth/login`;  // ou /auth/login
+  private apiBase = environment.apiUrl;
+
+  //private usersUrl = `${this.apiBase}/users`;
+  private apiUrl = `${this.apiBase}/auth/login`;
+  //private apiUrl = `${environment.apiUrl}/auth/login`;  // ou /auth/login
 
   constructor(
     private http: HttpClient,
