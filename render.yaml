@@ -1,0 +1,77 @@
+services:
+  # Frontend (Nginx estático após build Angular/React/Vue)
+  - type: web
+    name: forecast-frontend
+    runtime: docker
+    plan: free                # ← mude para starter se precisar de mais recursos
+    rootDir: forecast-frontend
+    # dockerfilePath: ./Dockerfile   # opcional se for Dockerfile na raiz da pasta
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE   # se o frontend precisar (provavelmente não)
+        value: prod
+    # domains:                         # descomente se quiser domínio custom
+    #   - seu-dominio.com
+
+  # API Gateway (ponto de entrada público)
+  - type: web
+    name: api-gateway
+    runtime: docker
+    plan: free
+    rootDir: api_gateway
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      # Adicione outras se necessário, ex: URLs internas dos serviços
+      # - key: USER_SERVICE_URL
+      #   value: http://user-service:8083   # Render resolve internamente pelo name
+    # domains:                           # adicione se quiser domínio custom
+    #   - api.seu-dominio.com
+
+  # Auth Service (interno)
+  - type: web
+    name: auth-service
+    runtime: docker
+    plan: free
+    rootDir: auth_service
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: JWT_SECRET
+        sync: false               # ← preencha no dashboard do Render (segredo)
+      # - key: DATABASE_URL         # se usar banco, adicione fromDatabase depois
+
+  # User Service (interno)
+  - type: web
+    name: user-service
+    runtime: docker
+    plan: free
+    rootDir: user_service
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      # Adicione DATABASE_URL se precisar
+
+  # AI Service (interno, com chaves de API)
+  - type: web
+    name: ai-service
+    runtime: docker
+    plan: free
+    rootDir: ai_service
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: OPENAI_API_KEY
+        sync: false               # ← segredo, preencha no dashboard
+      - key: OPENAI_MODEL
+        value: gpt-4o-mini
+      - key: JAVA_OPTS
+        value: -Xmx512m
+      # - key: GEMINI_API_KEY      # descomente se usar Gemini
+      #   sync: false
+
+# Se precisar de banco de dados (exemplo Postgres no Render):
+# databases:
+#   - name: app-db
+#     plan: free
+#     databaseName: forecast_db
+#     user: postgres

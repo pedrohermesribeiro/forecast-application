@@ -19,39 +19,27 @@ COPY user_service/src user_service/src
 RUN mvn clean package -DskipTests -B
 
 # ======== STAGE 2: RUNTIME (apenas para ai_service) ========
-# FROM eclipse-temurin:21-jdk-alpine
-# WORKDIR /app
-
-# # Copia SOMENTE o JAR do ai_service (ajuste o artifactId/versão se mudar)
-# COPY --from=build /app/ai_service/target/ai_service-0.0.1-SNAPSHOT.jar app.jar
-
-# EXPOSE 8081
-# ENTRYPOINT ["java", "-jar", "app.jar", "--server.port=8081"]
-
-# ======== STAGE 2: RUNTIME (apenas para ai_service) ========
-# FROM eclipse-temurin:21-jdk-alpine
-# WORKDIR /app
+FROM eclipse-temurin:21-jdk-alpine
+WORKDIR /app
 
 # Copia SOMENTE o JAR do ai_service (ajuste o artifactId/versão se mudar)
-# COPY --from=build /app/user_service/target/user_service-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=build /app/ai_service/target/ai_service-0.0.1-SNAPSHOT.jar app.jar
 
-# EXPOSE 8083
-# ENTRYPOINT ["java", "-jar", "app.jar", "--server.port=8083"]
+EXPOSE 8081
+ENTRYPOINT ["java", "-jar", "app.jar", "--server.port=8081"]
+
+# ======== STAGE 2: RUNTIME (apenas para ai_service) ========
+FROM eclipse-temurin:21-jdk-alpine
+WORKDIR /app
+
+# Copia SOMENTE o JAR do ai_service (ajuste o artifactId/versão se mudar)
+COPY --from=build /app/user_service/target/user_service-0.0.1-SNAPSHOT.jar app.jar
+
+EXPOSE 8083
+ENTRYPOINT ["java", "-jar", "app.jar", "--server.port=8083"]
 
 # Copia SOMENTE o JAR do ai_service (ajuste o artifactId/versão se mudar)
 # COPY --from=build /app/ai_service/target/user_service-0.0.1-SNAPSHOT.jar app.jar
 
 # EXPOSE 8083
 # ENTRYPOINT ["java", "-jar", "app.jar", "--server.port=8083"]
-
-FROM eclipse-temurin:21-jdk-alpine   
-WORKDIR /app
-
-# Copia o JAR gerado – use wildcard para evitar erro se versão mudar
-COPY --from=build /app/target/*-0.0.1-SNAPSHOT.jar app.jar
-
-# Porta que o serviço escuta (ajuste se necessário)
-EXPOSE 8083
-
-# Inicia com porta explícita (útil se o application.properties tiver server.port diferente)
-ENTRYPOINT ["java", "-jar", "app.jar", "--server.port=8083"]
