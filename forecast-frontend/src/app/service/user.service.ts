@@ -25,8 +25,8 @@ export class UserService {
 
   //private apiUrl = 'http://localhost:8080/users';
 
-  private usersUrl = 'http://localhost:8080/users';
-  private rolesUrl = 'http://localhost:8080/roles'; // endpoint das roles
+  private usersUrl = '`${environment.apiUrl}/users';
+  private rolesUrl = '`${environment.apiUrl}/roles'; // endpoint das roles
 
   constructor(private http: HttpClient) {}
 
