@@ -3,6 +3,7 @@ version: "3.9"
 services:
   frontend:
     image: pedrohermes/forecast-application-frontend:latest
+    restart: always
     environment:
       SPRING_PROFILES_ACTIVE: prod
     ports:
@@ -10,6 +11,7 @@ services:
 
   api-gateway:
     image: pedrohermes/forecast-application-api-gateway:latest
+    restart: always
     environment:
       SPRING_PROFILES_ACTIVE: prod
     ports:
@@ -17,6 +19,7 @@ services:
 
   auth-service:
     image: pedrohermes/forecast-application-auth-service:latest
+    restart: always
     environment:
       SPRING_PROFILES_ACTIVE: prod
       JWT_SECRET: ${JWT_SECRET}
@@ -25,6 +28,7 @@ services:
 
   user-service:
     image: pedrohermes/forecast-application-user-service:latest
+    restart: always
     environment:
       SPRING_PROFILES_ACTIVE: prod
     ports:
@@ -32,11 +36,12 @@ services:
 
   ai-service:
     image: pedrohermes/forecast-application-ai-service:latest
+    restart: always
     ports:
       - "8081:8080"
     environment:                  # ← aqui sim, environment é válido
           - OPENAI_API_KEY=${OPENAI_API_KEY}
           - OPENAI_MODEL=gpt-4o-mini
           - JAVA_OPTS=-Xmx512m
-    restart: unless-stopped
+    # restart: unless-stopped
 
