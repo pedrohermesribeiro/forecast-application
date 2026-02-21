@@ -37,7 +37,7 @@ spring:
                   allowedOrigins:
                     - http://localhost:4200
                     - http://localhost:3000
-                    - https://seu-front-no-render.onrender.com
+                    - https://forecast-frontend-gm1d.onrender.com
                   allowedMethods:
                     - GET
                     - POST
