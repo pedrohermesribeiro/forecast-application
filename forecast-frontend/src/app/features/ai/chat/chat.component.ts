@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpHeaders } from '@angular/common/http';
 import { catchError, map } from 'rxjs';
 //import { environment } from '../environments/environment';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../../environments/environment.prod';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import * as CryptoJS from 'crypto-js';

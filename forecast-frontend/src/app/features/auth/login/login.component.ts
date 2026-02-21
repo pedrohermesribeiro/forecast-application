@@ -8,7 +8,7 @@ import { of } from 'rxjs';
 import { RoleData } from '../model/roleData';
 import * as CryptoJS from 'crypto-js';
 import { jwtDecode } from 'jwt-decode';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../../environments/environment.prod';
 //import { RoleData } from '../model/roleData';
 
 interface LoginRequest {
