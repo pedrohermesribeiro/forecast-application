@@ -17,7 +17,7 @@ interface ChatMessage {
   text: any;
   timestamp: string;
 }
-
+let tokens = localStorage.getItem('token'); // Armazenar token JWT
 @Component({
   selector: 'app-chat',
   standalone: true,
@@ -76,7 +76,7 @@ async sendMessage() {
             method: 'POST',
             headers: {
             'Access-Control-Allow-Origin' : '*',
-            'Access-Control-Allow-Headers':'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+            'Access-Control-Allow-Headers':'Content-Type,X-Amz-Date,X-Api-Key,X-Amz-Security-Token','Authorization': `Bearer ${tokens}`,
             'Content-Type': 'application/json'
         },
             body: JSON.stringify({ "pergunta": this.newMessage})
