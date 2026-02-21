@@ -74,7 +74,11 @@ async sendMessage() {
         //this.message.push({ sender: 'user', text: this.newMessage });
         const respo = await fetch(this.apiUrl, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+            'Access-Control-Allow-Origin' : '*',
+            'Access-Control-Allow-Headers':'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+            'Content-Type': 'application/json'
+        },
             body: JSON.stringify({ "pergunta": this.newMessage})
         }).then(async respo => {
           if (respo === null) throw new Error("Erro ao criar jogo");
