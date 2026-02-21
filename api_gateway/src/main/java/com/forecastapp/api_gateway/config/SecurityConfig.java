@@ -37,7 +37,7 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth.anyRequest().permitAll()) // libera tudo
-            .authorizeHttpRequests(auth -> auth.requestMatchers("/ai/chat", "/public/**").permitAll())
+            .authorizeHttpRequests(auth -> auth.requestMatchers("/chat", "/public/**").permitAll())
             .authorizeHttpRequests(auth -> auth.requestMatchers("/users", "/public/**").permitAll())
             .authorizeHttpRequests(auth -> auth.requestMatchers("/roles", "/public/**").permitAll())
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
