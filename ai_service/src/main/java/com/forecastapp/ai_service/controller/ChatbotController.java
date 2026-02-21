@@ -20,7 +20,7 @@ import com.forecastapp.ai_service.dto.ChatbotResponseDTO;
 import com.forecastapp.ai_service.security.JwtTokenUtil;
 import com.forecastapp.ai_service.service.ChatbotService;
 
-@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8085"})
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8085", "https://forecast-frontend-gm1d.onrender.com"})
 @RestController
 @RequestMapping("/ai")
 public class ChatbotController {
