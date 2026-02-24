@@ -15,12 +15,13 @@ public class CorsConfig {
     public WebFluxConfigurer corsConfigurer() {
         return new WebFluxConfigurer() {
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedOriginPatterns("*")           // ← MUDAR PARA ISSO
-                        .allowedMethods("*")
-                        .allowedHeaders("*")
-                        .allowCredentials(true)               // pode continuar true
-                        .maxAge(3600);
+                registry.addMapping("/**")  // aplica para TODAS as rotas (inclui /roles)
+                        .allowedOrigins("https://forecast-frontend-gm1d.onrender.com")  // URL EXATA do frontend
+                        .allowedOrigins("*")  // para teste rápido (NÃO use em produção!)
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
+                        .allowedHeaders("Content-Type", "Authorization", "Accept")
+                        .allowCredentials(true)  // se usar cookies ou auth com credentials
+                        .maxAge(3600);  // cache do preflight por 1 hora
             }
         };
     }
