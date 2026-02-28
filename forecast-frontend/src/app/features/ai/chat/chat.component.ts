@@ -39,7 +39,7 @@ export class ChatComponent {
 
 private apiBase = environment.apiUrl;
 
-private apiUrl = `${this.apiBase}/ai/chat`;
+private apiUrl = `${this.apiBase}/chat`;
 
 
 //private apiUrl = `${environment.apiUrl}/ai/chat`;  // ou /auth/login
