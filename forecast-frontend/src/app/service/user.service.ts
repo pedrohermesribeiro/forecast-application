@@ -29,7 +29,8 @@ export class UserService {
 private apiBase = environment.apiUrl;
 
 private usersUrl = `${this.apiBase}/users`;
-private rolesUrl = `${this.apiBase}/roles`;
+//private rolesUrl = `${this.apiBase}/roles`;
+private rolesUrl = 'https://api-gateway-ptj6.onrender.com/roles';
 
   constructor(private http: HttpClient) {}
 
