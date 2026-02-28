@@ -1,7 +1,7 @@
 services:
   # Frontend (Nginx estático após build Angular/React/Vue)
   - type: web
-    name: forecast-frontend
+    name: frontend
     runtime: docker
     plan: free                # ← mude para starter se precisar de mais recursos
     rootDir: forecast-frontend
