@@ -10,24 +10,22 @@ spring:
     gateway:
       routes:
         - id: user-service
-          uri: ${USER_SERVICE_URL}
+          uri: https://user-service-983c.onrender.com
           predicates:
             - Path=/users/**
 
         - id: role-service
-          uri: ${USER_SERVICE_URL}
+          uri: https://user-service-983c.onrender.com
           predicates:
             - Path=/roles/**
-          filters:
-            - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
 
         - id: auth-service
-          uri: ${AUTH_SERVICE_URL}
+          uri: https://auth-service-komr.onrender.com
           predicates:
             - Path=/auth/login
 
         - id: ai-service
-          uri: ${AI_SERVICE_URL}
+          uri: https://ai-service-aahv.onrender.com
           predicates:
             - Path=/ai/chat
 

@@ -14,9 +14,9 @@ services:
     restart: always
     environment:
       SPRING_PROFILES_ACTIVE: prod
-      AI_SERVICE_URL : https://ai-service-aahv.onrender.com
-      USER_SERVICE_URL : https://user-service-983c.onrender.com
-      AUTH_SERVICE_URL : https://auth-service-komr.onrender.com
+      # AI_SERVICE_URL : https://ai-service-aahv.onrender.com
+      # USER_SERVICE_URL : https://user-service-983c.onrender.com
+      # AUTH_SERVICE_URL : https://auth-service-komr.onrender.com
       JWT_SECRET: ${JWT_SECRET}
     ports:
       - "8080:8080"

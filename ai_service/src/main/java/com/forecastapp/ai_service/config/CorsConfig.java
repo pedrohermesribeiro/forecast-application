@@ -16,11 +16,11 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")  // aplica para TODAS as rotas (inclui /roles)
                         .allowedOrigins("https://forecast-frontend-gm1d.onrender.com")  // URL EXATA do frontend
-                        .allowedOrigins("*")  // para teste rápido (NÃO use em produção!)
+                        //.allowedOrigins("*")  // para teste rápido (NÃO use em produção!)
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
                         .allowedHeaders("Content-Type", "Authorization", "Accept")
-                        .allowCredentials(true)  // se usar cookies ou auth com credentials
-                        .maxAge(3600);  // cache do preflight por 1 hora
+                        .allowCredentials(true);  // se usar cookies ou auth com credentials
+                        //.maxAge(3600);  // cache do preflight por 1 hora
             }
         };
     }
