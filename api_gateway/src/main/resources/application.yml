@@ -32,22 +32,22 @@ spring:
             - Path=/ai/chat
 
       globalcors:
-              corsConfigurations:
-                '[/**]':
-                  allowedOrigins:
-                    - http://localhost:4200
-                    - http://localhost:3000
-                    - https://forecast-frontend-gm1d.onrender.com
-                  allowedMethods:
-                    - GET
-                    - POST
-                    - PUT
-                    - DELETE
-                    - PATCH
-                    - OPTIONS
-                  allowedHeaders:
-                    - "*"
-                  allowCredentials: true
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - http://localhost:4200
+              - http://localhost:3000
+              - https://forecast-frontend-gm1d.onrender.com
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - PATCH
+              - OPTIONS
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
     default-filters:
             - DedupeResponseHeader=Access-Control-Allow-Credentials,Access-Control-Allow-Origin
 logging:
