@@ -6,6 +6,8 @@ services:
     restart: always
     environment:
       SPRING_PROFILES_ACTIVE: prod
+      AI_SERVICE_URL : https://ai-service-aahv.onrender.com
+      API_GATEWAY_URL : https://api-gateway-ptj6.onrender.com
     ports:
       - "8085:80"
 
