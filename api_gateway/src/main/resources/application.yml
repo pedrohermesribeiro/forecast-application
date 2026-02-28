@@ -30,25 +30,15 @@ spring:
           uri: ${AI_SERVICE_URL}
           predicates:
             - Path=/ai/chat
-
           globalcors:
-                  add-to-simple-url-handler-mapping: true
-                  cors-configurations:
+                  corsConfigurations:
                     '[/**]':
-                      allowed-origins:
-                        - "http://localhost:4200"
-                        - "http://localhost:3000"
-                        - "https://forecast-frontend-gm1d.onrender.com"
-                      allowed-methods:
-                        - GET
-                        - POST
-                        - PUT
-                        - DELETE
-                        - PATCH
-                        - OPTIONS
-                      allowed-headers:
-                        - "*"
-                      allow-credentials: true
+                      allowedOriginPatterns:
+                        - "https://*.onrender.com"          # permite qualquer subdomínio .onrender.com
+                        - "http://localhost:*"              # para dev (qualquer porta)
+                      allowedMethods: [GET, POST, PUT, DELETE, PATCH, OPTIONS]
+                      allowedHeaders: ["*"]
+                      allowCredentials: true
     default-filters:
             - DedupeResponseHeader=Access-Control-Allow-Credentials,Access-Control-Allow-Origin
 logging:
