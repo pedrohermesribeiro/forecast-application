@@ -34,14 +34,6 @@ services:
     ports:
       - "8083:8080"
 
-    role-service:
-      image: pedrohermes/forecast-application-user-service:latest
-      restart: always
-      environment:
-        SPRING_PROFILES_ACTIVE: prod
-      ports:
-        - "8083:8080"
-
   ai-service:
     image: pedrohermes/forecast-application-ai-service:latest
     restart: always
