@@ -18,8 +18,7 @@ public class CorsConfig {
                         .allowedOriginPatterns("*")           // ← MUDAR PARA ISSO
                         //.allowedMethods("*")
                         .allowedHeaders("*")
-                        .allowCredentials(true)               // pode continuar true
-                        .maxAge(3600);
+                        .allowCredentials(true);               // pode continuar true
             }
         };
     }
