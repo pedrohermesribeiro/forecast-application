@@ -22,12 +22,12 @@ spring:
         - id: auth-service
           uri: https://auth-service-komr.onrender.com
           predicates:
-            - Path=/auth/login
+            - Path=/auth/login/**
 
         - id: ai-service
           uri: https://ai-service-aahv.onrender.com
           predicates:
-            - Path=/chat
+            - Path=/ai/chat/**
 
       globalcors:
         corsConfigurations:

@@ -39,7 +39,7 @@ export class ChatComponent {
 
 private apiBase = environment.apiUrl;
 
-private apiUrl = 'https://api-gateway-ptj6.onrender.com/chat';
+private apiUrl = 'https://api-gateway-ptj6.onrender.com/ai/chat';
 
 
 //private apiUrl = `${environment.apiUrl}/ai/chat`;  // ou /auth/login
