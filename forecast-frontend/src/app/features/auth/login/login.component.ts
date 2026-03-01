@@ -43,7 +43,7 @@ export class LoginComponent {
   respLogin: any = '';
 
   //private apiUrl = 'http://localhost:8080/auth/login';  // ajuste se gateway ou proxy
-  private apiBase = environment.apiUrl;
+  private apiBase = 'https://api-gateway-ptj6.onrender.com/auth/login';
 
   //private usersUrl = `${this.apiBase}/users`;
   private apiUrl = `${this.apiBase}/auth/login`;
