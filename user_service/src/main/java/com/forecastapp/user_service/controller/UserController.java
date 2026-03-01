@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
-@CrossOrigin(origins = {"http://localhost:8085", "https://forecast-frontend-gm1d.onrender.com"})
+//@CrossOrigin(origins = {"http://localhost:8085", "https://forecast-frontend-gm1d.onrender.com"})
 public class UserController {
 
     private final UserService userService;

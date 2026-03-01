@@ -75,8 +75,7 @@ async sendMessage() {
         const respo = await fetch(this.apiUrl, {
             method: 'POST',
             headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json'
         },
             body: JSON.stringify({ "pergunta": this.newMessage})
         }).then(async respo => {
