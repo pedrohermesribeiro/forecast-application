@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.util.DigestUtils;
-import org.springframework.web.bind.annotation.CrossOrigin;
+//import org.springframework.web.bind.annotation.CrossOrigin;
 //import org.apache.commons.codec.digest.DigestUtils;
 import com.forecastapp.ai_service.util.HashUtil;
 
@@ -20,7 +20,7 @@ import com.forecastapp.ai_service.dto.ChatbotResponseDTO;
 import com.forecastapp.ai_service.security.JwtTokenUtil;
 import com.forecastapp.ai_service.service.ChatbotService;
 
-@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8085", "https://forecast-frontend-gm1d.onrender.com"})
+//@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8085", "https://forecast-frontend-gm1d.onrender.com"})
 @RestController
 @RequestMapping("/ai")
 public class ChatbotController {
