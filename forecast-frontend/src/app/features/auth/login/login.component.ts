@@ -46,7 +46,7 @@ export class LoginComponent {
   private apiBase = 'https://api-gateway-ptj6.onrender.com/auth/login';
 
   //private usersUrl = `${this.apiBase}/users`;
-  private apiUrl = `${this.apiBase}/auth/login`;
+  //private apiUrl = `${this.apiBase}/auth/login`;
   //private apiUrl = `${environment.apiUrl}/auth/login`;  // ou /auth/login
 
   constructor(
