@@ -48,7 +48,7 @@ export class LoginComponent {
   //private usersUrl = `${this.apiBase}/users`;
   //private apiUrl = `${this.apiBase}/auth/login`;
   //private apiUrl = `${environment.apiUrl}/auth/login`;  // ou /auth/login
-
+    private apiUrl = 'https://api-gateway-ptj6.onrender.com/auth/login';
   constructor(
     private http: HttpClient,
     private router: Router
@@ -75,11 +75,11 @@ export class LoginComponent {
     };
 
     try {
-      const response = await fetch(this.apiBase, {
+      const response = await fetch(this.apiUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(loginData)
-    });
+    }).then(async response => {
       this.respLogin = await response.json();
       const decoded = jwtDecode(this.respLogin.token);
       //const email = this.respLogin.loginRequest.email;
@@ -99,6 +99,7 @@ export class LoginComponent {
         } else {
           console.warn("Falha ao obter dados do usuário logado.");
         }
+    })
     } catch (error) {
         console.error('Erro ao logar:', error);
         alert('Falha ao logar. Tente novamente.');
