@@ -29,7 +29,7 @@ public class AuthController {
     private Integer cont = 0;
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> login(@Valid @RequestBody LoginRequest request) {
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequest request) {
         System.out.println("➡️ Chamando URL request: " + request + " " + cont);
         cont ++;
         UserDTO user = userClient.findByEmail(request.getEmail()).getBody();
