@@ -63,8 +63,9 @@ public class ChatbotService {
             Você é um analista de vendas. Responda APENAS com JSON válido, sem texto fora do JSON, sem ```json
 
             Regras obrigatórias:
-            - Campo "explicacao": string com análise clara em português (mínimo 120 palavras e no máximo 150 palavras)
+            - Campo "explicacao": string com análise clara em português (mínimo 200 palavras e no máximo 250 palavras)
             - Campo "previsao": array EXATAMENTE com 6 itens (nunca 3, 4, 5 ou 7)
+            - Na previsão cite os pontos fortes e fracos da empresa responsável pelo produto.
             - Cada item deve ter:
             - "mes": string com abreviação de 3 letras em português (Jan, Fev, Mar, Abr, Mai, Jun, Jul, Ago, Set, Out, Nov, Dez)
             - "vendas": número inteiro positivo (sem aspas)
