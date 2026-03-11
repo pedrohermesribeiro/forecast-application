@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, HostListener } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -27,9 +27,6 @@ let tokens = localStorage.getItem('token'); // Armazenar token JWT
 })
 export class ChatComponent {
 
-  sidebarOpen = false;
-  isMobile = false;
-
   messages: ChatMessage[] = [];
   newMessage: string = '';
   newResp: any = '';
@@ -56,29 +53,6 @@ private apiUrl = 'https://api-gateway-ptj6.onrender.com/ai/chat';
     private router: Router,
     private cdr: ChangeDetectorRef  // ← injete aqui!
   ) {}
-
-  ngOnInit() {
-    this.checkMobile();
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    this.checkMobile();
-  }
-
-  checkMobile() {
-    this.isMobile = window.innerWidth <= 768;
-    if (!this.isMobile) {
-      this.sidebarOpen = true;  // Abre automaticamente no desktop
-    }
-  }
-
-  toggleSidebar() {
-    this.sidebarOpen = !this.sidebarOpen;
-  }
-
-  // ... seu sendMessage(), novaPergunta(), etc.
-
 
 generateHash(value: string): string {
   return CryptoJS.SHA256(value).toString(CryptoJS.enc.Hex);
