@@ -103,7 +103,7 @@ public class UserClient {
         //         .toUriString();
 
 
-        ResponseEntity<UserDTO> entity = new RestTemplate().getForEntity("http://localhost:8083/users/{id}", UserDTO.class,id);
+        ResponseEntity<UserDTO> entity = new RestTemplate().getForEntity("https://user-service-983c.onrender.com/users/{id}", UserDTO.class,id);
         System.out.println("➡️ Chamando URL: " + baseUrl + " " + entity);
         return entity;
     }
