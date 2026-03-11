@@ -79,7 +79,22 @@ export class LoginComponent {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(loginData)
-    }).then(async response => {
+    });
+        if (!response.ok) {
+          // Aqui você pode tentar ler o body de erro se existir
+          let errorBody = '';
+          try {
+            errorBody = await response.text();  // use .text() primeiro, mais seguro
+          } catch {}
+          
+          console.error(`Erro HTTP ${response.status}: ${errorBody}`);
+          this.errorMessage = response.status === 401 
+            ? 'Email ou senha inválidos.' 
+            : `Erro no servidor (${response.status}). Tente novamente.`;
+          return;
+        }
+      
+
       this.respLogin = await response.json();
       const decoded = jwtDecode(this.respLogin.token);
       //const email = this.respLogin.loginRequest.email;
@@ -99,7 +114,7 @@ export class LoginComponent {
         } else {
           console.warn("Falha ao obter dados do usuário logado.");
         }
-    })
+    
     } catch (error) {
         console.error('Erro ao logar:', error);
         alert('Falha ao logar. Tente novamente.');
