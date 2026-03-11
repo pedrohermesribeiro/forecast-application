@@ -22,23 +22,25 @@
 
 
   <!-- Área para exibir as mensagens -->
-  <div class="messages" *ngIf="message.length > 0">
-    <div *ngFor="let msg of message" class="message-item" [ngClass]="{'user-message': msg.sender === 'user', 'bot-message': msg.sender === 'bot'}">
-      <strong>{{ msg.sender === 'user' ? 'Você:' : 'Bot:' }}</strong>
-      <div class="message-text">
-        {{ msg.text }}
+  <div class="message-container">
+    <div class="messages" *ngIf="message.length > 0">
+      <div *ngFor="let msg of message" class="message-item" [ngClass]="{'user-message': msg.sender === 'user', 'bot-message': msg.sender === 'bot'}">
+        <strong>{{ msg.sender === 'user' ? 'Você:' : 'Bot:' }}</strong>
+        <div class="message-text">
+          {{ msg.text }}
+        </div>
       </div>
     </div>
-  </div>
-  <div style="margin-left: 15px; margin-top: 10px;" *ngIf="message.length > 0">
-    <button type="submit" (click)="novaPergunta()">Nova pergunta</button>
-  </div>
-  <app-prediction 
-    *ngIf="showPrediction" 
-    [previsaoData]="previsao">
-    <!-- Debug temporário -->
-    <div style="color: red; font-weight: bold; margin: 10px;">
-      DEBUG: Previsão recebida com {{ previsao.length }} itens
+    <div style="margin-left: 15px; margin-top: 10px;" *ngIf="message.length > 0">
+      <button type="submit" (click)="novaPergunta()">Nova pergunta</button>
+    </div>
+    <app-prediction 
+      *ngIf="showPrediction" 
+      [previsaoData]="previsao">
+      <!-- Debug temporário -->
+      <div style="color: red; font-weight: bold; margin: 10px;">
+        DEBUG: Previsão recebida com {{ previsao.length }} itens
+      </div>
     </div>
   </app-prediction>
 

@@ -29,6 +29,11 @@
   border-radius: 6px;
 }
 
+.message-container {
+  display: flex;
+  align-items: center;
+}
+
 .chat-messages {
   flex: 1;
   padding: 1rem;
