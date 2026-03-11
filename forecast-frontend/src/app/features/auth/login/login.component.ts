@@ -35,7 +35,7 @@ const roleUser = {id: null, name: 'USER'}
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  email: string = '';       // ← mudei de username para email (consistente com backend)
+  username: string = '';       // ← mudei de username para email (consistente com backend)
   password: string = '';
   
   loading = false;
@@ -70,7 +70,7 @@ export class LoginComponent {
     this.errorMessage = '';
 
     const loginData: LoginRequest = {
-      email: this.email,
+      email: this.username,
       password: this.password
     };
 
@@ -84,9 +84,9 @@ export class LoginComponent {
       const decoded = jwtDecode(this.respLogin.token);
       //const email = this.respLogin.loginRequest.email;
       //const password = this.respLogin.loginRequest.password;
-      const localHash = this.generateHash(this.email.trim() + this.password.trim());
+      const localHash = this.generateHash(this.username.trim() + this.password.trim());
       const localHashPassword = this.generateHash(this.password.trim());
-      console.log("decoded: ", decoded,"localHash: ",localHash);
+      console.log("decoded: ", decoded,"localHash: ",localHash,"username:",this.username);
       if (response.ok) {
           //token = result;
           localStorage.setItem('token', this.respLogin.token); // Armazene o token
