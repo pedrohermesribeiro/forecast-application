@@ -21,7 +21,7 @@ interface LoginResponse {
 }
 
 
-//let token = localStorage.getItem('token'); // Armazenar token JWT
+let token = localStorage.getItem('token'); // Armazenar token JWT
 
 role: RoleData;
 const roleUser = {id: null, name: 'USER'}
@@ -89,7 +89,7 @@ export class LoginComponent {
       console.log("decoded: ", decoded,"localHash: ",localHash,"username:",this.username);
       if (response.ok) {
           //token = result;
-          localStorage.setItem('token', this.respLogin.token); // Armazene o token
+          //localStorage.setItem('token', this.respLogin.token); // Armazene o token
           if(decoded.sub === localHash){
             this.router.navigate(['/chat']);
           }else {
