@@ -96,14 +96,14 @@ public class UserClient {
             // }
          //ip = '192.168.0.6';
         //Socket clientSocket = new Socket(192.168.0.6, 5000);
-        String baseUrl = "http://localhost:8083/users/{id}";
+        String baseUrl = "https://user-service-983c.onrender.com/search";
         
-        // String url = UriComponentsBuilder.fromHttpUrl(baseUrl)
-        //         .queryParam("email", email)  // Automatically encodes '@' to '%40'
-        //         .toUriString();
+        String url = UriComponentsBuilder.fromHttpUrl(baseUrl)
+                .queryParam("email", email)  // Automatically encodes '@' to '%40'
+                .toUriString();
 
 
-        ResponseEntity<UserDTO> entity = new RestTemplate().getForEntity("https://user-service-983c.onrender.com/users/{id}", UserDTO.class,id);
+        ResponseEntity<UserDTO> entity = new RestTemplate().getForEntity(url, UserDTO.class);
         System.out.println("➡️ Chamando URL: " + baseUrl + " " + entity);
         return entity;
     }
@@ -112,7 +112,7 @@ public class UserClient {
 
 
     public ResponseEntity<UserDTO> findByEmail(String email) {
-        String baseUrl = "http://user-service:8083/users/search";  // Use service name and internal port
+        String baseUrl = "https://user-service-983c.onrender.com/users/search";  // Use service name and internal port
 
         String url = UriComponentsBuilder.fromHttpUrl(baseUrl)
                 .queryParam("email", email)  // Automatically encodes '@' to '%40'
