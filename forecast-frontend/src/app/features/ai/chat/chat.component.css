@@ -31,7 +31,6 @@
 
 .message-container {
   display: flex;
-  align-items: center;
 }
 
 .chat-messages {
