@@ -68,10 +68,10 @@ export class LoginComponent {
   async onLogin() {
     this.loading = true;
     this.errorMessage = '';
-
+    const localHashPassword = this.generateHash(this.password.trim());
     const loginData: LoginRequest = {
       email: this.username,
-      password: this.password
+      password: localHashPassword
     };
 
     try {
@@ -85,7 +85,7 @@ export class LoginComponent {
       //const email = this.respLogin.loginRequest.email;
       //const password = this.respLogin.loginRequest.password;
       const localHash = this.generateHash(this.username.trim() + this.password.trim());
-      const localHashPassword = this.generateHash(this.password.trim());
+      
       console.log("decoded: ", decoded,"localHash: ",localHash,"username:",this.username);
       if (response.ok) {
           //token = result;

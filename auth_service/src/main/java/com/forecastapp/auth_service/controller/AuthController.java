@@ -38,7 +38,7 @@ public class AuthController {
         LoginResponseDTO responseDTO = new LoginResponseDTO();
         String hashedRequestPassword = HashUtil.sha256(request.getPassword()); // Hasheie a senha recebida
         if (!user.getPassword().toString().equals(hashedRequestPassword)) {
-            return ResponseEntity.ok(responseDTO);
+            return ResponseEntity.status(401).body(null);
         }
         System.out.println("➡️ Chamando URL request: 3" + request);
         String hash = HashUtil.sha256(user.getEmail() + request.getPassword());
