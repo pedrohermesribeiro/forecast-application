@@ -71,7 +71,7 @@ export class LoginComponent {
     const localHashPassword = this.generateHash(this.password.trim());
     const loginData: LoginRequest = {
       email: this.email.trim(),
-      password: localHashPassword
+      password: this.password.trim()
     };
 
     try {
