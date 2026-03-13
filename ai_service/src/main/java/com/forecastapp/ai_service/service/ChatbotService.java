@@ -93,7 +93,7 @@ public class ChatbotService {
 
         ChatbotResponseDTO responseDTO = null;
         ChatCompletionCreateParams params = ChatCompletionCreateParams.builder()
-        	.model("gpt-4o-mini")
+        	.model("gpt-5.1")
             //.model(ChatModel.O3_MINI)       // modelo mais barato
             .addUserMessage(promptCompleto + hoje)
             //.maxTokens(32)                 // é só um lance curto
