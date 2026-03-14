@@ -87,12 +87,12 @@ public class ChatbotService {
             {
             "explicacao": "Texto da análise aqui...",
             "previsao": [
-                {"mes": "Mar", "vendas": 52000, "taxa": " 5 %"},
-                {"mes": "Abr", "vendas": 55000, "taxa": "-10 %"},
-                {"mes": "Mai", "vendas": 48000, "taxa": "-10 %"},
-                {"mes": "Jun", "vendas": 61000, "taxa": " 10 %"},
-                {"mes": "Jul", "vendas": 59000, "taxa": " 1 %"},
-                {"mes": "Ago", "vendas": 64000, "taxa": " 10 %"}
+                {"mes": "Mar", "vendas": 52000, "taxa": "5"},
+                {"mes": "Abr", "vendas": 55000, "taxa": "-10"},
+                {"mes": "Mai", "vendas": 48000, "taxa": "-10"},
+                {"mes": "Jun", "vendas": 61000, "taxa": " 10"},
+                {"mes": "Jul", "vendas": 59000, "taxa": " 1"},
+                {"mes": "Ago", "vendas": 64000, "taxa": " 10"}
             ]
             }
             """.formatted(hoje.replaceFirst("(?<=/)[0-9]{4}$", ""), hoje, pergunta);

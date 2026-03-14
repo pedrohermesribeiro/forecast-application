@@ -92,19 +92,16 @@ async sendMessage() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ "pergunta": this.newMessage})
       });
-        if (!respo.ok) {
-          // Aqui você pode tentar ler o body de erro se existir
-          let errorBody = '';
-          try {
-            errorBody = await respo.text();  // use .text() primeiro, mais seguro
-          } catch {}
-          
-          console.error(`Erro HTTP ${respo.status}: ${errorBody}`);
-          this.errorMessage = respo.status === 401 
-            ? 'Email ou senha inválidos.' 
-            : `Erro no servidor (${respo.status}). Tente novamente.`;
-          return;
-      }          
+          if (!respo.ok) {
+            // Aqui você pode tentar ler o body de erro se existir
+            let errorBody = '';
+            try {
+              errorBody = await respo.text();  // use .text() primeiro, mais seguro
+            } catch {}
+            
+            console.error(`Erro HTTP ${respo.status}: ${errorBody}`);
+            return;
+          }          
           //if (respo === null) throw new Error("Erro ao criar jogo");
           this.respChat = await respo.json();
           const decoded = jwtDecode(this.respChat.token);
