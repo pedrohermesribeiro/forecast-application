@@ -73,7 +73,7 @@ public class ChatbotService {
             - "mes": string com abreviação de 3 letras em português (Jan, Fev, Mar, Abr, Mai, Jun, Jul, Ago, Set, Out, Nov, Dez)
             - "vendas": número inteiro positivo que represente a previsão de venda daquele mês (sem aspas)
             - "taxa": na previsão no json no valor "taxa" voce coloca número inteiro positivo ou negativo que represente a taxa de crescimento das venda
-               daquele mês (sem aspas).
+               daquele mês (sem aspas), não precisa colar o símbolo da prcentagem só o numero inteiro positivo ou negativo.
             - A previsão começa no mês seguinte ao atual e vai exatamente 6 meses à frente.
             - Hoje é %s. Comece a previsão em %s.
             - Valores de vendas devem ser plausíveis e variar de forma realista.

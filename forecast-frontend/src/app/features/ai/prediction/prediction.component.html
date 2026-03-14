@@ -1,34 +1,32 @@
 <div class="prediction-container">
   <h3>Previsão de Vendas - Próximos 6 Meses</h3>
 
-  <!-- Wrapper com altura definida – isso é o que resolve o canvas invisível -->
-    <div class="chart-wrapper" style="height: 270px; border: 2px solid black;">
+  <div class="chart-wrapper" style="height: 300px; width: 100%; position: relative;">
     <canvas #chartCanvas></canvas>
-    </div>
+  </div>
 
-  <!-- Tabela continua igual -->
   <table class="prediction-table">
     <thead>
       <tr>
         <th>Mês</th>
         <th>Vendas Previstas</th>
+        <th>Taxa de Crescimento</th>
       </tr>
     </thead>
     <tbody>
       @for (item of previsaoData; track item.mes) {
         <tr>
           <td>{{ item.mes }}</td>
-          <td>{{ +item.vendas | number:'1.0-0':'pt-BR' }}</td>
-        </tr>
-      }
-    </tbody>
-        <tbody>
-      @for (item of previsaoData; track item.taxa) {
-        <tr>
-          <td>{{ item.mes }}</td>
-          <td>{{ +item.taxa | number:'1.0-0':'pt-BR' }}</td>
+          <td>{{ item.vendas | number:'1.0-0':'pt-BR' }}</td>
+          <td [class]="getTaxaClass(item.taxa)">
+            {{ formatTaxa(item.taxa) }}
+          </td>
         </tr>
       }
     </tbody>
   </table>
+
+  @if (previsaoData.length === 0) {
+    <p class="no-data">Nenhuma previsão disponível no momento.</p>
+  }
 </div>
