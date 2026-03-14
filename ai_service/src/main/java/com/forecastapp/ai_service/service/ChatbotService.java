@@ -63,7 +63,7 @@ public class ChatbotService {
             Você é um analista de vendas. Responda APENAS com JSON válido, sem texto fora do JSON, sem ```json
 
             Regras obrigatórias:
-            - Campo "explicacao": string com análise clara em português (mínimo 400 palavras e no máximo 500 palavras)
+            - Campo "explicacao": string com análise clara em português (mínimo 400 palavras e no máximo 450 palavras)
             - ainda na explicação comente sobre os possíveis motivos da taxa de crescimento sejam eles positivos que proporcionaram elevação
               nas vendas ou fatos negativos que ocasionaram diminuição nas vendas.
             - Campo "previsao": array EXATAMENTE com 6 itens (nunca 3, 4, 5 ou 7)
