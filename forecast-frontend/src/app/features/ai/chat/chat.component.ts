@@ -32,7 +32,7 @@ export class ChatComponent {
   newResp: any = '';
   respChat: any;
 
-  previsao: { mes: string; vendas: number }[] = [];
+  previsao: { mes: string; vendas: number; taxa: number }[] = [];
   showPrediction: boolean = false;
 
 //private apiUrl = 'http://localhost:8080/ai/chat';
