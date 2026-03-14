@@ -63,30 +63,36 @@ public class ChatbotService {
             Você é um analista de vendas. Responda APENAS com JSON válido, sem texto fora do JSON, sem ```json
 
             Regras obrigatórias:
-            - Campo "explicacao": string com análise clara em português (mínimo 300 palavras e no máximo 400 palavras)
+            - Campo "explicacao": string com análise clara em português (mínimo 400 palavras e no máximo 500 palavras)
+            - ainda na explicação comente sobre os possíveis motivos da taxa de crescimento sejam eles positivos que proporcionaram elevação
+              nas vendas ou fatos negativos que ocasionaram diminuição nas vendas.
             - Campo "previsao": array EXATAMENTE com 6 itens (nunca 3, 4, 5 ou 7)
             - Na previsão cite os pontos fortes e fracos da empresa responsável pelo produto.
             - Na previsão fale da sazonalidade anual do produto.
             - Cada item deve ter:
             - "mes": string com abreviação de 3 letras em português (Jan, Fev, Mar, Abr, Mai, Jun, Jul, Ago, Set, Out, Nov, Dez)
-            - "vendas": número inteiro positivo (sem aspas)
+            - "vendas": número inteiro positivo que represente a previsão de venda daquele mês (sem aspas)
+            - "taxa": na previsão no json no valor "taxa" voce coloca número inteiro positivo ou negativo que represente a taxa de crescimento das venda
+               daquele mês (sem aspas).
             - A previsão começa no mês seguinte ao atual e vai exatamente 6 meses à frente.
             - Hoje é %s. Comece a previsão em %s.
             - Valores de vendas devem ser plausíveis e variar de forma realista.
             - No final da explicação colocar as referências e colocar o link das referências da explicação e da previsão.
-
+            - os valores colocados no objeto json abaixa são ficticio, serve como exemplos, preciso de uma previsão  atual das vendas
+              do produto e da taxa de crescimento das vendas do produto que vai ser pesquisado, coloque também a taxa de crescimento 
+              das vendas do produto pesquisado no campo do json "taxa".
             Pergunta do usuário: %s
 
             Resposta esperada (exemplo de formato, não copie os valores):
             {
             "explicacao": "Texto da análise aqui...",
             "previsao": [
-                {"mes": "Mar", "vendas": 52000},
-                {"mes": "Abr", "vendas": 55000},
-                {"mes": "Mai", "vendas": 48000},
-                {"mes": "Jun", "vendas": 61000},
-                {"mes": "Jul", "vendas": 59000},
-                {"mes": "Ago", "vendas": 64000}
+                {"mes": "Mar", "vendas": 52000, "taxa": " 5 %"},
+                {"mes": "Abr", "vendas": 55000, "taxa": "-10 %"},
+                {"mes": "Mai", "vendas": 48000, "taxa": "-10 %"},
+                {"mes": "Jun", "vendas": 61000, "taxa": " 10 %"},
+                {"mes": "Jul", "vendas": 59000, "taxa": " 1 %"},
+                {"mes": "Ago", "vendas": 64000, "taxa": " 10 %"}
             ]
             }
             """.formatted(hoje.replaceFirst("(?<=/)[0-9]{4}$", ""), hoje, pergunta);

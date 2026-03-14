@@ -22,5 +22,13 @@
         </tr>
       }
     </tbody>
+        <tbody>
+      @for (item of previsaoData; track item.taxa) {
+        <tr>
+          <td>{{ item.mes }}</td>
+          <td>{{ +item.taxa | number:'1.0-0':'pt-BR' }}</td>
+        </tr>
+      }
+    </tbody>
   </table>
 </div>

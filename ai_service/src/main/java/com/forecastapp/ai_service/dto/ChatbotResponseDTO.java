@@ -46,6 +46,7 @@ public class ChatbotResponseDTO {
     public static class PrevisaoDTO {
         private String mes;
         private int vendas;
+        private int taxa;
 
         public PrevisaoDTO() {}
 
@@ -63,6 +64,14 @@ public class ChatbotResponseDTO {
 
         public void setVendas(int vendas) {
             this.vendas = vendas;
+        }
+
+        public int getTaxa() {
+            return taxa;
+        }
+
+        public void setTaxa(int taxa) {
+            this.taxa = taxa;
         }
     }
 }
