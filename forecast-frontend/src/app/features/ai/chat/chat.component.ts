@@ -32,6 +32,9 @@ export class ChatComponent {
   newResp: any = '';
   respChat: any;
 
+  loading = false;
+  errorMessage = '';
+
   previsao: { mes: string; vendas: number; taxa: number }[] = [];
   showPrediction: boolean = false;
 
@@ -70,16 +73,39 @@ generateHash(value: string): string {
 
 
 async sendMessage() {
+    this.loading = true;
+    this.errorMessage = '';
+    // try {
+    //     //this.message.push({ sender: 'user', text: this.newMessage });
+    //     const respo = await fetch(this.apiUrl, {
+    //         method: 'POST',
+    //         headers: {
+    //         'Content-Type': 'application/json'
+    //     },
+    //         body: JSON.stringify({ "pergunta": this.newMessage})
+    //     }).then(async respo => {
+
+
     try {
-        //this.message.push({ sender: 'user', text: this.newMessage });
-        const respo = await fetch(this.apiUrl, {
-            method: 'POST',
-            headers: {
-            'Content-Type': 'application/json'
-        },
-            body: JSON.stringify({ "pergunta": this.newMessage})
-        }).then(async respo => {
-          if (respo === null) throw new Error("Erro ao criar jogo");
+      const respo = await fetch(this.apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ "pergunta": this.newMessage})
+      });
+        if (!respo.ok) {
+          // Aqui você pode tentar ler o body de erro se existir
+          let errorBody = '';
+          try {
+            errorBody = await respo.text();  // use .text() primeiro, mais seguro
+          } catch {}
+          
+          console.error(`Erro HTTP ${respo.status}: ${errorBody}`);
+          this.errorMessage = respo.status === 401 
+            ? 'Email ou senha inválidos.' 
+            : `Erro no servidor (${respo.status}). Tente novamente.`;
+          return;
+      }          
+          //if (respo === null) throw new Error("Erro ao criar jogo");
           this.respChat = await respo.json();
           const decoded = jwtDecode(this.respChat.token);
           const localHash = this.generateHash(this.respChat.resposta.explicacao);
@@ -97,7 +123,7 @@ async sendMessage() {
             this.cdr.detectChanges(); // injete ChangeDetectorRef no construtor se não tiver
           }
 
-        })
+        
         } catch (error) {
           console.error('Erro ao cadastrar:', error);
           alert('Falha ao cadastrar. Tente novamente.');
