@@ -22,11 +22,16 @@
         </tr>
       }
     </tbody>
-        <tbody>
+    <tr>
+        <th>Mês</th>
+        <th>Taxa de Crescimento</th>
+      </tr>
+    </thead>
+    <tbody>
       @for (item of previsaoData; track item.mes) {
         <tr>
           <td>{{ item.mes }}</td>
-          <td>{{ +item.taxa | number:'1.0-0':'pt-BR' }}</td>
+          <td>{{ +item.taxa | number:'1.0-0':'pt-BR' }}%</td>
         </tr>
       }
     </tbody>
