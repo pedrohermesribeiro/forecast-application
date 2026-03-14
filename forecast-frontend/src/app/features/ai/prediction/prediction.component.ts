@@ -17,7 +17,7 @@ Chart.register(...registerables, ChartDataLabels);
   styleUrl: './prediction.component.css'
 })
 export class PredictionComponent implements AfterViewInit, OnDestroy {
-  @Input() previsaoData: { mes: string; vendas: number }[] = [];
+  @Input() previsaoData: { mes: string; vendas: number; taxa: number }[] = [];
 
   @ViewChild('chartCanvas') chartCanvas!: ElementRef<HTMLCanvasElement>;
 
