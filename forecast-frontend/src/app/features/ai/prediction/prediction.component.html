@@ -1,10 +1,15 @@
 <div class="prediction-container">
   <h3>Previsão de Vendas - Próximos 6 Meses</h3>
 
-  <!-- Wrapper com altura definida – isso é o que resolve o canvas invisível -->
-    <div class="chart-wrapper" style="height: 270px; border: 2px solid black;">
-    <canvas #chartCanvas></canvas>
-    </div>
+<!-- Gráfico de vendas -->
+  <div class="chart-wrapper" style="height: 270px; border: 2px solid black;">
+    <canvas #chartCanvasVendas></canvas>
+  </div>
+
+  <!-- Gráfico de taxa -->
+  <div class="chart-wrapper" style="height: 270px; border: 2px solid black; margin-top:20px;">
+    <canvas #chartCanvasTaxa></canvas>
+  </div>
 
   <!-- Tabela continua igual -->
   <table class="prediction-table">
@@ -22,7 +27,9 @@
         </tr>
       }
     </tbody>
-    <tr>
+  </table>
+  <table>
+        <tr>
         <th>Mês</th>
         <th>Taxa de Crescimento</th>
       </tr>
