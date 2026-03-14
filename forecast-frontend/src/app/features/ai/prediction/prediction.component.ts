@@ -74,7 +74,7 @@ export class PredictionComponent implements AfterViewInit, OnDestroy {
               font: { size: 14 }
             },
             ticks: {
-              callback: (value) => (Number(value) / 1000000).toFixed(1) + 'M'
+              callback: (value) => (Number(value))
             }
           },
           x: {
@@ -101,7 +101,7 @@ export class PredictionComponent implements AfterViewInit, OnDestroy {
             callbacks: {
               label: (context) => {
                 const value = context.raw as number;
-                return `Vendas: ${(value / 1000000).toFixed(1)} milhões`;
+                return `Vendas: ${(value)}`;
               }
             }
           },
