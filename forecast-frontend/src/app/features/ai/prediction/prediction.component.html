@@ -24,11 +24,12 @@
         <tr>
           <td>{{ item.mes }}</td>
           <td>{{ +item.vendas | number:'1.0-0':'pt-BR' }}</td>
+          <td>{{ +item.taxa | number:'1.0-0':'pt-BR' }}%</td>
         </tr>
       }
     </tbody>
   </table>
-  <table>
+  <!-- <table>
     <thead>
         <tr>
         <th>Mês</th>
@@ -43,5 +44,5 @@
         </tr>
       }
     </tbody>
-  </table>
+  </table> -->
 </div>
