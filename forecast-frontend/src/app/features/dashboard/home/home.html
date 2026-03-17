@@ -1,1 +1,52 @@
-<p>home works!</p>
+<div class="home-container">
+  <div class="hero">
+    <h1>🌤️ Forecast Application</h1>
+    <p class="subtitle">Previsão inteligente de vendas com IA • TCC Engenharia de Software</p>
+  </div>
+
+  <!-- Não logado -->
+  <div class="hero-actions" *ngIf="!isLoggedIn">
+    <button class="btn btn-primary btn-large" (click)="irParaLogin()">
+      🔐 Entrar no Sistema
+    </button>
+    <button class="btn btn-secondary" (click)="cadastrar()">
+      📝 Cadastrar nova conta (Cliente)
+    </button>
+  </div>
+
+  <!-- Logado -->
+  <div *ngIf="isLoggedIn" class="dashboard">
+    <div class="welcome">
+      <h2>👋 Olá, {{ username }}!</h2>
+      <button class="btn btn-danger" (click)="logout()">Sair</button>
+    </div>
+
+    <div class="cards">
+      <div class="card" (click)="irParaChat()">
+        <div class="card-icon">🤖</div>
+        <h3>Realizar Pesquisa com IA</h3>
+        <p>Faça perguntas e receba previsão de vendas + análise completa</p>
+        <button class="btn btn-primary">Acessar Chat IA</button>
+      </div>
+
+      <div class="card" (click)="irParaUsuarios()">
+        <div class="card-icon">👥</div>
+        <h3>Gerenciar Usuários</h3>
+        <p>Cadastre, edite e exclua usuários</p>
+        <button class="btn btn-primary">Acessar Usuários</button>
+      </div>
+
+      <div class="card" *ngIf="isAdmin" (click)="irParaRoles()">
+        <div class="card-icon">🔑</div>
+        <h3>Gerenciar Roles</h3>
+        <p>Crie e gerencie papéis de acesso</p>
+        <button class="btn btn-primary">Acessar Roles</button>
+      </div>
+      <div class="card disabled" *ngIf="!isAdmin">
+        <div class="card-icon">🔑</div>
+        <h3>Gerenciar Roles</h3>
+        <p>Acesso restrito a Administradores</p>
+      </div>
+    </div>
+  </div>
+</div>
