@@ -106,8 +106,8 @@ export class LoginComponent {
           //token = result;
           //localStorage.setItem('token', this.respLogin.token); // Armazene o token
           if(decoded.sub === localHash){
-            localStorage.setItem('token', this.respLogin.token);
-            this.router.navigate(['/chat']);
+            //localStorage.setItem('token', this.respLogin.token);
+            this.router.navigate(['/home']);
           }else {
             this.router.navigate(['/login']);
           }
