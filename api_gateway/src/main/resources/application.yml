@@ -22,7 +22,7 @@ spring:
         - id: auth-service
           uri: https://auth-service-komr.onrender.com
           predicates:
-            - Path=/auth/login/**,/auth/home
+            - Path=/auth/login/**, /auth/home/**
 
         - id: ai-service
           uri: https://ai-service-aahv.onrender.com
