@@ -5,11 +5,14 @@ import { UserList } from './features/users/user-list/user-list';
 import { UserForm } from './features/users/user-form/user-form';
 import { RoleForm } from './features/roles/role-form/role-form';
 import { RoleList } from './features/roles/role-list/role-list';
+//import { HomeComponent } from './home/home.component';|
+import { HomeComponent } from './features/dashboard/home/home';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'chat', component: ChatComponent },
-  //{ path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },   // ← raiz vai direto pro home
+  { path: 'home', component: HomeComponent },
   { path: 'users', component: UserList },
   { path: 'users/new', component: UserForm },
   { path: 'users/edit/:id', component: UserForm },

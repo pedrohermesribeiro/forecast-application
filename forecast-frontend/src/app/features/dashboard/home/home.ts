@@ -18,22 +18,27 @@ export class HomeComponent implements OnInit {
 
   constructor(private router: Router) {}
 
-  ngOnInit(): void {
-    const token = localStorage.getItem('token');
-    this.isLoggedIn = !!token;
+async ngOnInit() {
+  // const token = localStorage.getItem('token');
+  // this.isLoggedIn = !!token;
 
-    if (token) {
-      try {
-        const decoded: any = jwtDecode(token);
-        this.username = decoded.email || 'Usuário';
-        this.isAdmin = decoded.roles?.some((r: any) => 
-          r.name === 'ROLE_ADMIN' || r.includes('ADMIN')
-        ) || false;
-      } catch (e) {
-        localStorage.removeItem('token');
-      }
-    }
-  }
+  // if (token) {
+  //   try {
+  //     const res = await fetch('https://api-gateway-ptj6.onrender.com/auth/home', {
+  //       headers: { Authorization: `Bearer ${token}` }
+  //     });
+  //     if (res.ok) {
+  //       const data = await res.json();
+  //       this.username = data.username || data.email;
+  //       this.isAdmin = data.isAdmin;
+  //     }
+  //   } catch (e) {
+  //     console.log("Token inválido → logout");
+  //     localStorage.removeItem('token');
+  //     this.isLoggedIn = false;
+  //   }
+  // }
+}
 
   irParaLogin() { this.router.navigate(['/login']); }
   cadastrar() {
