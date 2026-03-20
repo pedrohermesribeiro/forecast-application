@@ -5,11 +5,11 @@
   </div>
 
   <!-- Não logado -->
-  <div class="hero-actions" *ngIf="!isLoggedIn">
+  <div class="hero-actions">
     <button class="btn btn-primary btn-large" (click)="irParaLogin()">
       🔐 Entrar no Sistema
     </button>
-    <button class="btn btn-secondary" (click)="cadastrar()">
+    <button class="btn btn-secondary" (click)="cadastrar()" *ngIf="isLoggedIn">
       📝 Cadastrar nova conta (Cliente)
     </button>
   </div>
@@ -45,7 +45,8 @@
       <div class="card disabled" *ngIf="!isAdmin">
         <div class="card-icon">🔑</div>
         <h3>Gerenciar Roles</h3>
-        <p>Acesso restrito a Administradores</p>
+        <p *ngIf="!isAdmin">Acesso restrito a Administradores</p>
+        <button class="btn btn-primary" *ngIf="isAdmin" (click)="irParaRoles()">Acessar Roles</button>
       </div>
     </div>
   </div>
