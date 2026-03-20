@@ -31,6 +31,7 @@ async ngOnInit() {
         const data = await res.json();
         this.username = data.username || data.email;
         this.isAdmin = this.username === "pedrohermesrib@gmail.com" ? true : false;
+        console.log("1: username:",this.username,"2: data:",data,"3: isAdmin",this.isAdmin);
       }
     } catch (e) {
       console.log("Token inválido → logout");
