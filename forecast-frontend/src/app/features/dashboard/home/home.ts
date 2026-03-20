@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { jwtDecode } from 'jwt-decode';
@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
   username: string | null = null;
   isAdmin = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private user: ChangeDetectorRef ) {}
 
 async ngOnInit() {
   const token = localStorage.getItem('token');
@@ -32,6 +32,7 @@ async ngOnInit() {
         this.username = data.username || data.email;
         this.isAdmin = this.username === "pedrohermesrib@gmail.com" ? true : false;
         console.log("1: username:",this.username,"2: data:",data,"3: isAdmin",this.isAdmin);
+        this.user.detectChanges();
       }
     } catch (e) {
       console.log("Token inválido → logout");
