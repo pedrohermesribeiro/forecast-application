@@ -33,6 +33,7 @@ async ngOnInit() {
       const res = await fetch('https://api-gateway-ptj6.onrender.com/auth/home', {
         headers: { Authorization: `Bearer ${token}` }
       });
+      console.log('Retorno authorization:', res);
       if (res.ok) {
         const data = await res.json();
         this.username = data.username || data.email;

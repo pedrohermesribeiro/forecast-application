@@ -83,7 +83,7 @@ public class AuthController {
             response.setAdmin(user.getRoles().stream().anyMatch(r -> r.getName().contains("ADMIN")));
             response.setMessage("Bem-vindo ao Forecast Application!");
             response.setSuccess(true);
-
+            System.out.println("➡️ Chamando URL response: 1" + response.getEmail());
             return ResponseEntity.ok(response);
 
         } catch (Exception e) {
