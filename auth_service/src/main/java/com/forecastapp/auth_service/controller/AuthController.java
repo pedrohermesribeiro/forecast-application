@@ -82,7 +82,7 @@ public ResponseEntity<HomeResponseDTO> getHomeInfo(
 
         System.out.println("➡️ Identificador extraído do token: " + identifier);
 
-        UserDTO user = userClient.findByEmail01(identifier).getBody();
+        UserDTO user = userClient.findByEmail(identifier).getBody();
 
         if (user == null) {
             response.setSuccess(false);
