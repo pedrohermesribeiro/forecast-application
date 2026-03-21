@@ -58,24 +58,34 @@ public class AuthController {
     public ResponseEntity<HomeResponseDTO> getHomeInfo(@RequestHeader(value = "Authorization", required = false) String authHeader) {
 
         HomeResponseDTO response = new HomeResponseDTO();
-
-        // if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-        //     response.setSuccess(false);
-        //     response.setMessage("Token não encontrado ou inválido");
-        //     return ResponseEntity.status(401).body(response);
-        // }
+        System.out.println("➡️ Chamando URL response: 0" + authHeader);
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            response.setSuccess(false);
+            response.setMessage("Token não encontrado ou inválido");
+            return ResponseEntity.status(401).body(response);
+        }
         //String hash = HashUtil.sha256(this.emailUsuario);
-        String token = jwtTokenUtil.generateToken(this.emailUsuario);
-
+        //String token = jwtTokenUtil.generateToken(this.emailUsuario);
+        System.out.println("➡️ Chamando URL token: 1" + authHeader);
         try {
             // Valida o token (usando o util que você já tem)
+            String token = authHeader.substring(7);
+
             if (!jwtTokenUtil.validateToken(token)) {
-                throw new Exception("Token inválido");
+                response.setSuccess(false);
+                response.setMessage("Token inválido ou expirado");
+                return ResponseEntity.status(401).body(response);
             }
+
+            System.out.println("➡️ Chamando URL response: 1" + response);
+
+            // if (!jwtTokenUtil.validateToken(token)) {
+            //     throw new Exception("Token inválido");
+            // }
 
             // Como o token atual é um hash, buscamos o usuário pelo UserClient (funciona!)
             // (se quiser, podemos melhorar o JWT depois para colocar email direto no token)
-            UserDTO user = userClient.findByEmail01("exemplo@email.com").getBody(); // ← temporário
+            UserDTO user = userClient.findByEmail01(this.emailUsuario).getBody(); // ← temporário
 
             // TODO: depois vamos pegar o email do token de forma correta
             response.setEmail(this.emailUsuario);
@@ -83,7 +93,8 @@ public class AuthController {
             response.setAdmin(user.getRoles().stream().anyMatch(r -> r.getName().contains("ADMIN")));
             response.setMessage("Bem-vindo ao Forecast Application!");
             response.setSuccess(true);
-            System.out.println("➡️ Chamando URL response: 1" + response.getEmail());
+            System.out.println("➡️ Chamando URL response: 2" + response.getEmail());
+            System.out.println("➡️ Chamando URL user: 1" + user.getEmail());
             return ResponseEntity.ok(response);
 
         } catch (Exception e) {
