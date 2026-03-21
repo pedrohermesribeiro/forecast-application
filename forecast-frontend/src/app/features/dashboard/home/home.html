@@ -29,7 +29,7 @@
         <button class="btn btn-primary">Acessar Chat IA</button>
       </div>
 
-      <div class="card" (click)="irParaUsuarios()">
+      <div class="card" *ngIf="isAdmin" (click)="irParaUsuarios()">
         <div class="card-icon">👥</div>
         <h3>Gerenciar Usuários</h3>
         <p>Cadastre, edite e exclua usuários</p>
