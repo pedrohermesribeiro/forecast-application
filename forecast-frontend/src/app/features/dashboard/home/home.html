@@ -29,18 +29,30 @@
         <button class="btn btn-primary">Acessar Chat IA</button>
       </div>
 
-      <div class="card" (click)="irParaUsuarios()">
+      <div class="card" *ngIf="isAdmin" (click)="irParaUsuarios()">
         <div class="card-icon">👥</div>
         <h3>Gerenciar Usuários</h3>
         <p>Cadastre, edite e exclua usuários</p>
         <button class="btn btn-primary" *ngIf="isAdmin">Acessar Usuários</button>
       </div>
+      <div class="card" *ngIf="!isAdmin">
+        <div class="card-icon">👥</div>
+        <h3>Gerenciar Usuários</h3>
+        <p>Cadastre, edite e exclua usuários</p>
+        <!-- <button class="btn btn-primary">Acessar Usuários</button> -->
+      </div>
 
-      <div class="card" (click)="irParaRoles()">
+      <div class="card" *ngIf="isAdmin" (click)="irParaRoles()">
         <div class="card-icon">🔑</div>
         <h3>Gerenciar Roles</h3>
         <p>Crie e gerencie papéis de acesso</p>
-        <button class="btn btn-primary" *ngIf="isAdmin">Acessar Roles</button>
+        <button class="btn btn-primary" >Acessar Roles</button>
+      </div>
+      <div class="card" *ngIf="!isAdmin">
+        <div class="card-icon">🔑</div>
+        <h3>Gerenciar Roles</h3>
+        <p>Crie e gerencie papéis de acesso</p>
+        <!-- <button class="btn btn-primary" >Acessar Roles</button> -->
       </div>
     </div>
   </div>
