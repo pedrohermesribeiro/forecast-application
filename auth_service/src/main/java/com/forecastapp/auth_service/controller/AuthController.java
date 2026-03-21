@@ -54,55 +54,61 @@ public class AuthController {
         return ResponseEntity.ok(responseDTO);
     }
 
-    @GetMapping("/home")
-    public ResponseEntity<HomeResponseDTO> getHomeInfo(@RequestHeader(value = "Authorization", required = false) String authHeader) {
+@GetMapping("/home")
+public ResponseEntity<HomeResponseDTO> getHomeInfo(
+        @RequestHeader(value = "Authorization", required = false) String authHeader) {
 
-        HomeResponseDTO response = new HomeResponseDTO();
-        System.out.println("➡️ Chamando URL response: 0" + authHeader);
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            response.setSuccess(false);
-            response.setMessage("Token não encontrado ou inválido");
-            return ResponseEntity.status(401).body(response);
-        }
-        //String hash = HashUtil.sha256(this.emailUsuario);
-        //String token = jwtTokenUtil.generateToken(this.emailUsuario);
-        System.out.println("➡️ Chamando URL token: 1" + authHeader);
-        try {
-            // Valida o token (usando o util que você já tem)
-            String token = authHeader.substring(7);
+    HomeResponseDTO response = new HomeResponseDTO();
+    System.out.println("➡️ Chamando URL response: 0" + authHeader);
 
-            if (!jwtTokenUtil.validateToken(token)) {
-                response.setSuccess(false);
-                response.setMessage("Token inválido ou expirado");
-                return ResponseEntity.status(401).body(response);
-            }
+    if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+        response.setSuccess(false);
+        response.setMessage("Token não encontrado ou formato inválido");
+        return ResponseEntity.status(401).body(response);
+    }
 
-            System.out.println("➡️ Chamando URL response: 1" + response);
+    String token = authHeader.substring(7);
+    System.out.println("➡️ Chamando URL token: 1" + token.substring(0, 20) + "...");
 
-            // if (!jwtTokenUtil.validateToken(token)) {
-            //     throw new Exception("Token inválido");
-            // }
-
-            // Como o token atual é um hash, buscamos o usuário pelo UserClient (funciona!)
-            // (se quiser, podemos melhorar o JWT depois para colocar email direto no token)
-            UserDTO user = userClient.findByEmail01(this.emailUsuario).getBody(); // ← temporário
-
-            // TODO: depois vamos pegar o email do token de forma correta
-            response.setEmail(this.emailUsuario);
-            response.setUsername(user.getUsername() != null ? user.getUsername() : user.getEmail());
-            response.setAdmin(user.getRoles().stream().anyMatch(r -> r.getName().contains("ADMIN")));
-            response.setMessage("Bem-vindo ao Forecast Application!");
-            response.setSuccess(true);
-            System.out.println("➡️ Chamando URL response: 2" + response.getEmail());
-            System.out.println("➡️ Chamando URL user: 1" + user.getEmail());
-            return ResponseEntity.ok(response);
-
-        } catch (Exception e) {
+    try {
+        if (!jwtTokenUtil.validateToken(token)) {
             response.setSuccess(false);
             response.setMessage("Token inválido ou expirado");
             return ResponseEntity.status(401).body(response);
         }
+
+        // Extrai o identificador (deve ser email ou hash, dependendo do que você gravou)
+        String identifier = jwtTokenUtil.getUsernameFromToken(token);  // implemente esse método se não tiver
+
+        System.out.println("➡️ Identificador extraído do token: " + identifier);
+
+        UserDTO user = userClient.findByEmail01(identifier).getBody();
+
+        if (user == null) {
+            response.setSuccess(false);
+            response.setMessage("Usuário não encontrado");
+            return ResponseEntity.status(404).body(response);
+        }
+
+        response.setEmail(user.getEmail());
+        response.setUsername(user.getUsername() != null ? user.getUsername() : user.getEmail());
+        response.setAdmin(user.getRoles().stream().anyMatch(r -> r.getName().contains("ADMIN")));
+        response.setMessage("Bem-vindo ao Forecast Application!");
+        response.setSuccess(true);
+
+        System.out.println("➡️ Chamando URL response: 2 " + response.getEmail());
+        System.out.println("➡️ Usuário encontrado: " + user.getEmail());
+
+        return ResponseEntity.ok(response);
+
+    } catch (Exception e) {
+        System.out.println("❌ Erro no /home: " + e.getMessage());
+        e.printStackTrace();  // para ver stacktrace no log do Render
+        response.setSuccess(false);
+        response.setMessage("Erro ao processar requisição: " + e.getMessage());
+        return ResponseEntity.status(401).body(response);
     }
+}
 
 
 

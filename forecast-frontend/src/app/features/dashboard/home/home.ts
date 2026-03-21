@@ -25,48 +25,79 @@ export class HomeComponent implements OnInit {
   constructor(private router: Router, private user: ChangeDetectorRef, private userService: UserService ) {}
 
 async ngOnInit() {
+  this.loading = true;
   const token = localStorage.getItem('token');
-  this.isLoggedIn = !!token;
 
-  if (token) {
-    try {
-      const res = await fetch('https://api-gateway-ptj6.onrender.com/auth/home', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      console.log('Retorno authorization:', res);
-      if (res.ok) {
-        const data = await res.json();
-        this.username = data.username || data.email;
-        //this.isAdmin = this.username === "pedrohermesrib@gmail.com" ? true : false;
-        this.buscarUsuario(data.email);
+  if (!token) {
+    this.isLoggedIn = false;
+    this.finalizarCarregamento();
+    return;
+  }
+
+  try {
+    const res = await fetch('https://api-gateway-ptj6.onrender.com/auth/home', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/json'
       }
+    });
+
+    // dentro do try, depois de pegar o token:
+    try {
+      const decoded: any = jwtDecode(token);
+      console.log('Token decodificado (debug):', decoded);
+      // sub pode ser o hash ou email, dependendo do que você colocou no backend
     } catch (e) {
-      console.log("Token inválido → logout");
-      localStorage.removeItem('token');
-      this.isLoggedIn = false;
+      console.warn('Token não decodificável');
     }
+
+    if (!res.ok) {
+      if (res.status === 401) {
+        throw new Error('Sessão expirada ou token inválido');
+      }
+      throw new Error(`Erro ${res.status}`);
+    }
+
+    const data: { success: boolean; email: string; username: string; admin: boolean; message: string } = await res.json();
+
+    if (!data.success) {
+      throw new Error(data.message || 'Resposta inválida do servidor');
+    }
+
+    this.username   = data.username || data.email || null;
+    this.isAdmin    = !!data.admin;
+    this.isLoggedIn = true;
+
+    this.finalizarCarregamento();
+
+  } catch (err: any) {
+    console.error('Falha ao carregar informações do usuário:', err);
+    localStorage.removeItem('token');
+    this.isLoggedIn = false;
+    this.finalizarCarregamento(err.message || 'Erro ao carregar dados. Tente novamente.');
   }
 }
 
-  buscarUsuario(user:string ): void {
-    this.loading = true;
-    //this.error = null;
-    //this.users = null;
+  // buscarUsuario(user:string ): void {
+  //   this.loading = true;
+  //   //this.error = null;
+  //   //this.users = null;
 
-    this.userService.findByEmail(user).subscribe({
-      next: (user) => {
-        this.users = user;
-        this.isAdmin = this.ehAdminPelaPrimeiraRole(user.roles);
-        this.finalizarCarregamento();
-        console.log('Usuário encontrado:', user);
-      },
-      error: (err) => {
-        this.error = 'Erro ao buscar usuário: ' + (err.message || err.statusText);
-        this.loading = false;
-        console.error(err);
-      }
-    });
-  }
+  //   this.userService.findByEmail(user).subscribe({
+  //     next: (user) => {
+  //       this.users = user;
+  //       this.isAdmin = this.ehAdminPelaPrimeiraRole(user.roles);
+  //       this.finalizarCarregamento();
+  //       console.log('Usuário encontrado:', user);
+  //     },
+  //     error: (err) => {
+  //       this.error = 'Erro ao buscar usuário: ' + (err.message || err.statusText);
+  //       this.loading = false;
+  //       console.error(err);
+  //     }
+  //   });
+  // }
 
     private ehAdminPelaPrimeiraRole(roles: Role[]): boolean {
     if (!roles || roles.length === 0) {

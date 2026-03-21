@@ -15,7 +15,7 @@
   </div>
 
   <!-- Logado -->
-  <div *ngIf="isLoggedIn" class="dashboard">
+  <div *ngIf="isLoggedIn && !loading && !error" class="dashboard">
     <div class="welcome">
       <h2>👋 Olá, {{ username }}!</h2>
       <button class="btn btn-danger" (click)="logout()">Sair</button>
