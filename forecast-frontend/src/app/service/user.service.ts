@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.prod';
 
@@ -70,5 +70,10 @@ private rolesUrl = 'https://api-gateway-ptj6.onrender.com/roles';
 
   deleteRole(id: number): Observable<any> {
     return this.http.delete(`${this.rolesUrl}/${id}`);
+  }
+
+  findByEmail(email: string): Observable<User> {
+    const params = new HttpParams().set('email', email);
+    return this.http.get<User>(`${this.usersUrl}/search`, { params });
   }
 }
