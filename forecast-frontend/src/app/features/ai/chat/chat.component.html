@@ -60,19 +60,19 @@
         </div>
         <div *ngIf="selectedAgent === 'INVESTMENT_ADVISOR' && resumo" class="investment-response">
           <h3>Resumo</h3>
-          <p>{{ resumo }}</p>
+          <p>{{ msg.text[0] }}</p>
 
           <h3>Análise</h3>
-          <p>{{ analise }}</p>
+          <p>{{ msg.text[1] }}</p>
 
           <h3>Recomendação</h3>
-          <p>{{ recomendacao }}</p>
+          <p>{{ msg.text[2] }}</p>
 
           <h3>Riscos</h3>
-          <p>{{ riscos }}</p>
+          <p>{{ msg.text[3] }}</p>
 
           <h4>Disclaimer</h4>
-          <p><strong>{{ disclaimer }}</strong></p>
+          <p><strong>{{ msg.text[5] }}</strong></p>
         </div>
 
         </div>
