@@ -65,6 +65,12 @@
         [previsaoData]="previsao">
       </app-prediction>
 
+      <!-- Componente de Previsão -->
+      <app-prediction
+        *ngIf="showPrediction && selectedAgent === 'SALES_FORECAST'"
+        [previsaoData]="previsao">
+      </app-prediction>
+
       <!-- Botão Nova Conversa -->
       <div class="new-chat-btn" *ngIf="messages.length > 0">
         <button (click)="novaConversa()">Nova conversa</button>

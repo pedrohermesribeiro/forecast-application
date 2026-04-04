@@ -18,10 +18,16 @@ interface ChatMessage {
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent {
-  selectedAgent: string = 'SALES_FORECAST';   // Agente padrão
+  selectedAgent: string =  "";  // Agente padrão
+  selectedAgent02: string = 'INVESTMENT_ADVISOR';
   messages: ChatMessage[] = [];
   newMessage: string = '';
   previsao: any[] = [];
+  resumo: any[] = [];
+  analise: any[] = [];
+  recomendacao: any[] = [];
+  riscos: any[] = [];
+  disclaimer: any[] = [];
   showPrediction: boolean = false;
   loading: boolean = false;
 
@@ -30,10 +36,20 @@ export class ChatComponent {
   constructor(private cdr: ChangeDetectorRef) {}
 
   selectAgent(agent: string) {
-    if (this.selectedAgent !== agent) {
-      this.selectedAgent = agent;
+    this.selectedAgent = agent == 'SALES_FORECAST' ? 'SALES_FORECAST' : 'INVESTMENT_ADVISOR'; 
+    if (this.selectedAgent === 'SALES_FORECAST') {
+      //this.selectedAgent = agent;
       this.messages = [];
       this.previsao = [];
+      this.showPrediction = true;
+    }
+    if (this.selectedAgent === 'INVESTMENT_ADVISOR') {
+      //this.selectedAgent02 = agent;
+      this.resumo = [];
+      this.analise = [];
+      this.recomendacao = [];
+      this.riscos = [];
+      this.disclaimer = [];
       this.showPrediction = false;
     }
   }
@@ -71,13 +87,21 @@ export class ChatComponent {
 
         this.messages.push({
           sender: 'bot',
-          text: resposta.explicacao || resposta.resumo || resposta.analise || 'Resposta recebida com sucesso.'
+          text: resposta.explicacao || resposta.resumo || resposta.analise || resposta.recomendacao || resposta.risco || resposta.disclaimer || 'Resposta recebida com sucesso.'
         });
 
         // Mostra gráfico de previsão apenas no agente de vendas
         if (this.selectedAgent === 'SALES_FORECAST' && resposta.previsao && resposta.previsao.length > 0) {
           this.previsao = resposta.previsao;
           this.showPrediction = true;
+        }
+        if (this.selectedAgent === 'INVESTMENT_ADVISOR' && resposta.resumo && resposta.recomendacao && resposta.risco && resposta.analise && resposta.disclaimer) {
+          this.resumo = resposta.resumo;
+          this.analise = resposta.analise;
+          this.recomendacao = resposta.recomendacao;
+          this.riscos = resposta.riscos;
+          this.disclaimer = resposta.disclaimer;
+          this.showPrediction = false;
         }
       } else {
         this.messages.push({ sender: 'bot', text: 'Erro de validação da resposta. Tente novamente.' });
