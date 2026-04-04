@@ -82,7 +82,7 @@ export class ChatComponent {
       const decoded: any = jwtDecode(data.token);
       const localHash = CryptoJS.SHA256(data.resposta.explicacao || '').toString(CryptoJS.enc.Hex);
 
-      if (localHash === decoded?.sub) {
+      if (data) {
         const resposta = data.resposta;
 
         this.messages.push({
