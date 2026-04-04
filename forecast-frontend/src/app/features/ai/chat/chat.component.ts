@@ -81,10 +81,10 @@ export class ChatComponent {
         const resposta = data.resposta;
 
         // Adiciona a mensagem principal no chat
-        const mensagemPrincipal = resposta.explicacao; 
-                                  // resposta.resumo || 
-                                  // resposta.analise || 
-                                  // 'Resposta recebida com sucesso.';
+        const mensagemPrincipal = resposta.explicacao || 
+                                  resposta.resumo || 
+                                  resposta.analise || 
+                                  'Resposta recebida com sucesso.';
 
         this.messages.push({ sender: 'bot', text: mensagemPrincipal });
 
