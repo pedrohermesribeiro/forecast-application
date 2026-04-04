@@ -71,3 +71,146 @@
   padding: 20px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 97vh;
+  width: 100%;
+  max-width: 1300px;
+  margin: auto;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f9f9f9;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+}
+
+.chat-header {
+  background: #004080;
+  color: #fff;
+  padding: 1rem;
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-header .status {
+  font-size: 0.9rem;
+  background: #28a745;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: #ffffff;
+}
+
+.message-container{
+  overflow-y: auto;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  max-width: 75%;
+}
+
+.user-message {
+  align-self: flex-end;
+  text-align: right;
+}
+
+.bot-message {
+  align-self: flex-start;
+  text-align: left;
+}
+
+.bubble {
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  background: #e6f0ff;
+  color: #000;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.user-message .bubble {
+  background: #004080;
+  color: #fff;
+}
+
+.meta {
+  font-size: 0.75rem;
+  margin-top: 0.2rem;
+  color: #666;
+}
+
+.chat-input {
+  display: flex;
+  padding: 0.8rem;
+  border-top: 1px solid #ddd;
+  background: #f1f1f1;
+
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  font-size: 1rem;
+
+}
+
+.chat-input button {
+  margin-left: 0.5rem;
+  padding: 0.8rem 1.2rem;
+  border: none;
+  background: #004080;
+  color: #fff;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.chat-input button:hover {
+  background: #0066cc;
+}
+
+.message-item {
+  margin: 12px 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  max-width: 93%;
+}
+
+.user-message {
+  background: #e3f2fd;
+  align-self: flex-start;
+  margin-right: auto;
+}
+
+.bot-message {
+  background: #f1f8e9;
+  align-self: flex-start;
+  margin-left: auto;
+  margin-right: 20px; /* ou ajuste para ficar mais à esquerda */
+}
+
+.message-text {
+  white-space: pre-wrap;          /* Preserva quebras de linha do texto */
+  word-wrap: break-word;          /* Quebra palavras longas */
+  text-align: justify;            /* Justificado */
+  line-height: 1.5;               /* Mais espaçamento entre linhas */
+  margin-top: 6px;
+} 

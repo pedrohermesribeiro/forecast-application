@@ -394,7 +394,7 @@ public class ChatbotService {
         }
 
         ChatCompletionCreateParams params = ChatCompletionCreateParams.builder()
-                .model("gpt-4o-mini")   // ou "gpt-5.1" se você tiver acesso
+                .model("gpt-5.1")   // ou "gpt-5.1" se você tiver acesso
                 .addUserMessage(promptCompleto)
                 .build();
 

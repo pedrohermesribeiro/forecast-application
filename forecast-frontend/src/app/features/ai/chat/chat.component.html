@@ -56,7 +56,7 @@
              [ngClass]="{'user-message': msg.sender === 'user', 'bot-message': msg.sender === 'bot'}">
           <strong>{{ msg.sender === 'user' ? 'Você:' : 'Agente:' }}</strong>
           <div class="message-text">{{ msg.text }}</div>
-          <div *ngIf="selectedAgent === 'INVESTMENT_ADVISOR' && resumo" class="investment-response">
+          <!-- <div *ngIf="selectedAgent === 'INVESTMENT_ADVISOR' && resumo" class="investment-response">
             <h3>Resumo</h3>
             <p>{{ resumo }}</p>
 
@@ -71,7 +71,7 @@
 
             <h4>Disclaimer</h4>
             <p><strong>{{ disclaimer }}</strong></p>
-          </div>
+          </div> -->
 
         </div>
       </div>
