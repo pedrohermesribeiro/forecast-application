@@ -56,14 +56,25 @@
              [ngClass]="{'user-message': msg.sender === 'user', 'bot-message': msg.sender === 'bot'}">
           <strong>{{ msg.sender === 'user' ? 'Você:' : 'Agente:' }}</strong>
           <div class="message-text">{{ msg.text }}</div>
+          <div *ngIf="selectedAgent === 'INVESTMENT_ADVISOR' && resumo" class="investment-response">
+            <h3>Resumo</h3>
+            <p>{{ resumo }}</p>
+
+            <h3>Análise</h3>
+            <p>{{ analise }}</p>
+
+            <h3>Recomendação</h3>
+            <p>{{ recomendacao }}</p>
+
+            <h3>Riscos</h3>
+            <p>{{ riscos }}</p>
+
+            <h4>Disclaimer</h4>
+            <p><strong>{{ disclaimer }}</strong></p>
+          </div>
+
         </div>
       </div>
-
-      <!-- Componente de Previsão -->
-      <app-prediction
-        *ngIf="showPrediction && selectedAgent === 'SALES_FORECAST'"
-        [previsaoData]="previsao">
-      </app-prediction>
 
       <!-- Componente de Previsão -->
       <app-prediction

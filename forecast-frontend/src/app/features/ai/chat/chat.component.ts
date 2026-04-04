@@ -18,38 +18,34 @@ interface ChatMessage {
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent {
-  selectedAgent: string =  "";  // Agente padrão
-  selectedAgent02: string = 'INVESTMENT_ADVISOR';
+  selectedAgent: string = 'SALES_FORECAST';   // ← Corrigido: começa com um valor válido
   messages: ChatMessage[] = [];
   newMessage: string = '';
   previsao: any[] = [];
-  resumo: any[] = [];
-  analise: any[] = [];
-  recomendacao: any[] = [];
-  riscos: any[] = [];
-  disclaimer: any[] = [];
   showPrediction: boolean = false;
   loading: boolean = false;
 
-  private apiUrl = 'https://api-gateway-ptj6.onrender.com/ai/chat'; // ajuste se necessário
+  // Variáveis para o agente de Investimentos (agora como string, não array)
+  resumo: string = '';
+  analise: string = '';
+  recomendacao: string = '';
+  riscos: string = '';
+  disclaimer: string = '';
+
+  private apiUrl = 'https://api-gateway-ptj6.onrender.com/ai/chat';
 
   constructor(private cdr: ChangeDetectorRef) {}
 
   selectAgent(agent: string) {
-    this.selectedAgent = agent == 'SALES_FORECAST' ? 'SALES_FORECAST' : 'INVESTMENT_ADVISOR'; 
-    if (this.selectedAgent === 'SALES_FORECAST') {
-      //this.selectedAgent = agent;
+    if (this.selectedAgent !== agent) {
+      this.selectedAgent = agent;
       this.messages = [];
       this.previsao = [];
-      this.showPrediction = true;
-    }
-    if (this.selectedAgent === 'INVESTMENT_ADVISOR') {
-      //this.selectedAgent02 = agent;
-      this.resumo = [];
-      this.analise = [];
-      this.recomendacao = [];
-      this.riscos = [];
-      this.disclaimer = [];
+      this.resumo = '';
+      this.analise = '';
+      this.recomendacao = '';
+      this.riscos = '';
+      this.disclaimer = '';
       this.showPrediction = false;
     }
   }
@@ -72,39 +68,46 @@ export class ChatComponent {
         body: JSON.stringify(payload)
       });
 
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
 
       const data = await res.json();
 
-      // Validação do token JWT (manter segurança)
+      // ==================== VALIDAÇÃO JWT CORRIGIDA ====================
       const decoded: any = jwtDecode(data.token);
-      const localHash = CryptoJS.SHA256(data.resposta.explicacao || '').toString(CryptoJS.enc.Hex);
+      const textoParaHash = data.resposta.explicacao || data.resposta.resumo || '';
+      const localHash = CryptoJS.SHA256(textoParaHash).toString(CryptoJS.enc.Hex);
 
-      if (data) {
+      if (localHash === decoded?.sub) {
         const resposta = data.resposta;
 
-        this.messages.push({
-          sender: 'bot',
-          text: resposta.explicacao || resposta.resumo || resposta.analise || resposta.recomendacao || resposta.risco || resposta.disclaimer || 'Resposta recebida com sucesso.'
-        });
+        // Adiciona a mensagem principal no chat
+        const mensagemPrincipal = resposta.explicacao || 
+                                  resposta.resumo || 
+                                  resposta.analise || 
+                                  'Resposta recebida com sucesso.';
 
-        // Mostra gráfico de previsão apenas no agente de vendas
-        if (this.selectedAgent === 'SALES_FORECAST' && resposta.previsao && resposta.previsao.length > 0) {
+        this.messages.push({ sender: 'bot', text: mensagemPrincipal });
+
+        // === SALES_FORECAST ===
+        if (this.selectedAgent === 'SALES_FORECAST' && resposta.previsao?.length > 0) {
           this.previsao = resposta.previsao;
           this.showPrediction = true;
-        }
-        if (this.selectedAgent === 'INVESTMENT_ADVISOR' && resposta.resumo && resposta.recomendacao && resposta.risco && resposta.analise && resposta.disclaimer) {
-          this.resumo = resposta.resumo;
-          this.analise = resposta.analise;
-          this.recomendacao = resposta.recomendacao;
-          this.riscos = resposta.riscos;
-          this.disclaimer = resposta.disclaimer;
+        } 
+        // === INVESTMENT_ADVISOR ===
+        else if (this.selectedAgent === 'INVESTMENT_ADVISOR') {
+          this.resumo = resposta.resumo || '';
+          this.analise = resposta.analise || '';
+          this.recomendacao = resposta.recomendacao || '';
+          this.riscos = resposta.riscos || '';
+          this.disclaimer = resposta.disclaimer || '';
           this.showPrediction = false;
         }
+
       } else {
-        this.messages.push({ sender: 'bot', text: 'Erro de validação da resposta. Tente novamente.' });
+        this.messages.push({ 
+          sender: 'bot', 
+          text: 'Erro de validação da resposta (token inválido). Tente novamente.' 
+        });
       }
 
     } catch (error) {
@@ -123,6 +126,7 @@ export class ChatComponent {
   novaConversa() {
     this.messages = [];
     this.previsao = [];
+    this.resumo = this.analise = this.recomendacao = this.riscos = this.disclaimer = '';
     this.showPrediction = false;
   }
 }
