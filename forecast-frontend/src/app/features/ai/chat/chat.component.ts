@@ -98,6 +98,7 @@ export class ChatComponent {
         // === INVESTMENT_ADVISOR ===
         else if (this.selectedAgent === 'INVESTMENT_ADVISOR') {
           const mensagemPrincipal = resposta.resumo;
+          this.resumo = resposta.resumo;
           this.messages.push({ sender: 'bot', text: mensagemPrincipal }); 
           this.analise = resposta.analise;
           this.recomendacao = resposta.recomendacao;
