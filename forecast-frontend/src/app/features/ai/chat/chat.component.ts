@@ -81,25 +81,29 @@ export class ChatComponent {
         const resposta = data.resposta;
 
         // Adiciona a mensagem principal no chat
-        const mensagemPrincipal = resposta.explicacao || 
-                                  resposta.resumo || 
-                                  resposta.analise || 
-                                  'Resposta recebida com sucesso.';
+        // const mensagemPrincipal = resposta.explicacao || 
+        //                           resposta.resumo || 
+        //                           resposta.analise || 
+        //                           'Resposta recebida com sucesso.';
 
-        this.messages.push({ sender: 'bot', text: mensagemPrincipal });
+        // this.messages.push({ sender: 'bot', text: mensagemPrincipal });
 
         // === SALES_FORECAST ===
         if (this.selectedAgent === 'SALES_FORECAST' && resposta.previsao?.length > 0) {
+          const mensagemPrincipal = resposta.explicacao; 
+          this.messages.push({ sender: 'bot', text: mensagemPrincipal });
           this.previsao = resposta.previsao;
           this.showPrediction = true;
         } 
         // === INVESTMENT_ADVISOR ===
         else if (this.selectedAgent === 'INVESTMENT_ADVISOR') {
-          this.resumo = resposta.resumo || '';
-          this.analise = resposta.analise || '';
-          this.recomendacao = resposta.recomendacao || '';
-          this.riscos = resposta.riscos || '';
-          this.disclaimer = resposta.disclaimer || '';
+          const mensagemPrincipal = 
+            resposta.resumo || 
+            resposta.analise ||
+            resposta.recomendacao ||
+            resposta.riscos ||
+            resposta.disclaimer || '';
+          this.messages.push({ sender: 'bot', text: mensagemPrincipal });
           this.showPrediction = false;
         }
 
