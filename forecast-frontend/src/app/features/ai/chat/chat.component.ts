@@ -109,7 +109,7 @@ export class ChatComponent {
           this.messages.push({ sender: 'bot', text: mensagemPrincipal5 });
           this.showPrediction = false;
         }
-
+        console.log(this.messages);
       // } else {
       //   this.messages.push({ 
       //     sender: 'bot', 
