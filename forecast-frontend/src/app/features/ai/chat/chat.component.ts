@@ -81,10 +81,10 @@ export class ChatComponent {
         const resposta = data.resposta;
 
         // Adiciona a mensagem principal no chat
-        const mensagemPrincipal = resposta.explicacao || 
-                                  resposta.resumo || 
-                                  resposta.analise || 
-                                  'Resposta recebida com sucesso.';
+        const mensagemPrincipal = resposta.explicacao; 
+                                  // resposta.resumo || 
+                                  // resposta.analise || 
+                                  // 'Resposta recebida com sucesso.';
 
         this.messages.push({ sender: 'bot', text: mensagemPrincipal });
 
@@ -95,12 +95,12 @@ export class ChatComponent {
         } 
         // === INVESTMENT_ADVISOR ===
         else if (this.selectedAgent === 'INVESTMENT_ADVISOR') {
-          // this.resumo = resposta.resumo || '';
-          // this.analise = resposta.analise || '';
-          // this.recomendacao = resposta.recomendacao || '';
-          // this.riscos = resposta.riscos || '';
-          // this.disclaimer = resposta.disclaimer || '';
-          // this.showPrediction = false;
+          this.resumo = resposta.resumo || '';
+          this.analise = resposta.analise || '';
+          this.recomendacao = resposta.recomendacao || '';
+          this.riscos = resposta.riscos || '';
+          this.disclaimer = resposta.disclaimer || '';
+          this.showPrediction = false;
         }
 
       // } else {
