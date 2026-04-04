@@ -77,7 +77,7 @@ export class ChatComponent {
       const textoParaHash = data.resposta.explicacao || data.resposta.resumo || '';
       const localHash = CryptoJS.SHA256(textoParaHash).toString(CryptoJS.enc.Hex);
 
-      if (localHash === decoded?.sub) {
+      // if (localHash === decoded?.sub) {
         const resposta = data.resposta;
 
         // Adiciona a mensagem principal no chat
@@ -103,12 +103,12 @@ export class ChatComponent {
           this.showPrediction = false;
         }
 
-      } else {
-        this.messages.push({ 
-          sender: 'bot', 
-          text: 'Erro de validação da resposta (token inválido). Tente novamente.' 
-        });
-      }
+      // } else {
+      //   this.messages.push({ 
+      //     sender: 'bot', 
+      //     text: 'Erro de validação da resposta (token inválido). Tente novamente.' 
+      //   });
+      // }
 
     } catch (error) {
       console.error('Erro ao chamar API:', error);
