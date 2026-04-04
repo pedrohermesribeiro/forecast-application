@@ -97,20 +97,12 @@ export class ChatComponent {
         } 
         // === INVESTMENT_ADVISOR ===
         else if (this.selectedAgent === 'INVESTMENT_ADVISOR') {
-          const mensagemPrincipal1 = resposta.resumo;
-          
-          this.messages.push({ sender: 'bot', text: mensagemPrincipal1 }); 
-          const mensagemPrincipal2 = resposta.analise;
+          const mensagemPrincipal = resposta.resumo;
+          this.messages.push({ sender: 'bot', text: mensagemPrincipal }); 
           this.analise = resposta.analise;
-          //this.messages.push({ sender: 'bot', text: mensagemPrincipal2 });
-          const mensagemPrincipal3 = resposta.recomendacao;
-          //this.messages.push({ sender: 'bot', text: mensagemPrincipal3 });
-          const mensagemPrincipal4 = resposta.riscos;
+          this.recomendacao = resposta.recomendacao;
           this.riscos = resposta.riscos;
-          //this.messages.push({ sender: 'bot', text: mensagemPrincipal4 });
-          const mensagemPrincipal5 = resposta.disclaimer;
-          this.disclaimer;
-          //this.messages.push({ sender: 'bot', text: mensagemPrincipal5 });
+          this.disclaimer = resposta.disclaimer;
           this.showPrediction = false;
         }
         console.log(this.messages);
