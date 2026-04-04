@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 //import org.springframework.web.bind.annotation.CrossOrigin;
 //import org.apache.commons.codec.digest.DigestUtils;
 import com.forecastapp.ai_service.util.HashUtil;
-
+import com.forecastapp.ai_service.dto.ChatRequestDTO;
 import com.forecastapp.ai_service.dto.ChatTokenResponse;
 import com.forecastapp.ai_service.dto.ChatbotResponseDTO;
 import com.forecastapp.ai_service.security.JwtTokenUtil;
@@ -34,18 +34,38 @@ public class ChatbotController {
         this.chatbotService = chatbotService;
     }
 
-    @PostMapping("/chat")
-    public ResponseEntity<ChatTokenResponse> chat(@RequestBody Map<String, String> request) {
+    // @PostMapping("/chat")
+    // public ResponseEntity<ChatTokenResponse> chat(@RequestBody Map<String, String> request) {
 
-        System.out.println("🔥 RECEBIDO NO AI_SERVICE: " + request.get("pergunta"));
-        String pergunta = request.get("pergunta");
-        System.err.println("Pergunta: " + pergunta);
-        ChatbotResponseDTO respDTO = new ChatbotResponseDTO();
-        respDTO = chatbotService.processarPergunta(pergunta);
-        System.out.println("➡️ Chamando URL request: 3" + request);
+    //     System.out.println("🔥 RECEBIDO NO AI_SERVICE: " + request.get("pergunta"));
+    //     String pergunta = request.get("pergunta");
+    //     System.err.println("Pergunta: " + pergunta);
+    //     ChatbotResponseDTO respDTO = new ChatbotResponseDTO();
+    //     respDTO = chatbotService.processarPergunta(pergunta);
+    //     System.out.println("➡️ Chamando URL request: 3" + request);
+    //     String hash = HashUtil.sha256(respDTO.getExplicacao());
+    //     String token = jwtTokenUtil.generateToken(hash);
+    //     //String token = jwtTokenUtil.generateToken(respDTO.getExplicacao());
+    //     ChatTokenResponse chatResp = new ChatTokenResponse();
+    //     chatResp.setResposta(respDTO);
+    //     chatResp.setToken(token);
+
+    //     return ResponseEntity.ok(chatResp);
+    // }
+
+    @PostMapping("/chat")
+    public ResponseEntity<ChatTokenResponse> chat(@RequestBody ChatRequestDTO request) {
+        System.out.println("🔥 Agente solicitado: " + request.getAgentType());
+
+        ChatbotResponseDTO respDTO = chatbotService.processarPergunta(
+            request.getPergunta(), 
+            request.getAgentType()
+        );
+
+        // ... resto do código de hash + token igual
         String hash = HashUtil.sha256(respDTO.getExplicacao());
         String token = jwtTokenUtil.generateToken(hash);
-        //String token = jwtTokenUtil.generateToken(respDTO.getExplicacao());
+
         ChatTokenResponse chatResp = new ChatTokenResponse();
         chatResp.setResposta(respDTO);
         chatResp.setToken(token);

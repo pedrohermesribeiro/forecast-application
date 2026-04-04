@@ -1,4 +1,4 @@
-<div class="chat-container">
+<!-- <div class="chat-container">
   <h2>Chatbot de Previsão</h2>
 
   <!-- Removi o <form> para evitar GET automático -->
@@ -42,7 +42,73 @@
         DEBUG: Previsão recebida com {{ previsao.length }} itens
       </div>
     </app-prediction>
+  </div> -->
+
+  <div class="chat-page">
+  
+  <!-- Seleção de Agentes com Cards -->
+  <div class="agent-selector">
+    <h2 class="section-title">Escolha o Agente de IA</h2>
+    
+    <div class="agent-cards">
+      
+      <!-- Card 1: Previsão de Vendas -->
+      <div class="agent-card" 
+           [class.active]="selectedAgent === 'SALES_FORECAST'"
+           (click)="selectAgent('SALES_FORECAST')">
+        <div class="card-icon">📊</div>
+        <h3>Previsão de Vendas</h3>
+        <p>Análise e projeção de vendas dos seus produtos nos próximos meses</p>
+        <span class="agent-label">Analista Comercial</span>
+      </div>
+
+      <!-- Card 2: Investimentos -->
+      <div class="agent-card" 
+           [class.active]="selectedAgent === 'INVESTMENT_ADVISOR'"
+           (click)="selectAgent('INVESTMENT_ADVISOR')">
+        <div class="card-icon">💰</div>
+        <h3>Investimentos</h3>
+        <p>Assessor especializado em ações, portfólio, risco e alocação de capital</p>
+        <span class="agent-label">Assessor de Investimentos</span>
+      </div>
+
+    </div>
   </div>
+
+  <!-- Área do Chat -->
+  <div class="chat-container">
+    <h2 class="chat-title">
+      {{ selectedAgent === 'SALES_FORECAST' ? 'Chatbot de Previsão' : 'Agente de Investimentos' }}
+    </h2>
+
+    <div class="chat-input">
+      <input
+        type="text"
+        [(ngModel)]="newMessage"
+        placeholder="Digite sua pergunta..."
+        (keyup.enter)="sendMessage()"
+      />
+      <button (click)="sendMessage()" [disabled]="loading">Enviar</button>
+    </div>
+
+    <!-- Mensagens -->
+    <div class="message-container">
+      <div class="messages" *ngIf="messages.length > 0">
+        <div *ngFor="let msg of messages" 
+             class="message-item" 
+             [ngClass]="{'user-message': msg.sender === 'user', 'bot-message': msg.sender === 'bot'}">
+          <strong>{{ msg.sender === 'user' ? 'Você:' : 'Agente:' }}</strong>
+          <div class="message-text">{{ msg.text }}</div>
+        </div>
+      </div>
+
+      <app-prediction
+        *ngIf="showPrediction && selectedAgent === 'SALES_FORECAST'"
+        [previsaoData]="previsao">
+      </app-prediction>
+    </div>
+  </div>
+</div>
 
 
 
