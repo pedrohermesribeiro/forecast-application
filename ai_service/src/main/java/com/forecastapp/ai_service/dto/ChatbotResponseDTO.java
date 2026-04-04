@@ -1,77 +1,41 @@
 package com.forecastapp.ai_service.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
-import java.util.Map;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)  // Não inclui campos nulos no JSON
 public class ChatbotResponseDTO {
+
+    // Campos para SALES_FORECAST
     private String explicacao;
-    private List<PrevisaoDTO> previsao;
+    private List<PrevisaoItemDTO> previsao;
 
-    // Construtor padrão
-    public ChatbotResponseDTO(String explicacao, Map<String, Object> map) {
-    	
-    	this.explicacao = explicacao;
-    	//this.previsao = map;
-    	
-    }
+    // Campos para INVESTMENT_ADVISOR
+    private String resumo;
+    private String analise;
+    private String recomendacao;
+    private String riscos;
+    private String disclaimer;
 
-    // Construtor com todos os campos
-    public ChatbotResponseDTO(String explicacao, List<PrevisaoDTO> previsao) {
-        this.explicacao = explicacao;
-        this.previsao = previsao;
-    }
-    
-    
+    // Getters e Setters
+    public String getExplicacao() { return explicacao; }
+    public void setExplicacao(String explicacao) { this.explicacao = explicacao; }
 
-    public ChatbotResponseDTO() {
-		super();
-	}
+    public List<PrevisaoItemDTO> getPrevisao() { return previsao; }
+    public void setPrevisao(List<PrevisaoItemDTO> previsao) { this.previsao = previsao; }
 
-	public String getExplicacao() {
-        return explicacao;
-    }
+    public String getResumo() { return resumo; }
+    public void setResumo(String resumo) { this.resumo = resumo; }
 
-    public void setExplicacao(String explicacao) {
-        this.explicacao = explicacao;
-    }
+    public String getAnalise() { return analise; }
+    public void setAnalise(String analise) { this.analise = analise; }
 
-    public List<PrevisaoDTO> getPrevisao() {
-        return previsao;
-    }
+    public String getRecomendacao() { return recomendacao; }
+    public void setRecomendacao(String recomendacao) { this.recomendacao = recomendacao; }
 
-    public void setPrevisao(List<PrevisaoDTO> previsao) {
-        this.previsao = previsao;
-    }
+    public String getRiscos() { return riscos; }
+    public void setRiscos(String riscos) { this.riscos = riscos; }
 
-    public static class PrevisaoDTO {
-        private String mes;
-        private int vendas;
-        private int taxa;
-
-        public PrevisaoDTO() {}
-
-        public String getMes() {
-            return mes;
-        }
-
-        public void setMes(String mes) {
-            this.mes = mes;
-        }
-
-        public int getVendas() {
-            return vendas;
-        }
-
-        public void setVendas(int vendas) {
-            this.vendas = vendas;
-        }
-
-        public int getTaxa() {
-            return taxa;
-        }
-
-        public void setTaxa(int taxa) {
-            this.taxa = taxa;
-        }
-    }
+    public String getDisclaimer() { return disclaimer; }
+    public void setDisclaimer(String disclaimer) { this.disclaimer = disclaimer; }
 }

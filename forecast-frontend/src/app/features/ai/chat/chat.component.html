@@ -59,7 +59,7 @@
         </div>
       </div>
 
-      <!-- Componente de Previsão (só aparece no agente de vendas) -->
+      <!-- Componente de Previsão -->
       <app-prediction
         *ngIf="showPrediction && selectedAgent === 'SALES_FORECAST'"
         [previsaoData]="previsao">
