@@ -51,14 +51,14 @@
     <!-- Mensagens do Chat -->
     <div class="message-container">
       <div class="messages" *ngIf="messages.length > 0">
-        <div *ngFor="let msg of messages" 
+        <div *ngFor="let msg of messages; let i = index" 
              class="message-item" 
              [ngClass]="{'user-message': msg.sender === 'user', 'bot-message': msg.sender === 'bot'}">
           <strong>{{ msg.sender === 'user' ? 'Você:' : 'Agente:' }}</strong>
         <div *ngIf="selectedAgent === 'SALES_FORECAST'" class="investment-response">
           <div class="message-text">{{ msg.text }}</div>
         </div>
-        <div *ngIf="selectedAgent === 'INVESTMENT_ADVISOR' && showPrediction === false" class="investment-response">
+        <div *ngIf="selectedAgent === 'INVESTMENT_ADVISOR' && {{i}} === 1" class="investment-response">
           <h3>Resumo</h3>
           <p>{{ resumo }}</p>
 
