@@ -58,6 +58,9 @@
         <div *ngIf="selectedAgent === 'SALES_FORECAST'" class="investment-response">
           <div class="message-text">{{ msg.text }}</div>
         </div>
+        <div *ngIf="selectedAgent === 'INVESTMENT_ADVISOR' && i === 0" class="investment-response">
+          <div class="message-text">{{ msg.text }}</div>
+        </div>
         <div *ngIf="selectedAgent === 'INVESTMENT_ADVISOR' && i === 1" class="investment-response">
           <h3>Resumo</h3>
           <p>{{ resumo }}</p>
