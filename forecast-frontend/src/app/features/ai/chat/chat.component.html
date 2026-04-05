@@ -86,6 +86,10 @@
         *ngIf="showPrediction && selectedAgent === 'SALES_FORECAST'"
         [previsaoData]="previsao">
       </app-prediction>
+      <app-prediction
+        *ngIf="showPrediction === false && selectedAgent === 'INVESTMENT_ADVISOR'">
+        <span>{{ibovespa}}</span>
+      </app-prediction>
 
       <!-- Botão Nova Conversa -->
       <div class="new-chat-btn" *ngIf="messages.length > 0">

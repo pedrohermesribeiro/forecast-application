@@ -5,6 +5,7 @@ import { jwtDecode } from 'jwt-decode';
 import * as CryptoJS from 'crypto-js';
 import { PredictionComponent } from '../prediction/prediction.component';
 
+
 interface ChatMessage {
   sender: 'user' | 'bot';
   text: string;
@@ -31,6 +32,8 @@ export class ChatComponent {
   recomendacao: string = '';
   riscos: string = '';
   disclaimer: string = '';
+  dolar: any = null;
+  ibovespa: any = null;
 
   private apiUrl = 'https://api-gateway-ptj6.onrender.com/ai/chat';
 
@@ -113,6 +116,7 @@ export class ChatComponent {
       //     text: 'Erro de validação da resposta (token inválido). Tente novamente.' 
       //   });
       // }
+      this.pegarIndices();
 
     } catch (error) {
       console.error('Erro ao chamar API:', error);
@@ -133,4 +137,21 @@ export class ChatComponent {
     this.resumo = this.analise = this.recomendacao = this.riscos = this.disclaimer = '';
     this.showPrediction = false;
   }
+
+  async pegarIndices() {
+    try {
+      const response = await fetch('https://brapi.dev/api/quote/^BVSP,USDBRL,IFIX');
+      const data = await response.json();
+
+      console.log("Ibovespa:", data.results.find((resp: { symbol: string; }) => resp.symbol === '^BVSP'));
+      console.log("Dólar (USDBRL):", data.results.find((r: { symbol: string; }) => r.symbol === 'USDBRL'));
+      console.log("IFIX:", data.results.find((r: { symbol: string; }) => r.symbol === 'IFIX'));
+      this.ibovespa = data.results.find((resp: { symbol: string; }) => resp.symbol === '^BVSP');
+
+    } catch (error) {
+      console.error("Erro ao buscar índices:", error);
+    }
+  }
+
+  
 }
