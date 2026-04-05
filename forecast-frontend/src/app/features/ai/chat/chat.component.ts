@@ -139,14 +139,26 @@ export class ChatComponent {
   }
 
   async pegarIndices() {
+    const token = 'SEU_TOKEN_AQUI';   // ← Coloque aqui
+
     try {
-      const response = await fetch('https://brapi.dev/api/quote/^BVSP,USDBRL,IFIX');
+      const url = `https://brapi.dev/api/quote/^BVSP,USDBRL,IFIX?token=${token}`;
+      
+      const response = await fetch(url);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
       const data = await response.json();
 
-      console.log("Ibovespa:", data.results.find((resp: { symbol: string; }) => resp.symbol === '^BVSP'));
-      console.log("Dólar (USDBRL):", data.results.find((r: { symbol: string; }) => r.symbol === 'USDBRL'));
-      console.log("IFIX:", data.results.find((r: { symbol: string; }) => r.symbol === 'IFIX'));
-      this.ibovespa = data.results.find((resp: { symbol: string; }) => resp.symbol === '^BVSP');
+      const ibov = data.results.find((r: { symbol: string; }) => r.symbol === '^BVSP');
+      const dolar = data.results.find((r: { symbol: string; }) => r.symbol === 'USDBRL');
+      const ifix = data.results.find((r: { symbol: string; }) => r.symbol === 'IFIX');
+      this.ibovespa = data.results.find((r: { symbol: string; }) => r.symbol === '^BVSP');
+      console.log('Ibovespa:', ibov);
+      console.log('Dólar:', dolar);
+      console.log('IFIX:', ifix);
 
     } catch (error) {
       console.error("Erro ao buscar índices:", error);

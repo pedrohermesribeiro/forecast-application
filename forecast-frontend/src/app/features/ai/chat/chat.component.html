@@ -79,16 +79,20 @@
         </div>
 
         </div>
+        <div class="value">
+          <h4>IBOVESPA</h4>
+          <span class="points">{{ibovespa}}</span>
+        </div>
+        <div class="value">
+          <h4>IBOVESPA</h4>
+          <span class="points">{{ibov}}</span>
+        </div>
       </div>
 
       <!-- Componente de Previsão -->
       <app-prediction
         *ngIf="showPrediction && selectedAgent === 'SALES_FORECAST'"
         [previsaoData]="previsao">
-      </app-prediction>
-      <app-prediction
-        *ngIf="showPrediction === false && selectedAgent === 'INVESTMENT_ADVISOR'">
-        <span>{{ibovespa}}</span>
       </app-prediction>
 
       <!-- Botão Nova Conversa -->
