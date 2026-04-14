@@ -1,0 +1,24 @@
+<div class="p-6">
+  <h1 class="text-3xl font-bold mb-2">Principais Indicadores Financeiros</h1>
+  <p class="text-gray-500 mb-8">Atualizado em tempo real • Última atualização: {{ lastUpdate }}</p>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div *ngFor="let ind of indicators" 
+         class="bg-white rounded-2xl shadow p-6 border border-gray-100 hover:shadow-lg transition">
+      
+      <h3 class="text-lg font-semibold text-gray-800">{{ ind.name }}</h3>
+      <p class="text-sm text-gray-500">{{ ind.symbol }}</p>
+
+      <div class="mt-6 flex items-baseline">
+        <span class="text-4xl font-bold">
+          {{ ind.value | number:'1.2-2' }}
+        </span>
+        <span class="ml-2 text-xl text-gray-500">{{ ind.currency }}</span>
+      </div>
+
+      <div [ngClass]="getColor(ind.changePercent)" class="mt-4 text-xl font-medium">
+        {{ ind.changeText }}
+      </div>
+    </div>
+  </div>
+</div>

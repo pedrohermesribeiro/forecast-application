@@ -79,11 +79,17 @@ package com.forecastapp.ai_service.controller;
 import com.forecastapp.ai_service.dto.ChatRequestDTO;
 import com.forecastapp.ai_service.dto.ChatTokenResponse;
 import com.forecastapp.ai_service.dto.ChatbotResponseDTO;
+import com.forecastapp.ai_service.dto.MarketIndicatorDTO;
 import com.forecastapp.ai_service.service.ChatbotService;
+import com.forecastapp.ai_service.service.QuoteService;
 import com.forecastapp.ai_service.security.JwtTokenUtil;
 import com.forecastapp.ai_service.util.HashUtil;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -94,11 +100,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class ChatbotController {
 
     private final ChatbotService chatbotService;
+
+    private final QuoteService quoteService;
+
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
     public ChatbotController(ChatbotService chatbotService) {
         this.chatbotService = chatbotService;
+        this.quoteService = new QuoteService();
     }
 
     @PostMapping("/chat")
@@ -123,5 +133,11 @@ public class ChatbotController {
         chatResp.setToken(token);
 
         return ResponseEntity.ok(chatResp);
+    }
+
+    @GetMapping("/market/indicators")
+    public ResponseEntity<List<MarketIndicatorDTO>> getIndicators() {
+        List<MarketIndicatorDTO> indicators = quoteService.getMainIndicators();
+        return ResponseEntity.ok(indicators);
     }
 }
