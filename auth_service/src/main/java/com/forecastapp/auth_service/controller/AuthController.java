@@ -17,8 +17,6 @@ import com.forecastapp.auth_service.dto.LoginResponseDTO;
 import com.forecastapp.auth_service.model.LoginRequest;
 import com.forecastapp.auth_service.model.UserDTO;
 
-import jakarta.validation.Valid;
-
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
