@@ -38,7 +38,6 @@ services:
         value: prod
       - key: JWT_SECRET
         sync: false               # ← preencha no dashboard do Render (segredo)
-      # - key: DATABASE_URL         # se usar banco, adicione fromDatabase depois
 
   # User Service (interno)
   - type: web
@@ -49,7 +48,28 @@ services:
     envVars:
       - key: SPRING_PROFILES_ACTIVE
         value: prod
-      # Adicione DATABASE_URL se precisar
+      - key: JWT_SECRET
+        sync: false               # ← mesmo valor do auth-service (necessário p/ filtro JWT)
+      - key: DB_HOST
+        fromDatabase:
+          name: forecast-user-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: forecast-user-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: forecast-user-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: forecast-user-db
+          property: user
+      - key: DB_PASS
+        fromDatabase:
+          name: forecast-user-db
+          property: password
 
   # AI Service (interno, com chaves de API)
   - type: web
@@ -66,12 +86,42 @@ services:
         value: gpt-4o-mini
       - key: JAVA_OPTS
         value: -Xmx512m
+      - key: JWT_SECRET
+        sync: false               # ← mesmo valor do auth-service
+      - key: DB_HOST
+        fromDatabase:
+          name: forecast-ai-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: forecast-ai-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: forecast-ai-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: forecast-ai-db
+          property: user
+      - key: DB_PASS
+        fromDatabase:
+          name: forecast-ai-db
+          property: password
       # - key: GEMINI_API_KEY      # descomente se usar Gemini
       #   sync: false
 
-# Se precisar de banco de dados (exemplo Postgres no Render):
-# databases:
-#   - name: app-db
-#     plan: free
-#     databaseName: forecast_db
-#     user: postgres
+# Bancos Postgres (Oregon) — migração de H2 in-memory para persistência real (TCC)
+# Atenção: o Render free tier permite apenas 1 Postgres free por conta. O segundo
+# banco aqui está em plano "starter" (pago). Ajuste no dashboard se necessário.
+databases:
+  - name: forecast-user-db
+    plan: free
+    region: oregon
+    databaseName: forecast_user_db
+    user: forecast_user
+  - name: forecast-ai-db
+    plan: starter
+    region: oregon
+    databaseName: forecast_ai_db
+    user: forecast_ai

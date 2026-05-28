@@ -5,26 +5,19 @@ spring:
   config:
     activate:
       on-profile: prod
-
-# spring:
-#   application:
-#     name: user-service
-#   datasource:
-#     url: jdbc:h2:mem:forecast_user_db;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-#     driver-class-name: org.h2.Driver
-#     username: sa
-#     password:
-#   jpa:
-#     hibernate:
-#       ddl-auto: update
-#     show-sql: true
-#     properties:
-#       hibernate:
-#         format_sql: true
+  datasource:
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    username: ${DB_USER}
+    password: ${DB_PASS}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
   h2:
     console:
-      enabled: true
-      path: /h2-console
+      enabled: false
   security:
     enabled: false
 
@@ -33,16 +26,6 @@ management:
     web:
       exposure:
         include: health,info
-
----
-spring:
-  config:
-    activate:
-      on-profile: prod
-  h2:
-    console:
-      enabled: false
-
 
 jwt:
   secret: ${JWT_SECRET}

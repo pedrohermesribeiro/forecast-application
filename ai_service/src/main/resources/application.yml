@@ -5,37 +5,23 @@ spring:
   config:
     activate:
       on-profile: prod
+  datasource:
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    username: ${DB_USER}
+    password: ${DB_PASS}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
   h2:
     console:
-      enabled: true
-      path: /h2-console
+      enabled: false
 
-# spring:
-#   application:
-#     name: ai-service
-#   datasource:
-#     url: jdbc:h2:mem:forecast_ai_db;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-#     driver-class-name: org.h2.Driver
-#     username: sa
-#     password:
-#   jpa:
-#     hibernate:
-#       ddl-auto: update
-#     show-sql: true
-#     properties:
-#       hibernate:
-#         format_sql: true
-
-
-# usa variáveis de ambiente com valor padrão para não quebrar em dev/teste
 openai:
   api:
     key: ${OPENAI_API_KEY:default-dummy-key-for-local}
-
-# gemini:
-#   api:
-#     key: ${GEMINI_API_KEY:dummy-key-for-dev}
-#     url: ${GEMINI_API_URL:https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent}
 
 management:
   endpoints:
@@ -46,20 +32,6 @@ management:
     health:
       show-details: when_authorized
 
-# em produção (opcional), desabilite o console H2
----
-# spring:
-#   config:
-#     activate:
-#       on-profile: prod
-#   h2:
-#     console:
-#       enabled: false
-#   security:
-#     enabled: false
-
 jwt:
   secret: ${JWT_SECRET}
   expiration: ${JWT_EXPIRATION:3600000}
-
-
